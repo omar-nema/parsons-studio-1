@@ -32,11 +32,9 @@ var years = [
 
 // Task 1
 // Console log the length of each Array
-console.log(/* COMPLETE ME */)
-console.log(/* COMPLETE ME */)
-console.log(/* COMPLETE ME */)
-
-
+console.log(names.length)
+console.log(URLs.length)
+console.log(years.length)
 
 // Task 2
 // add a new item to an array
@@ -44,9 +42,9 @@ var newName = "The International Center of Photography"
 var newURL = "icp.org"
 var newYear = 1974
 
-names.push(/* COMPLETE ME */);
-URLs[/* COMPLETE ME */] = newURL;
-years = years.concat(/* COMPLETE ME */);
+names.push(newName);
+URLs[URLs.length] = newURL; //replacing?
+years = years.concat(newYear);
 
 // Task 3
 // construct an Object out of our three Arrays
@@ -58,40 +56,37 @@ var result = {
   }
 }
 
-var museums = {};
-for (var i = 0; i < names.length; i++) {
-  var currentName = names[/* COMPLETE ME */];
-  /* COMPLETE ME */ = URLs[i];
-  var currentYear = /* COMPLETE ME */;
 
-  museums[currentName] = {};
-  museums[currentName]["URL"] = currentURL;
-  museums[currentName].year = currentYear;
+function createMuseumObject(){
+  var museums = {};
+  for (var i = 0; i < names.length; i++) {
+    var currentName = names[i];
+    let currURL = URLs[i];
+    var currentYear = years[i];
+  
+    museums[currentName] = {};
+    museums[currentName]["URL"] = currURL;
+    museums[currentName].year = currentYear;
+  }
+  return museums;
 }
 
-console.log('museums', museums)
-
-var museums2 = {};
-names.forEach(function(/* COMPLETE ME*/) {
-  museums2[n] = {};
-
-  var currentURL = URLs[i];
-  var currentYear = years[i];
-
-  museums2[n].URL = currentURL;
-  museums2[n]["year"] = currentYear;
-});
-
-console.log('museums2', museums2)
+let museum2 = createMuseumObject();
 
 // Task
 // Write a function to add a new museum object, with properties URL and year, to an existing museums object. Call it on museums2
 function addAMuseum(museums, newName, newURL, newYear){
-  /* COMPLETE ME */
-
-  return museums;
+  
+  let newMuseumObj = {
+    url: newURL,
+    year: newYear
+  }
+   museums[newName] = newMuseumObj;
+   return museums;
 }
 
-addAMuseum(/* COMPLETE ME */);
+let newMus = addAMuseum(museum2, 'Parsons Insitute of Blah', 'blah.com', '2050');
+console.log(newMus)
 
-console.log('museums2', museums2);
+
+

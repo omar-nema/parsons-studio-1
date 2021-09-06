@@ -5,9 +5,11 @@
 
 // Task
 // What does DOM stand for?
+//Document Object Model
 
 // Task
 // Open the file index.html in AWS Cloud9. Click "Preview" > "Preview File index.html". (Note that you can open it in a new window). What do you see?
+//A red box
 
 // Task
 // Delete the div with the class rectangle from index.html and refresh the preview.
@@ -15,8 +17,6 @@
 // Task
 // What does the following code do?
 const viz = document.body.querySelector(".viz");
-
-console.log(viz, viz.children);
 
 const addChildToViz = () => {
   const newChild = document.createElement("div");
@@ -27,15 +27,20 @@ const addChildToViz = () => {
 
 viz.addEventListener("click", addChildToViz);
 
+//onu user click, adds a new rectangle to the viz element
+
 // Task
 // Where can you see the results of the console.log below? How is it different from in previous exercises?
 
+//The log can be viewed when running devtools on the index.html page. In previous exercises running the javascript alone works.
 function drawIrisData() {
   window
     .fetch("./iris_json.json")
     .then(data => data.json())
     .then(data => {
-      console.log(data);
+      data.forEach(d => {
+        addChildToViz()
+      })
     });
 }
 

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (data == null) {
         return;
       }
-      console.log(data.x, data.y);
+      console.log(data.x, data.y, elapsedTime);
     })
     .begin();
 });

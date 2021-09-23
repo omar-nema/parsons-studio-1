@@ -1,7 +1,5 @@
 let recordings = [];
 let runId = new Date().getTime();
-let img = d3.select('#imgHolder');
-let bbox = img.node().getBoundingClientRect();
 
 function initViewInstructions() {
   //   d3.select("[id ^= 'webgazer']").style('display', 'none');
@@ -14,6 +12,8 @@ function initView() {
   d3.select('#viewInst').style('display', 'none');
   webgazer.resume();
   d3.select('#imgHolder').classed('show', true);
+  let bbox = d3.select('#innerImg').node().getBoundingClientRect();
+  console.log(bbox);
   webgazer.setGazeListener(function (data, elapsedTime) {
     if (data == null) {
       return;
@@ -32,7 +32,7 @@ function initView() {
     };
     recordings.push(recordingObj);
   });
-  setTimeout(end, 60000);
+  setTimeout(end, 6000);
 }
 
 function end() {

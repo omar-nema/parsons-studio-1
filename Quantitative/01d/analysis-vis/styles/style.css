@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #504d4d;
+  color: #fff8f8;
+  font-family: 'Lora';
+}
+#container {
+  max-width: 900px;
+  width: 90%;
+  margin: auto;
+  margin-top: 70px;
+}
+
+.text-accent {
+  color: #e1e89a;
+}
+
+h1 {
+  font-size: 42px;
+  font-weight: 400;
+  padding-top: 30px;
+  text-align: center;
+  border-top: 3px solid #e1e89a;
+  padding-top: 30px;
+  margin-bottom: 80px;
+}
+
+section {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+h3 {
+  font-size: 28px;
+  font-weight: 500;
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: #e1e89a;
+}
+p {
+  font-size: 28px;
+}

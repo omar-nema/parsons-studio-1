@@ -146,12 +146,6 @@ h5 {
 
 .textContainer.loading {
   display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  text-align: left;
-  width: auto;
-  transform: translate(-50%, -50%);
 }
 .textContainer.loading.active {
   display: block;

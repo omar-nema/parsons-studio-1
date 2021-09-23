@@ -4,7 +4,8 @@ let img = d3.select('#mainpic');
 let bbox = img.node().getBoundingClientRect();
 
 function initViewInstructions() {
-  d3.select("[id ^= 'webgazer']").style('display', 'none');
+  //   d3.select("[id ^= 'webgazer']").style('display', 'none');
+  webgazer.showVideoPreview(false);
   d3.select('#webgazerGazeDot').style('opacity', '0');
   d3.select('#initView').on('click', initView);
 }

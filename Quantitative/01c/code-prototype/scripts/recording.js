@@ -32,8 +32,7 @@ function initView() {
     };
     recordings.push(recordingObj);
   });
-  //60000
-  setTimeout(end, 6000);
+  setTimeout(end, 60000);
 }
 
 function end() {

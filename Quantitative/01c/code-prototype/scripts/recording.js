@@ -1,6 +1,6 @@
 let recordings = [];
 let runId = new Date().getTime();
-let img = d3.select('#mainpic');
+let img = d3.select('#imgHolder');
 let bbox = img.node().getBoundingClientRect();
 
 function initViewInstructions() {
@@ -13,7 +13,7 @@ function initViewInstructions() {
 function initView() {
   d3.select('#viewInst').style('display', 'none');
   webgazer.resume();
-  d3.select('#mainpic').classed('show', true);
+  d3.select('#imgHolder').classed('show', true);
   webgazer.setGazeListener(function (data, elapsedTime) {
     if (data == null) {
       return;
@@ -41,7 +41,7 @@ function end() {
   changePageState('results');
 }
 function initDownload() {
-  d3.select('#mainpic').classed('show', false);
+  d3.select('#imgHolder').classed('show', false);
   d3.select('#download').on('click', download);
   d3.select('resultsInst').style('display', 'block');
 }

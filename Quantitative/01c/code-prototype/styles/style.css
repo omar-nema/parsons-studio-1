@@ -1,12 +1,8 @@
-#mainpic {
-  max-width: 100%;
-  max-height: 100%;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body {
+  font-family: 'Inter';
+  margin: 0;
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
@@ -14,19 +10,30 @@ body {
   padding: 0;
 }
 
+#mainpic {
+  max-width: 100%;
+  max-height: 100%;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.08);
+}
 #mainpic.show {
-  opacity: 1;
+  display: block;
 }
 
-body {
-  display: flex;
-  justify-content: center;
+strong {
+  font-weight: 600;
 }
 
-button {
+/* .button {
   position: absolute;
   top: 20px;
-}
+} */
 
 #pause {
   right: 25%;
@@ -42,4 +49,110 @@ button {
 
 #end {
   right: 10%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#calibrationPts {
+  width: 100%;
+  height: calc(100vh - 50px);
+  display: none;
+  position: relative;
+}
+
+.calibration-pt {
+  width: 20px;
+  height: 20px;
+  background: red;
+  border: 2px solid black;
+  border-radius: 100%;
+  position: absolute;
+  box-shadow: 0 0 0.5px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  opacity: 1;
+}
+
+.calibration-pt:hover {
+  opacity: 0.9;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  background: #3a3838;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  color: white;
+}
+
+header .inner {
+  max-width: 1000px;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav {
+  display: flex;
+}
+nav div.active {
+  color: #fe87ab;
+}
+nav div {
+  padding: 0 5px;
+}
+
+.textContainer {
+  max-width: 750px;
+  width: 90%;
+  margin: auto;
+  padding-top: 25px;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 600;
+}
+.button-contrast {
+  width: 100%;
+  background: #3a3838;
+  color: white;
+  padding: 10px 5px;
+  border-radius: 6px;
+  margin-top: 30px;
+}
+.button {
+  cursor: pointer;
+  transition: opacity 0.15s linear;
+  font-weight: 600;
+  text-align: center;
+}
+.button:hover {
+  opacity: 0.8;
+}
+.section {
+  display: none;
+}
+.section.active {
+  display: block;
+}
+
+.textContainer.loading {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: left;
+  width: auto;
+  transform: translate(-50%, -50%);
+}
+.textContainer.loading.active {
+  display: block;
 }

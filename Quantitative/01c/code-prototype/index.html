@@ -2,26 +2,84 @@
 <html>
 
 <head>
-    <title>webgazer demo</title>
+    <title>how we look at art</title>
     <link rel="stylesheet" type="text/css" href="./styles/style.css" media="screen" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
     
 <body>
 
-    <button id="resume">Resume</button>
-    <button id="pause">Pause</button>    
-    <button id="rec">Record</button>   
-    <button id="end">End</button>            
-    <!-- <img id="mainpic" src="https://images.squarespace-cdn.com/content/v1/54faf78ce4b04da0abdfbde8/1608772665005-JHX0VA1D1SA007ZIRIOP/image-asset.jpeg"/>
-     -->
-    <img id="mainpic" src="./assets/img/bhatt.png"/>
+    <header>
+        <div class="inner">
+            <div><strong>How We Look at Art: Phase I Study</strong></div>
+            <nav>
+                <div class="active overview">Overview</div>
+                <div class="calibrate">Calibrate</div>
+                <div class="view">View</div>
+                <div class="results">Results</div>                                    
+            </nav>  
+        </div>
+       
+    </header>
+
+    <section>
+        <div class="overview section active">
+            <div class="textContainer">
+                <h1>Project Overview</h1>
+                <p>This project proposes to use a data visualization approach to show a viewer how they viewed a particular piece of art. As a proof-of-concept, I am looking to collect data on how a small sample of viewers viewed a single piece of artwork.
+                </p>
+                <p>Thank you for agreeing to participate! This will take about 15 minutes total.</p>
+                <p>As a first step, we’ll need to calibrate your webcam to track your eye movement.</p>
+                <div class="button button-contrast" id="btn-calibrate">I'm ready to calibrate</div>
+            </div>
+        </div>
+        <div class="calibrate section">
+            <div id="calibrationPts"></div>
+            <div class="textContainer calibration">
+                <h1>Calibrate</h1>
+                <p>Before we get started, we need to calibrate WebGazer (the eyetracking software used here). Please read instructions below carefully.</p>
+                <ul>
+                    <li><strong>Ensure your face is in the green portion of the video feed (top left</strong>)</li>
+                    <li><strong>Make sure your eyes follow the cursor at all times</strong></li>
+                    <li>Click on each dot 5 times (until it goes away)</li>
+                    <li>If you're confused you'll have to refresh and get these instructions again (sorry!)</li>
+                </ul>
+                <div class="button button-contrast" id="btn-calibrate-confirm">Okay I got it!</div>
+            </div>
+            <div class="textContainer loading">
+                <h1>Loading...</h1>
+                <ul>
+                    <li><strong>Ensure your face is in the green portion of the video feed (top left</strong>)</li>
+                    <li><strong>Make sure your eyes follow the cursor at all times</strong></li>
+                    <li>Click on each dot 5 times (until it goes away)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="view section">
+            <div class="textContainer view" id="viewInst">
+                <h1>View Some ~Art~</h1>
+                <p>Great job calibrating my friend. Next, we’re going to look at a beautiful piece of artwork! For exactly one minute. Take a deep breath, and bring your best museum face.</p>
+                <div class="button button-contrast" id="initView">I'm ready to view!</div>
+            </div>
+            <img id="mainpic" src="./assets/img/bhatt.png"/>
+        </div>
+        <div class="results section">
+            <div class="textContainer results" id="resultsInst">
+                <h1>Results</h1>
+                <p>We're all set, please just download the JSON file below, and email it to omar.nema@newschool.edu. Thanks for participating!</p>
+                <div class="button button-contrast" id="download">Download results!</div>
+            </div>
+        </div>
+    </section>
     
 
 </body>
 
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="./scripts/filesaver.js" type="text/javascript" ></script>
 <script src="./scripts/webgazer.js" type="text/javascript" ></script>
-<script src="./scripts/main.js"></script>
-
+<script src="./scripts/view.js"></script>
+<script src="./scripts/main.js" ></script>
+<script src="./scripts/recording.js"></script>
+<script src="./scripts/calibration.js"></script>
 </html> 

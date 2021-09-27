@@ -93,16 +93,22 @@ img {
   background: #666464;
 }
 
-.svg-container {
+/* .svg-container {
   position: relative;
-  padding-top: 50%; /* this is strangely relative to width, nice trick */
+  padding-top: 100%;
 }
 .svg-container > svg {
   position: absolute;
-  height: 100%;
-  width: 100%;
   left: 0;
   top: 0;
   border: 1px solid black;
   overflow: visible;
+} */
+
+.svg-container {
+  width: 100%;
+}
+svg {
+  border: 1px solid black;
+  /* overflow: visible; */
 }

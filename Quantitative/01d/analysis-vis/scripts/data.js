@@ -20,13 +20,77 @@ data.forEach((d) => {
 });
 Promise.all(promises).then(async (values) => {
   let dataCombined = d3.merge(values);
-  numParticipants = values.length;
-  timePerPoint = (numParticipants * 60) / dataCombined.length;
-  let dataAgg = await aggregateData(dataCombined, timePerPoint);
-  //heatmap(dataAgg, timePerPoint);
+  dataCombined = dataCombined.filter((d) => {
+    return d.xPct >= 0 && d.xPct <= 100 && d.yPct >= 0 && d.yPct <= 100;
+  });
+
+  //clean small datasets tooooo
+
   contourmap(dataCombined);
 });
 
+async function contourmap(data) {
+  let svg = d3.select('#heatmap');
+  let bbox = svg.node().getBoundingClientRect();
+  let width = bbox.width,
+    height = bbox.height;
+
+  let xPos = d3.scaleLinear().domain([0, 100]).range([0, width]);
+  let yPos = d3.scaleLinear().domain([0, 100]).range([0, height]);
+
+  let contours = d3
+    .contourDensity()
+    .x((d) => xPos(d.xPct))
+    .y((d) => yPos(d.yPct))
+    .size([width, height])
+    .bandwidth(30)
+    .thresholds(10)(data);
+
+  console.log(contours);
+
+  let minCoords = d3.min(contours, (d) => d.value);
+  let maxCoords = d3.max(contours, (d) => d.value);
+  let fillScale = d3
+    .scaleLinear()
+    .domain([minCoords, maxCoords])
+    .range(['#504d4d', '#67d0f1']);
+
+  console.log(data);
+
+  svg
+    .append('g')
+    .selectAll('path')
+    .data(contours)
+    .join('path')
+    // .attr('stroke', 'white')
+    .attr('stroke-linejoin', 'round')
+    .attr('fill', (d) => fillScale(d.value))
+    // .attr('fill', (d) => fillScale(getContourPointCount(d)))
+    .attr('stroke-width', (d, i) => (i % 5 ? 0.25 : 1))
+    .attr('d', d3.geoPath());
+
+  svg
+    .append('g')
+    .attr('stroke', 'white')
+    .selectAll('circle')
+    .data(data)
+    .join('circle')
+    .attr('cx', (d) => xPos(d.xPct))
+    .attr('cy', (d) => yPos(d.yPct))
+    .attr('r', 2)
+    .on('mouseover', (evt, data) => {
+      console.log(data);
+    });
+
+  // .on('mouseover', (event, data) => {
+  //   console.log('uh', data, getContourPointCount(data));
+  // });
+}
+
+//   numParticipants = values.length;
+//   timePerPoint = (numParticipants * 60) / dataCombined.length;
+//   let dataAgg = await aggregateData(dataCombined, timePerPoint);
+//heatmap(dataAgg, timePerPoint);
 let binInc = 10;
 let numBins = (100 / binInc) * (100 / binInc);
 let heatmapBinMax = d3.range(0, 100, binInc);
@@ -56,59 +120,6 @@ async function aggregateData(inputArray) {
   });
   await dataAggregated.sort((a, b) => b.count - a.count);
   return dataAggregated;
-}
-
-async function contourmap(data) {
-  let svg = d3.select('#heatmap');
-  let bbox = svg.node().getBoundingClientRect();
-  let width = bbox.width,
-    height = bbox.height;
-
-  console.log(data);
-
-  let posDomain = [d3.min(heatmapBinMax), d3.max(heatmapBinMax)];
-  let xPos = d3.scaleLinear().domain(posDomain).range([0, width]);
-  let yPos = d3.scaleLinear().domain(posDomain).range([0, height]);
-
-  let contours = d3
-    .contourDensity()
-    .x((d) => xPos(d.xPct))
-    .y((d) => yPos(d.yPct))
-    .size([width, height])
-    .bandwidth(30)
-    .thresholds(10)(data);
-
-  console.log(contours);
-
-  function getContourPointCount(d) {
-    let totalCoords = 0;
-    d.coordinates.forEach((coordArray) => {
-      coordArray.forEach((actualArray) => {
-        totalCoords += actualArray.length;
-      });
-    });
-    return totalCoords;
-  }
-  let minCoords = d3.min(contours, (d) => getContourPointCount(d));
-  let maxCoords = d3.max(contours, (d) => getContourPointCount(d));
-  let fillScale = d3
-    .scaleLinear()
-    .domain([minCoords, maxCoords])
-    .range(['#504d4d', '#67d0f1']);
-
-  svg
-    .append('g')
-    .selectAll('path')
-    .data(contours)
-    .join('path')
-    .attr('stroke', 'steelblue')
-    .attr('stroke-linejoin', 'round')
-    .attr('fill', (d) => fillScale(getContourPointCount(d)))
-    .attr('stroke-width', (d, i) => (i % 5 ? 0.25 : 1))
-    .attr('d', d3.geoPath())
-    .on('mouseover', (event, data) => {
-      console.log('uh', data, getContourPointCount(data));
-    });
 }
 
 async function heatmap(data) {

@@ -105,10 +105,22 @@ img {
   overflow: visible;
 } */
 
-.svg-container {
+.contour-container {
   width: 100%;
 }
 svg {
   border: 1px solid black;
+  background: #3e3c3c;
   /* overflow: visible; */
+}
+
+.contour-overlay-container {
+  width: 100%;
+  position: relative;
+}
+#imgContour {
+  width: 100%;
+  position: absolute;
+  max-width: none;
+  z-index: -1;
 }

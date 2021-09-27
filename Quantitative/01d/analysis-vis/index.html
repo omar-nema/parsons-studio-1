@@ -16,13 +16,13 @@
         <section>
             <h3>Introduction</h3>
             <p>Imagine a piece of art that you love. How do you look at it? Do you study the work bit-by-bit? Or do admire it from a distance, and take in as a whole?</p>
-            <p>And how would someone else look at the same work? Which elements is their attention drawn to?</p>
-            <p>This project attempts to visualize how individuals study a particular piece of art. This project serves a proof-of-concept for a broader series of work that examines how we look. For this proof-of-concept, eye tracking data from five individuals was collected and visualized.  </p>
+            <p>How would someone else look at the same work? Which elements of the piece is their attention drawn to?</p>
+            <p>This project attempts to visualize how individuals study a particular piece of art. This project serves a proof-of-concept for a broader series of work that examines how we look. Eye tracking data from five individuals was collected and visualized.  </p>
         </section>
         <section>
             <h3>Experiment & Data Collection</h3>
             <p>For this project, I asked a group of participants (friends and peers) to examine a piece of art for 1 minute. I choose 'Local Calm' by Julie Mehretu as the piece to examine.</p>
-            <p>Ideally, I would have asked participants to view a variety of works. However, I wanted to narrow scope for this initial study, and choose to use a single piece in order to simplify the study. The selected Mehretu piece is complex and layered - one that would likely hold viewers' attention, and also lead to a variety of different viewing patterns.</p>
+            <p>Ideally, I would have asked participants to view a variety of works. However, I wanted to narrow scope for this initial study, and choose to use a single piece in order to simplify the study. The selected Mehretu piece is complex and layered - one that would likely hold viewers' attention, and lead to a variety of different viewing patterns.</p>
             <p>This piece was sourced from the Smithsonian American Art Museum, Renwick Art Gallery - <a href="https://www.si.edu/object/local-calm:saam_2006.23">link here.</a></p>
             <div class="img-container">
                 <img class="" src="./assets/img/mehretuCropped.png">
@@ -42,6 +42,7 @@
         
         </section>
 
+
         <section>
             <h3>Numerical Analysis</h3>
             <p>Let’s look at some quick, cold stats to just understand the general nature of eye movement in this experiment. We’ll then delve into a more visual analysis in the next section.</p>
@@ -49,8 +50,8 @@
             <div id="img-travel"></div>
             <p>Though there was a lot of eye movement overall, much of this movement was concentrated in certain regions of the image. The contour map below highlights the regions with the most recorded points. You can see that the center-left is given the most attention.</p>
             <p>The contour map below was created by interpolating between all recorded points in the dataset. Areas with dense small points get lines drawn around.</p>
-            <div class="svg-container">
-                <svg id="heatmap"></svg>
+            <div class="contour-container">
+                <svg id="contour"></svg>
             </div>
         </section>
 
@@ -58,9 +59,13 @@
             <h3>Image Analysis</h3>
             <p>Let's overlay the 'attention' heatmap from the past section onto the actual visual piece. Aggregating all samples, this is what the average ‘gaze’ looked like. Areas that were paid less attention to are blurred out. Hover over to see the original image.</p>
         
-            <p>*blur map here*</p>
             <p>In my own exploration, I’ve found that looking at a single sample is much more interesting - as we can directly imagine that this was someone’s experience when looking at the painting.</p>
-            <p>*dropdown with blur map*</p>
+            <p>*dropdown map*</p>
+
+            <div class="contour-overlay-container">
+                <svg id="contour-overlay"></svg>
+            </div>
+         
         </section>    
  
         <section>

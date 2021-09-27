@@ -3,6 +3,9 @@
 
 <head>
     <title>the gaze - an analysis</title>
+    
+<meta charset="UTF-8">
+
     <link rel="stylesheet" type="text/css" href="./styles/style.css" media="screen" />
 </head>
     
@@ -12,16 +15,64 @@
         <h1 class="text-accent"><span class="header-dec">How We Gaze: A Proof of Concept</span></h1>
         <section>
             <h3>Introduction</h3>
-            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident. Take a moment to study it.</p>
+            <p>Imagine a piece of art that you love. How do you look at it? Do you study the work bit-by-bit? Or do admire it from a distance, and take in as a whole?</p>
+            <p>And how would someone else look at the same work? Which elements is their attention drawn to?</p>
+            <p>This project attempts to visualize how individuals study a particular piece of art. This project serves a proof-of-concept for a broader series of work that examines how we look. For this proof-of-concept, eye tracking data from five individuals was collected and visualized.  </p>
         </section>
         <section>
-            <h3>Introduction</h3>
-            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident. Take a moment to study it.</p>
+            <h3>Experiment & Data Collection</h3>
+            <p>For this project, I asked a group of participants (friends and peers) to examine a piece of art for 1 minute. I choose 'Local Calm' by Julie Mehretu as the piece to examine.</p>
+            <p>Ideally, I would have asked participants to view a variety of works. However, I wanted to narrow scope for this initial study, and choose to use a single piece in order to simplify the study. The selected Mehretu piece is complex and layered - one that would likely hold viewers' attention, and also lead to a variety of different viewing patterns.</p>
+            <p>This piece was sourced from the Smithsonian American Art Museum, Renwick Art Gallery - <a href="https://www.si.edu/object/local-calm:saam_2006.23">link here.</a></p>
+            <div class="img-container">
+                <img class="" src="./assets/img/mehretuCropped.png">
+                <p class="caption ">Mehretu's 'Local Calm'</p>
+            </div>
+
+
+            <p>Participant eye movements were tracked using the webgazer.js library and sent to me via a downloaded JSON file. The data collection portion of the project is available <a href="https://omarnema.com/parsons-studio-1/Quantitative/01c/code-prototype/">here.</a></p>
+            <p>Each dataset contains a unique id for the participant, and an indication a set of x and y coordinates for each 0.1 seconds of data collection.</p>
+            <p>As part of this proof-of-concept, I asked participants to only send data if their accuracy rate was greater than 70%. However, I did not actually record the accuracy rate, so it is likely that some of the data is unreliable.</p>
+     
+
+            <div class="img-container">
+                <img class="collection" src="./assets/img/data-collection.png">
+                <p class="caption collection">Screenshot from data collection app</p>
+            </div>
+        
         </section>
+
+        <section>
+            <h3>Numerical Analysis</h3>
+            <p>Let’s look at some quick, cold stats to just understand the general nature of eye movement in this experiment. We’ll then delve into a more visual analysis in the next section.</p>
+            <p>On average, each viewers eyes traveled about <span class="stat" id="pixel-value"></span> the width of the image in a minute.</p>
+            <div id="img-travel"></div>
+            <p>Let's break down this movement into sections of the image. Though there was a lot of eye movement overall, much of this movement was concentrated in certain regions of the image. We see that, in aggregate, the edges of the image were given less attention than the center.</p>
+            <p>In the visual below, we've broken down the image into 100 pieces. If attention were divided equally in the 60 seconds of viewing, we would expect that a viewer would spend 0.6 seconds per square. In the most concenrated areas, we see that viewers spent about 3 seconds per square, and in the least - almost no time. </p>
+            <p>legend here</p>
+            <div class="svg-container">
+                <svg id="heatmap"></svg>
+            </div>
+        </section>
+
+        <section>
+            <h3>Image Analysis</h3>
+            <p>Let's overlay the 'attention' heatmap from the past section onto the actual visual piece. Aggregating all samples, this is what the average ‘gaze’ looked like. Areas that were paid less attention to are blurred out. Hover over to see the original image.</p>
+        
+            <p>*blur map here*</p>
+            <p>In my own exploration, I’ve found that looking at a single sample is much more interesting - as we can directly imagine that this was someone’s experience when looking at the painting.</p>
+            <p>*dropdown with blur map*</p>
+        </section>    
+ 
+        <section>
+            <h3>Methodology & Process</h3>
+            <p>Talk about observable here</p>
+        </section>  
+        
 
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="./scripts/main.js"></script>
+<script src="./scripts/main.js" type="module"></script>
 
 </html> 

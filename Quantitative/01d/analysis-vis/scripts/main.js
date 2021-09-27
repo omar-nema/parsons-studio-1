@@ -1,13 +1,17 @@
-console.log('HEEEEEEY');
+import './data.js';
 
-//select element
-var element = document.querySelector('body');
+document.addEventListener('DOMContentLoaded', () => {
+  //create nav
+  // sections = d3.selectAll('section').nodes();
+  // sections.forEach(d=> {
 
-//attach mousemove event listener
-element.addEventListener('mousemove', function (event) {
-  // Cursor x position
-  var x = event.clientX;
-  // Cursor y position
-  var y = event.clientY;
-  console.log(x, y);
+  // })
+
+  //add stats
+  let statImgWidthMoved = 31;
+  d3.select('#pixel-value').text(statImgWidthMoved + 'x');
+
+  for (let i = 0; i < statImgWidthMoved; i++) {
+    d3.select('#img-travel').append('div').attr('class', 'abstract-img');
+  }
 });

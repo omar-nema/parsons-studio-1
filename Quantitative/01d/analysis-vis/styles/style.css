@@ -11,14 +11,22 @@ body {
   font-family: 'Lora';
 }
 #container {
-  max-width: 900px;
-  width: 90%;
+  max-width: 850px;
+  width: 80%;
   margin: auto;
   margin-top: 70px;
 }
 
 .text-accent {
   color: #e1e89a;
+}
+a {
+  color: #e1e89a;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+}
+a:hover {
+  opacity: 0.85;
 }
 
 h1 {
@@ -32,17 +40,68 @@ h1 {
 }
 
 section {
-  margin-top: 50px;
-  margin-bottom: 100px;
+  margin-top: 40px;
+  margin-bottom: 80px;
 }
 
 h3 {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 500;
   color: white;
   text-decoration: underline;
   text-decoration-color: #e1e89a;
 }
 p {
-  font-size: 28px;
+  font-size: 22px;
+}
+
+.img-container {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 0;
+}
+img {
+  border: 0.5px solid black;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+}
+
+.collection {
+  width: 50%;
+}
+.caption {
+  text-align: center;
+  font-size: 18px;
+  color: lightgray;
+}
+.stat {
+  font-weight: 700;
+}
+
+#img-travel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.abstract-img {
+  width: 80px;
+  background: blue;
+  height: 55px;
+  margin: 5px 10px;
+  background: #666464;
+}
+
+.svg-container {
+  position: relative;
+  padding-top: 50%; /* this is strangely relative to width, nice trick */
+}
+.svg-container > svg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  border: 1px solid white;
 }

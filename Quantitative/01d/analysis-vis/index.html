@@ -22,8 +22,8 @@
         </section>
         <section>
             <h3>Experiment & Data Collection</h3>
-            <p>For this project, I asked a group of participants (friends and peers) to examine a piece of art for 1 minute. I choose 'Local Calm' by Julie Mehretu as the piece to examine.</p>
-            <p>Ideally, I would have asked participants to view a variety of works. However, I wanted to narrow scope and simplify this initial study, so I chose single piece. The selected Mehretu piece is complex and layered - one that would likely hold viewers' attention, and lead to a variety of different viewing patterns.</p>
+            <p>For this project, I asked a group of participants (friends and peers) to examine a piece of art -  Julie Mehretu's 'Local Calm'-  for 1 minute.</p>
+            <p>Ideally, I would have asked participants to view a variety of works. However, I wanted to narrow scope and simplify this initial study, so I chose to work with a single piece. The selected Mehretu piece is complex and layered - one that would likely hold viewers' attention, and lead to a variety of different viewing patterns.</p>
             <p>This piece was sourced from the Smithsonian American Art Museum, Renwick Art Gallery - <a href="https://www.si.edu/object/local-calm:saam_2006.23">link here.</a></p>
             <div class="img-container">
                 <img class="" src="./assets/img/mehretuCropped.png">
@@ -31,9 +31,8 @@
             </div>
 
 
-            <p>Participant eye movements were tracked using the webgazer.js library and sent to me via a downloaded JSON file. The data collection portion of the project is available <a href="https://omarnema.com/parsons-studio-1/Quantitative/01c/code-prototype/">here.</a></p>
-            <p>Each dataset contains a unique id for the participant, and a set of x and y coordinates for each 0.1 seconds of data collection.</p>
-
+            <p>Participant eye movements were tracked using the webgazer.js library and sent to me via a downloaded JSON file. The data collection portion of the project is available <a href="https://omarnema.com/parsons-studio-1/Quantitative/01c/code-prototype/">here.</a> Each dataset contains a unique id for the participant, and a set of x and y coordinates for each 0.1 seconds of data collection. Additional details on data collection follow in the 'Appendix' section.</p>
+         
             <div class="img-container">
                 <img class="collection" src="./assets/img/data-collection.png">
                 <p class="caption collection">Screenshot from data collection app</p>
@@ -44,47 +43,57 @@
 
         <section>
             <h3>Numerical Analysis</h3>
-            <p>Let’s look at some quick, cold stats to understand the general nature of eye movement in this experiment. We’ll then delve into a more visual analysis in the next section.</p>
-            <p>On average, each viewers eyes traveled about <span class="stat" id="pixel-value"></span> the width of the image in a minute.</p>
+            <p>Let’s look at some quick, cold stats to understand the general nature of eye movement in this experiment. We’ll then delve into a visual analysis in the next section.</p>
+            <p>On average, each viewer's eyes traveled about <span class="stat" id="pixel-value"></span> the width of the image in a minute.</p>
             <div id="img-travel"></div>
             <p>Though there was a lot of eye movement overall, much of this movement was concentrated in certain regions of the image. The contour map below highlights the regions with the most recorded points. This visual was created by interpolating between all recorded points in the dataset
             </p>
             <p>You can see that the center-left (brighest area) is given the most attention, while the outer edges of the painting did not carry most participants' attention.</p>
-            <div class="contour-container">
-                <svg id="contour" class="graph-container"></svg>
+            <div class="chart-holder">
+                <p class="chart-title"><span>
+                    Viewing Data Plotted With </span>
+                    <span id="dropdown-contour"></span>
+                </p>
+     
+                <div class="contour-container">
+                    <svg id="contour" class="graph-container"></svg>
+                </div>
             </div>
+           
         </section>
 
         <section>
             <h3>Image Analysis</h3>
-            <p>Let's overlay the above contour map onto the actual visual that viewers studied. Aggregating all samples, this is what the average ‘gaze’ looked like. Areas that were paid less attention to are blurred out.</p>
+            <p>Let's overlay the above contour map onto Mehretu's 'Local Calm' to imagine the average viewing experience. In the below visual, the contour map was used to guide a blurring pattern; areas of the piece that were focused on are shown clearly, while portions of the piece that viewers did not focus on are blurred out.</p>
         
-            <p>In my own exploration, I’ve found that looking at a single sample is much more interesting - as we can directly imagine that this was someone’s experience when looking at the painting. Use the dropdown below to toggle between activity for different viewers.</p>
-         
-            <p id="imgBorder"><span class="text-secondary">Select Viewer:</span><span id="dropdown-container"></span></p>
+            <p>In my own exploration, I’ve found that looking at a single sample at a time is most compelling - as we can directly imagine that this was someone’s experience when looking at the painting. Use the dropdown below to toggle between the experience for different viewers.</p>
 
-            <div class="contour-overlay-container graph-container">
-                <img id="imgContour" src="./assets/img/mehretuCropped.png">
-                <svg id="contour-overlay"></svg>
+            <div class="chart-holder">
+                <p class="chart-title"><span>Viewing Experience Visualized for </span><span id="dropdown-overlay"></span></p>
+                <div class="contour-overlay-container">
+                    <img id="imgContour" src="./assets/img/mehretuCropped.png">
+                    <svg id="contour-overlay"></svg>
+                </div>
             </div>
+        
          
         </section>    
 
         <section>
             <h3>Extending This Work</h3>
             <p>
-                What is most interesting about the data in this study is that it approximates base-level perception that we cannot explain to others. This dataset gives us some idea of how we see, and where our attention is drawn.
+                What I find most interesting about the data in this study is that it approximates base-level perception that we cannot easily explain to others. This dataset gives us some idea of how we see, and where our attention is drawn.
             </p>
-            <p>Having built out this proof-of-concept, I'm interested in exploring how eye-tracking data can be used to help us see in a new way. I can imagine building a tool that points which elements of an artwork we did *not* pay attention to. I can envision a tool that replays others' viewing experience. 
+            <p>Having built out this proof-of-concept, I'm interested in exploring how eye-tracking data can be used to help us see in a new way. I can imagine building a tool that points which elements of an artwork we did *not* pay attention to. I can also envision building tool that replays others' viewing experience. 
             </p>
 
         </section>
  
         <section>
             <h3>Appendix: Methodology & Process</h3>
-            <p>Data collection was done via a custom <a href="https://omarnema.com/parsons-studio-1/Quantitative/01c/code-prototype/">web application</a>. The webpage uses webgazer.js to detect eye tracking movement, and then provides a JSON file download containing eye positions at intervals of roughly every .05 seconds. Github repo <a href="https://github.com/omar-nema/parsons-studio-1/tree/main/Quantitative/01c/code-prototype">here</a></p>
+            <p>Data collection was done via a custom <a href="https://omarnema.com/parsons-studio-1/Quantitative/01c/code-prototype/">web application</a>. The webpage uses webgazer.js to detect eye tracking movement, and then provides a JSON file download containing eye positions at intervals of roughly every .05 seconds. Github repository <a href="https://github.com/omar-nema/parsons-studio-1/tree/main/Quantitative/01c/code-prototype">here.</a></p>
             <p>I explored and validated the collected data using Observable Plot - see <a href="https://observablehq.com/@omar-nema/eye-tracking">notebook</a>. Using Observable, I was able to get a sense of the data distribution. I also made some quick visual prototypes for a heatmap and connected dot scatterplot, which helped guide the idea for a more layered, density-based visualization. </p>
-            <p>Lastly, the visualizations in this page were built using d3.js. The first visualization uses the built-in d3 contour density estimation. The second visualization overlays the pre-made contours onto sections of the original image, and applies a blur filter to show which portions of the painting were given the most attention to. Code <a href="https://github.com/omar-nema/parsons-studio-1/tree/main/Quantitative/01d/analysis-vis">here</a></p>
+            <p>Lastly, the visualizations in this page were built using d3.js. The first visualization uses the built-in d3 contour density estimation. The second visualization overlays the pre-made contours onto sections of the original image, and applies a blur filter to show which portions of the painting were given the most attention to. Code is available <a href="https://github.com/omar-nema/parsons-studio-1/tree/main/Quantitative/01d/analysis-vis">here/</a></p>
   
             <p>There are some significant data limitations in this study. I asked participants to only send data if their calibration accuracy rate was greater than 70%. However, I did not actually record the accuracy rate and relied on participants to self-moderate, so it is likely that some of the data is unreliable. Participants also did the study from a variety of computers, with different webcams and lighting conditions, which likely influenced  data variability.
             </p>

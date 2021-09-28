@@ -10,36 +10,58 @@ document.addEventListener('DOMContentLoaded', async () => {
   let data = await prepareData();
   //plot
   let dataCombined = helperGetDataFromLabel('All', data);
-  contourMap(dataCombined);
+  contourMap(dataCombined, 'Contours');
   contourMapBlur(dataCombined);
+
+  //add filters and dropdowns
+  let contourSelector = '#dropdown-contour';
   createDropdown(
-    data.map((d) => (d = d.label)),
-    'All',
-    data
+    contourSelector,
+    ['Contours', 'Points', 'Contours & Points'],
+    'Contours'
   );
+  d3.select(contourSelector).on('change', (d) => {
+    let newVal = document.querySelector(contourSelector + ' select').value;
+    if (newVal == 'Contours & Points') {
+      d3.selectAll('.contour').classed('show', true);
+      d3.selectAll('.point').classed('show', true);
+    } else if (newVal == 'Contours') {
+      d3.selectAll('.contour').classed('show', true);
+      d3.selectAll('.point').classed('show', false);
+    } else if (newVal == 'Points') {
+      d3.selectAll('.contour').classed('show', false);
+      d3.selectAll('.point').classed('show', true);
+    }
+  });
+
+  let overlayDropdownSelector = '#dropdown-overlay';
+  createDropdown(
+    overlayDropdownSelector,
+    data.map((d) => (d = d.label)),
+    'All'
+  );
+
+  d3.select(overlayDropdownSelector).on('change', (d) => {
+    let newVal = document.querySelector(
+      overlayDropdownSelector + ' select'
+    ).value;
+    contourMapBlur(helperGetDataFromLabel(newVal, data));
+  });
 });
 
 function helperGetDataFromLabel(label, data) {
   return data.filter((d) => d.label == label)[0].data;
 }
 
-function createDropdown(subjectNames, defaultValue, data) {
-  let dropdown = d3
-    .select('#dropdown-container')
-    .append('select')
-    .attr('id', 'subjectSel')
-    .attr('name', 'subjects');
+function createDropdown(selector, labels, defaultValue) {
+  let dropdown = d3.select(selector).append('select');
+
   var options = dropdown
     .selectAll('option')
-    .data(subjectNames)
+    .data(labels)
     .join('option')
     .text((d) => d)
     .attr('value', (d) => d);
 
-  document.querySelector('#subjectSel').value = 'All';
-
-  d3.select('#subjectSel').on('change', (d) => {
-    let newVal = document.querySelector('#subjectSel').value;
-    contourMapBlur(helperGetDataFromLabel(newVal, data));
-  });
+  document.querySelector(selector + ' select').value = defaultValue;
 }

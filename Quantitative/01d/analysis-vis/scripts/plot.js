@@ -81,7 +81,7 @@ export async function contourMapBlur(data) {
     .style('filter', (d) => `blur(${blurScale(d.value)}px`);
 }
 
-export async function contourMap(data) {
+export async function contourMap(data, elementsToShow) {
   let bbox = d3.select('.contour-container').node().getBoundingClientRect();
   let width = bbox.width;
   let height = 0.705 * width;
@@ -117,37 +117,38 @@ export async function contourMap(data) {
     .domain([minCoords, maxCoords])
     .range(['#535050', '#67d0f1']);
 
+  let contourClassName = 'contour',
+    pointClassName = 'point';
+  if (elementsToShow == 'Contours & Points') {
+    contourClassName += ' show';
+    pointClassName += ' point';
+  } else if (elementsToShow == 'Contours') {
+    contourClassName += ' show';
+  } else if (elementsToShow == 'Points') {
+    pointClassName += ' point';
+  }
+
   svg
     .append('g')
     .selectAll('path')
     .data(contours)
     .join('path')
-    // .attr('stroke', 'white')
     .attr('stroke-linejoin', 'round')
     .attr('fill', (d) => fillScale(d.value))
     .attr('stroke', 'rgba(0,0,0,.1)')
-    // .attr('fill', (d) => fillScale(getContourPointCount(d)))
-    // .attr('stroke-width', (d, i) => (i % 5 ? 0.25 : 1))
     .attr('stroke-width', 1)
     .attr('d', d3.geoPath())
-    .on('mouseover', (event, data) => {
-      console.log(data);
-    });
-  // svg
-  //   .append('g')
-  //   .selectAll('circle')
-  //   .data(data)
-  //   .join('circle')
-  //   .attr('cx', (d) => xPos(d.xPct))
-  //   .attr('cy', (d) => yPos(d.yPct))
-  //   .attr('r', 3)
-  //   .attr('fill', 'black')
-  //   .attr('fill-opacity', '0.2')
-  //   .on('mouseover', (event, data) => {
-  //     console.log(data);
-  //   });
+    .attr('class', contourClassName);
 
-  // .on('mouseover', (event, data) => {
-  //   console.log('uh', data, getContourPointCount(data));
-  // });
+  svg
+    .append('g')
+    .selectAll('circle')
+    .data(data)
+    .join('circle')
+    .attr('cx', (d) => xPos(d.xPct))
+    .attr('cy', (d) => yPos(d.yPct))
+    .attr('r', 1)
+    .attr('fill', 'white')
+    .attr('fill-opacity', '1')
+    .attr('class', pointClassName);
 }

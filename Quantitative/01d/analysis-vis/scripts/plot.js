@@ -43,8 +43,8 @@ export async function contourMapBlur(data) {
 
   let blurScale = d3
     .scaleLinear()
-    .domain([maxCoords, maxCoords / 2, minCoords])
-    .range([0, 0.5, 4]);
+    .domain([maxCoords, maxCoords * 0.75, , maxCoords / 2, minCoords])
+    .range([0, 1, 1.5, 5]);
   let fillScale = d3
     .scaleLinear()
     .domain([minCoords, maxCoords])

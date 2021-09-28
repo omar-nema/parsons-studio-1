@@ -71,10 +71,9 @@ export async function contourMapBlur(data) {
     .attr('d', d3.geoPath());
 
   svg
-    .append('g')
-    .selectAll('clipPath')
-    .data(contours)
-    .join('image')
+    .selectAll('.clipPathGroup')
+    // .data(contours)
+    .append('image')
     .attr('clip-path', (d, i) => `url(#path-${i})`)
     .attr('width', '100%')
     .attr('height', '100%')

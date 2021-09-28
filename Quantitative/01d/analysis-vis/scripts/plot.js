@@ -50,11 +50,20 @@ export async function contourMapBlur(data) {
     .domain([minCoords, maxCoords])
     .range(['#504d4d', '#67d0f1']);
 
+  console.log(contours.length);
+
+  //, function (d) {
+  // return d.coordinates[0].length;
+
+  let clipPathG = svg
+    .selectAll('.clipPathGroup')
+    .data(contours, (d) => d.coordinates[0])
+    .join('g')
+    .attr('class', 'clipPathGroup');
+
   svg
-    .append('g')
-    .selectAll('clipPath')
-    .data(contours)
-    .join('clipPath')
+    .selectAll('.clipPathGroup')
+    .append('clipPath')
     .attr('id', (d, i) => 'path-' + i)
     .append('path')
     .attr('stroke-linejoin', 'round')

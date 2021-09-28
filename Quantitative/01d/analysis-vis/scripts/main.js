@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   //prepare data
   let data = await prepareData();
   //plot
-  let dataCombined = helperGetDataFromLabel('All', data);
+  let dataCombined = helperGetDataFromLabel('All Participants', data);
   contourMap(dataCombined, 'Contours');
   contourMapBlur(dataCombined);
 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   createDropdown(
     overlayDropdownSelector,
     data.map((d) => (d = d.label)),
-    'All'
+    'All Participants'
   );
 
   d3.select(overlayDropdownSelector).on('change', (d) => {

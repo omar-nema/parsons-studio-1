@@ -115,7 +115,7 @@ export async function contourMap(data, elementsToShow) {
   let fillScale = d3
     .scaleLinear()
     .domain([minCoords, maxCoords])
-    .range(['#535050', '#67d0f1']);
+    .range(['#4a4646', '#e0ef4c']);
 
   let contourClassName = 'contour',
     pointClassName = 'point';
@@ -135,8 +135,9 @@ export async function contourMap(data, elementsToShow) {
     .join('path')
     .attr('stroke-linejoin', 'round')
     .attr('fill', (d) => fillScale(d.value))
-    .attr('stroke', 'rgba(0,0,0,.1)')
-    .attr('stroke-width', 1)
+    // .attr('stroke', 'rgba(0,0,0,.1)')
+    // .attr('stroke-width', 1)
+    .attr('stroke', 'rgba(0,0,0,.3)')
     .attr('d', d3.geoPath())
     .attr('class', contourClassName);
 
@@ -147,8 +148,8 @@ export async function contourMap(data, elementsToShow) {
     .join('circle')
     .attr('cx', (d) => xPos(d.xPct))
     .attr('cy', (d) => yPos(d.yPct))
-    .attr('r', 1)
+    .attr('r', 1.3)
     .attr('fill', 'white')
-    .attr('fill-opacity', '1')
+    .attr('fill-opacity', '0.5')
     .attr('class', pointClassName);
 }

@@ -31,7 +31,7 @@ export async function prepareData() {
           label: data[i].label,
         });
       });
-      dataFetched.push({ data: d3.merge(values), label: 'All' });
+      dataFetched.push({ data: d3.merge(values), label: 'All Participants' });
       return dataFetched;
     })
     .then(async (values) => {

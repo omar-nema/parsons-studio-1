@@ -66,6 +66,9 @@ p {
   color: #e1e89a;
   text-align: center;
 }
+.filter {
+  margin-left: 10px;
+}
 
 .img-container {
   max-width: 100%;
@@ -112,7 +115,7 @@ image {
   width: 100%;
 }
 #contour {
-  background: #3e3c3c;
+  background: #464242;
 }
 .point,
 .contour {

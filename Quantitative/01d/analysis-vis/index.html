@@ -42,17 +42,17 @@
 
 
         <section>
-            <h3>Numerical Analysis</h3>
+            <h3>Quantitative Analysis</h3>
             <p>Let’s look at some quick, cold stats to understand the general nature of eye movement in this experiment. We’ll then delve into a visual analysis in the next section.</p>
             <p>On average, each viewer's eyes traveled about <span class="stat" id="pixel-value"></span> the width of the image in a minute.</p>
             <div id="img-travel"></div>
             <p>Though there was a lot of eye movement overall, much of this movement was concentrated in certain regions of the image. The contour map below highlights the regions with the most recorded points. This visual was created by interpolating between all recorded points in the dataset
             </p>
-            <p>You can see that the center-left (brighest area) is given the most attention, while the outer edges of the painting did not carry most participants' attention.</p>
+            <p>You can see that the center-left (brighest area) is given the most attention. Viewers spent little time examining the edges of the painting.</p>
             <div class="chart-holder">
                 <p class="chart-title"><span>
                     Viewing Data Plotted With </span>
-                    <span id="dropdown-contour"></span>
+                    <span id="dropdown-contour" class="filter"></span>
                 </p>
      
                 <div class="contour-container">
@@ -69,7 +69,7 @@
             <p>In my own exploration, I’ve found that looking at a single sample at a time is most compelling - as we can directly imagine that this was someone’s experience when looking at the painting. Use the dropdown below to toggle between the experience for different viewers.</p>
 
             <div class="chart-holder">
-                <p class="chart-title"><span>Viewing Experience Visualized for </span><span id="dropdown-overlay"></span></p>
+                <p class="chart-title"><span>Viewing Experience Visualized for </span><span id="dropdown-overlay" class="filter"></span></p>
                 <div class="contour-overlay-container">
                     <img id="imgContour" src="./assets/img/mehretuCropped.png">
                     <svg id="contour-overlay"></svg>

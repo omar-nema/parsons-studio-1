@@ -3,7 +3,6 @@ let data = [
   { path: './assets/data/jessie.json', label: 'Viewer 2' },
   { path: './assets/data/molly.json', label: 'Viewer 3' },
   { path: './assets/data/shea.json', label: 'Viewer 4' },
-  // { path: './assets/data/vira.json', label: 'vira' },
   { path: './assets/data/omar.json', label: 'Viewer 5' },
 ];
 let dataToFetch = data.filter((d) => d.path);

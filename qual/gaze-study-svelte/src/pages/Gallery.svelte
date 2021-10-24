@@ -1,5 +1,22 @@
 <script>
-  import Gallery from '../components/GalleryCard.svelte';
+  import GalleryCard from '../components/GalleryCard.svelte';
+
+  let imgData = [
+    {
+      path: 'mehretuCropped.png',
+      label: 'Local Calm',
+      artist: 'Julie Mehretu',
+      museumLink: 'blah',
+    },
+    {
+      path: 'mehretuCropped.png',
+      label: 'Local Calm',
+      artist: 'Julie Mehretu',
+      museumLink: 'blah',
+    },
+  ];
+
+  //artworkdata, create card for each
 </script>
 
 <h1>Gallery</h1>
@@ -8,4 +25,11 @@
   individuals viewed it.
 </p>
 
-<style></style>
+<div class="card-holder">
+  {#each imgData as img}
+    <GalleryCard data={img} />
+  {/each}
+</div>
+
+<style>
+</style>

@@ -7,15 +7,13 @@
   <div class="header-content">
     <div class="header-left">How We Gaze</div>
     <div class="header-right">
-      <div class="breadcrumb" class:active={$pageState === 'gallery'}>
-        Gallery
+      <div
+        class="breadcrumb"
+        class:active={$pageState === 'gallery' || $pageState === 'patterns'}
+      >
+        View
       </div>
-      <div class="breadcrumb" class:active={$pageState === 'patterns'}>
-        Patterns
-      </div>
-      <div class="breadcrumb" class:active={$pageState === 'analysis'}>
-        Analysis
-      </div>
+      <div class="breadcrumb" class:active={$pageState === 'record'}>Gaze</div>
     </div>
   </div>
 </header>

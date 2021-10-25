@@ -108,7 +108,7 @@
 </script>
 
 <svelte:head>
-  <script on:load={() => {gazerReady = true} }  src="/public/assets/webgazer.min.js" ></script>
+  <script on:load={() => {gazerReady = true} }  src="./assets/webgazer.min.js" ></script>
 </svelte:head>
 
 <header>

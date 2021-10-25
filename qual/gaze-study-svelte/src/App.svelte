@@ -44,11 +44,13 @@
     --bg-contrast: #585656;
     --bg-contrast-darker: #4b4747;
     --bg-contrast-darkest: #232020;
-    --content-width-pct: 88%;
-    --content-width-max: 1200px;
+    --content-width-pct: 92%;
+    --content-width-max: 1300px;
     --font-size-md: 22px;
     --font-size-lg: 26px;
     --header-ht: 50px;
+    --color-pos: #5df4c7;
+    --color-neg: #ff8f80;
   }
   :global(.clickable) {
     cursor: pointer;
@@ -70,6 +72,27 @@
   }
   :global(.font-lg) {
     font-size: 22px;
+  }
+  :global(.btn) {
+    cursor: pointer;
+    font-weight: 500;
+    text-align: center;
+    padding: 7px 12px;
+    border-radius: 5px;
+  }
+  :global(.btn.accent) {
+    background: #eef2b4;
+    color: black;
+  }
+  :global(header) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.btn:hover) {
+    transition: opacity 0.3s ease-in-out;
   }
 
   :global(.card) {

@@ -22,10 +22,6 @@
   header {
     background: black;
     height: var(--header-ht);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .header-content {
     max-width: var(--content-width-max);

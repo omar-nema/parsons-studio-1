@@ -22,7 +22,7 @@
 
 <style>
   .instr {
-    width: 90%;
+    width: 80%;
   }
   .explain {
     display: flex;

@@ -1,5 +1,6 @@
 <script>
   import { gazerArtRecording } from '../utils/gazerUtils';
+
   let imageInactive = true;
   setTimeout(() => {
     imageInactive = false;
@@ -14,7 +15,7 @@
   <div class="img-holder">
     <img
       id="artView"
-      src="/assets/img/mehretuCropped.png"
+      src="./assets/img/mehretuCropped.png"
       class:inactive={imageInactive == true}
     />
     <p class:inactive={imageInactive == false}>

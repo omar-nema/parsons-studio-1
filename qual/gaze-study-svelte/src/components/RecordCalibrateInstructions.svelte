@@ -12,11 +12,11 @@
 <div class="explain">
   <div>
     <p>Eyes on cursor at all times</p>
-    <img src="/assets/img/explain-eye.svg" />
+    <img src="./assets/img/explain-eye.svg" />
   </div>
   <div>
     <p>Move cursor to each red dot, and click on dot until it disappears</p>
-    <img src="/assets/img/explain-cursor.svg" />
+    <img src="./assets/img/explain-cursor.svg" />
   </div>
 </div>
 

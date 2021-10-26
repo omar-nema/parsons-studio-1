@@ -1,9 +1,11 @@
 import {
-  gazerInit,
+  loadingInd,
   gazerInitVideoDone,
   gazerRecordingTraining,
   calibrationPct,
   gazerRecordingArt,
+  stateIndex,
+  sessionID,
 } from '../stores/pageState';
 import { get } from 'svelte/store';
 
@@ -69,7 +71,7 @@ export async function gazerArtRecording() {
       xMax: bbox.right,
       yMin: bbox.top,
       yMax: bbox.bottom,
-      // series: runId,
+      sessionID: get(sessionID),
     };
 
     let gazerArray = get(gazerRecordingArt); //this is prob not good
@@ -77,11 +79,9 @@ export async function gazerArtRecording() {
     gazerRecordingArt.set(gazerArray);
   });
   setTimeout(() => {
-    ///
     webgazer.clearGazeListener();
     console.log(get(gazerRecordingArt));
-
-    //how we end that shit here
+    stateIndex.set(get(stateIndex) + 1);
   }, 4000);
 }
 
@@ -150,7 +150,8 @@ async function gazerLoadCheck() {
     document.querySelector('.container-body').append(vidContainer);
 
     setTimeout(() => {
-      gazerInit.set(true);
+      console.log('yea');
+      loadingInd.set(false);
     }, 1500);
   }
 }

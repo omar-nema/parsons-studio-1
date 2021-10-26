@@ -1,7 +1,4 @@
 <script>
-  //modules
-  import { getItem } from './stores/firebasedb';
-
   //stores
   import { pageState } from './stores/pageState';
 
@@ -79,7 +76,13 @@
     text-align: center;
     padding: 7px 12px;
     border-radius: 5px;
+    transition: opacity 0.2s ease-in-out;
   }
+
+  :global(.disabled-part) {
+    opacity: 0.2;
+  }
+
   :global(.btn.accent) {
     background: #eef2b4;
     color: black;

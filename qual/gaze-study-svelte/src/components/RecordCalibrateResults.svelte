@@ -57,7 +57,9 @@
       'svgContours/' + artworkId + '/contours/' + sessionId + '.svg',
       svgBlob
     );
+    console.log('made it ma');
     loadingInd.set(false);
+    console.log($loadingInd);
   }
 
   writeAllData();

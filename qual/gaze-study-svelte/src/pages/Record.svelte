@@ -34,6 +34,7 @@
       videoShown: false,
       btnLabel: 'Start!',
       disableBack: true,
+      showLoader: true
     },
     {
       sectionName: 'calibrate-vid',
@@ -72,7 +73,7 @@
       sectionName: 'results',
       videoShown: false,
       btnLabel: 'View Pattern',
-      disableNext: true,
+
       btnBackLabel: 'Back to Calibration',
       showLoader: true,
     },

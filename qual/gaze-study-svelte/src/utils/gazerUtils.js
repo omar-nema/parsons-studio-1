@@ -150,7 +150,6 @@ async function gazerLoadCheck() {
     document.querySelector('.container-body').append(vidContainer);
 
     setTimeout(() => {
-      console.log('yea');
       loadingInd.set(false);
     }, 1500);
   }

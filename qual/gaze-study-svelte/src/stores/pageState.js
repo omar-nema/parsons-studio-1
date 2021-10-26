@@ -16,4 +16,5 @@ export let stateIndex = writable(0);
 export let loadingInd = writable(true);
 
 export let artworkID = writable('mehretuUntitled');
-export let sessionID = readable(new Date().getTime());
+export let sessionID = readable(555);
+//new Date().getTime()

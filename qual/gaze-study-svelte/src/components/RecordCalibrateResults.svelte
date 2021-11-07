@@ -1,6 +1,5 @@
 <script>
   import { artworkMetadata } from '../stores/artworkMetadata';
-  import { generateContour } from '../utils/generateVisuals';
   import {
     gazerRecordingArt,
     artworkID,

@@ -18,7 +18,7 @@
   }
 
   onMount(() => {
-    updateScreenSize;
+    updateScreenSize();
   });
 
   window.onresize = function () {

@@ -7,10 +7,11 @@
   } from '../stores/pageState';
   import { dbGet } from '../utils/firebaseUtils.js';
   import { onMount } from 'svelte';
+  import { contourMapBlur } from '../utils/generateVisuals';
   export let data;
 
   let maxW = 1000,
-    maxH = 500;
+    maxH = $screenHeight * 0.85 - 200;
 
   onMount(() => {
     //get this bounding client rect
@@ -29,10 +30,24 @@
   }
 
   let sessions = data.sessionData;
+  let sessionsArray = Object.keys(sessions);
+  let currSessionIndex = 0;
+  let currSessionKey;
 
-  // Object.keys(sessions).forEach(async (d) => {
-  //   let sessionData = await dbGet('sessionData/' + d);
-  // });
+  function navigateKeys(chg) {
+    currSessionIndex = currSessionIndex + chg;
+  }
+
+  $: {
+    currSessionKey = sessionsArray[currSessionIndex];
+  }
+
+  $: (async () => {
+    let sessionData = await dbGet('sessionData/' + currSessionKey);
+    if (sessionData) {
+      contourMapBlur(sessionData);
+    }
+  })();
 
   function patternDrilldown() {
     selectedImage.set(data);
@@ -50,20 +65,45 @@
       </div>
       <div class="filter-options">
         <div class="filter selected">
-          <span class="material-icons-round md-18">chevron_left</span>
-          <span class="name">Pablo L.</span>
-          <span class="material-icons-round md-18">chevron_right</span>
+          <span
+            class:disabled={currSessionIndex == 0}
+            on:click={() => {
+              navigateKeys(-1);
+            }}
+            class="material-icons-round md-18 nav clickable">chevron_left</span
+          >
+          <span
+            class:disabled={currSessionIndex == sessionsArray.length - 1}
+            on:click={() => {
+              navigateKeys(1);
+            }}
+            class="material-icons-round md-18 nav clickable">chevron_right</span
+          >
+          <select class="clickable" bind:value={currSessionKey}>
+            {#each sessionsArray as session}
+              <option value={session}>{sessions[session].name}</option>
+            {/each}
+
+            <!-- <option value={b}>b</option>
+            <option value={c}>c</option> -->
+          </select>
+          <!-- <span class="name clickable">{sessions[currSessionKey].name}</span> -->
         </div>
-        <div class="filter">Add Gaze</div>
+        <div class="filter clickable">Add Gaze</div>
       </div>
     </div>
   </div>
   <div class="img-holder" style="width: {width}; height: {ht}">
-    <img src={data.url} style={styleSubstring} />
+    <svg style={styleSubstring} id="contour-overlay" />
+    <!-- <img src={data.url} style={styleSubstring} /> -->
   </div>
 </div>
 
 <style>
+  #contour-overlay {
+    background: black;
+  }
+
   p {
     margin-top: 10px;
     padding: 0;
@@ -86,7 +126,6 @@
   .card-outer {
     max-width: 1100px;
     width: 100%;
-    height: calc(100vh - 200px);
     background: var(--bg-contrast);
     padding: 30px 40px;
     margin: auto;
@@ -121,6 +160,13 @@
   .label {
     margin-right: 10px;
   }
+  select {
+    background: none;
+    border: none;
+    color: white;
+    padding: 0;
+    margin: 0;
+  }
   .filter {
     background: var(--bg-contrast-darker);
     padding: 0 10px;
@@ -134,11 +180,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px 15px;
+    padding: 5px 10px;
   }
   .name {
     padding: 0 10px;
     min-width: 100px;
     text-align: center;
+  }
+
+  .clickable:hover {
+    color: var(--color-accent);
+  }
+
+  .disabled {
+    opacity: 0.2;
+    pointer-events: none;
   }
 </style>

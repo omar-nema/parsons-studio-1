@@ -7,7 +7,7 @@
   <div class="header-content">
     <div class="header-left">How We Gaze</div>
     <div class="header-right">
-      <div
+      <!-- <div
         class="breadcrumb"
         class:active={$pageState === 'gallery' || $pageState === 'patterns'}
       >
@@ -15,7 +15,7 @@
       </div>
       <div class="btn clickable" class:active={$pageState === 'record'}>
         Back to Gallery
-      </div>
+      </div> -->
     </div>
   </div>
 </header>

@@ -7,6 +7,7 @@
     calibrationCutoff,
     stateIndex,
     loadingInd,
+    sessionID
   } from '../stores/pageState';
   import { slide, fade } from 'svelte/transition';
   import Overview from '../components/RecordOverview.svelte';
@@ -81,6 +82,9 @@
 
   afterUpdate(() => {
     mount = true;
+    if (!$sessionID){
+      sessionID.set(new Date().getTime());
+    }
   });
 
   function backClick() {
@@ -146,10 +150,7 @@
   <script on:load={() => {gazerReady = true} }  src="./assets/webgazer.min.js" ></script>
 </svelte:head>
 
-<header>
-  <h1>Share Your Gaze</h1>
-  <h3 class="clickable">Back to Gallery</h3>
-</header>
+
 
 <section class="experiment-container">
   <div class="container-header">
@@ -211,6 +212,7 @@
   .experiment-container {
     background: var(--bg-contrast);
     width: 100%;
+    margin-top: 30px;
   }
   .container-header,
   .container-footer,
@@ -218,7 +220,7 @@
     padding: 0 30px;
   }
   .container-body {
-    height: calc(100vh - 3 * var(--header-ht) - 150px);
+    height: calc(100vh - 3 * var(--header-ht) - 80px);
     padding: 0 30px;
     font-size: 18px;
     position: relative;

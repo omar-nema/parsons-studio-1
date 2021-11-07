@@ -1,12 +1,29 @@
 <script>
   //stores
-  import { pageState } from './stores/pageState';
+  import { pageState, screenWidth, screenHeight } from './stores/pageState';
+  import screenSize from './utils/screenSize';
+
+  //svelte
+  import { onMount } from 'svelte';
 
   //internal components
   import Gallery from './pages/Gallery.svelte';
   import Header from './components/Header.svelte';
   import Patterns from './pages/Patterns.svelte';
   import Record from './pages/Record.svelte';
+
+  function updateScreenSize() {
+    screenWidth.set(screenSize().windowW);
+    screenHeight.set(screenSize().windowH);
+  }
+
+  onMount(() => {
+    updateScreenSize;
+  });
+
+  window.onresize = function () {
+    updateScreenSize();
+  };
 </script>
 
 <main>
@@ -23,17 +40,21 @@
 </main>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap'); */
+
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+  @import url('https://fonts.googleapis.com/icon?family=Material+Icons+Round');
 
   :global(*) {
     box-sizing: border-box;
-    font-family: 'Lora';
+    font-family: 'DM Sans';
   }
   :global(body) {
     background: #423f3f;
     margin: 0;
     padding: 0;
     color: #efefef;
+    font-weight: 400;
   }
   :global(:root) {
     --color-accent: #cfd494;
@@ -68,7 +89,7 @@
     text-decoration-color: var(--color-accent);
   }
   :global(.font-lg) {
-    font-size: 22px;
+    font-size: 18px;
   }
   :global(.btn) {
     cursor: pointer;
@@ -92,33 +113,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 
   :global(.btn:hover) {
     transition: opacity 0.3s ease-in-out;
   }
 
-  :global(.card) {
-    width: 250px;
-    height: 250px;
-    background: #524d4d;
-    margin: 0 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   :global(img) {
     max-width: 100%;
-  }
-  :global(.card-outer) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  :global(.card-holder) {
-    display: flex;
-    flex-direction: row;
   }
 
   .container {

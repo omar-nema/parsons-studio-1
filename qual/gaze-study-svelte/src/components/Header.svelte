@@ -11,9 +11,11 @@
         class="breadcrumb"
         class:active={$pageState === 'gallery' || $pageState === 'patterns'}
       >
-        View
+        Navigate Artwork
       </div>
-      <div class="breadcrumb" class:active={$pageState === 'record'}>Gaze</div>
+      <div class="btn clickable" class:active={$pageState === 'record'}>
+        Back to Gallery
+      </div>
     </div>
   </div>
 </header>
@@ -28,6 +30,7 @@
     width: var(--content-width-pct);
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   .header-left {
     font-weight: 600;
@@ -40,9 +43,11 @@
     margin-left: 25px;
     color: var(--color-gray-faded);
     transition: color 0.3s linear;
+    display: none;
   }
   .breadcrumb.active {
     color: var(--color-accent);
     font-weight: 600;
+    display: block;
   }
 </style>

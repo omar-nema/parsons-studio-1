@@ -6,7 +6,9 @@ export let calibrationState = writable(null);
 export let gazerRecordingTraining = writable([]);
 export let gazerRecordingArt = writable([]);
 
+export let gazerInitDone = writable(false);
 export let gazerInitVideoDone = writable(false);
+
 export let calibrationPct = writable(null);
 export let calibrationCutoff = readable(10);
 export let stateIndex = writable(0);

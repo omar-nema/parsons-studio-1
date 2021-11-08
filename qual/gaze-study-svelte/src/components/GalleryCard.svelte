@@ -8,10 +8,13 @@
   import { dbGet } from '../utils/firebaseUtils.js';
   import { onMount } from 'svelte';
   import { contourMapBlur } from '../utils/generateVisuals';
+  import Slider from '@bulatdashiev/svelte-slider';
   export let data;
 
   let maxW = 1000,
     maxH = $screenHeight * 0.85 - 200;
+
+  let sliderRange = [0, 10, 20];
 
   onMount(() => {
     //get this bounding client rect
@@ -48,15 +51,11 @@
       contourMapBlur(sessionData);
     }
   })();
-
-  function patternDrilldown() {
-    selectedImage.set(data);
-    pageState.set('patterns');
-  }
 </script>
 
 <div class="card-outer">
   <h2>{data.artist}, <i>{data.title}</i></h2>
+  <!-- <Slider bind:value sliderRange /> -->
   <div class="card-filters">
     <div class="viewer-filter">
       <div class="label">
@@ -89,7 +88,15 @@
           </select>
           <!-- <span class="name clickable">{sessions[currSessionKey].name}</span> -->
         </div>
-        <div class="filter clickable">Add Gaze</div>
+        <div
+          class="filter clickable"
+          on:click={() => {
+            selectedImage.set(data);
+            pageState.set('record');
+          }}
+        >
+          Add Gaze
+        </div>
       </div>
     </div>
   </div>
@@ -166,6 +173,9 @@
     color: white;
     padding: 0;
     margin: 0;
+    width: 130px;
+    text-align: center;
+    text-transform: capitalize;
   }
   .filter {
     background: var(--bg-contrast-darker);
@@ -180,8 +190,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px 10px;
+    padding: 5px 15px;
   }
+
   .name {
     padding: 0 10px;
     min-width: 100px;

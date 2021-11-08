@@ -1,6 +1,7 @@
 <script>
   import GalleryCard from '../components/GalleryCard.svelte';
   import { dbGet } from '../utils/firebaseUtils.js';
+  import { slide, fade } from 'svelte/transition';
 
   //load the works in real time
 
@@ -23,7 +24,7 @@
   individuals viewed it.
 </p> -->
 
-<div class="card-holder">
+<div class="card-holder" transition:fade>
   {#each works as img}
     <GalleryCard data={img} />
   {/each}

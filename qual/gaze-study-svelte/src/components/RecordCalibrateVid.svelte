@@ -1,21 +1,39 @@
 <script>
   import { gazerInitVideo } from '../utils/gazerUtils';
   import { onMount } from 'svelte';
-  import { gazerInitVideoDone } from '../stores/pageState';
+  import {
+    gazerInitVideoDone,
+    gazerInitDone,
+    calibrationPct,
+  } from '../stores/pageState';
 
-  onMount(() => {
-    setTimeout(() => {
-      gazerInitVideo();
-    }, 100);
-  });
+  export let calibrated;
+
+  $: {
+    if ($gazerInitDone) {
+      console.log('yea baby');
+      setTimeout(() => {
+        gazerInitVideo();
+      }, 200);
+    }
+  }
 </script>
 
-<h3>Calibrate: Video</h3>
-<p class="inst">
-  We’ll need to first calibrate your webcam in order to proceed. Ensure that
-  your are in a well-lit environment, and that your face is in the green section
-  of the screen below.
-</p>
+{#if calibrated == true}
+  <h3>Existing Calibration Loaded</h3>
+  <p class="inst">
+    Your webcam was already calibrated with an accuracy rate of {$calibrationPct}%.
+    Please ensure your face is centered below, and click to proceed and view
+    art!
+  </p>
+{:else if calibrated == false}
+  <h3>Calibrate: Video</h3>
+  <p class="inst">
+    We’ll need to first calibrate your webcam in order to proceed. Ensure that
+    your are in a well-lit environment, and that your face is in the green
+    section of the screen below.
+  </p>
+{/if}
 
 {#if !$gazerInitVideoDone}
   <div class="video-wrapper">
@@ -36,8 +54,6 @@
     justify-content: center;
     background: #585656ad;
     pointer-events: none;
-  }
-  .inst {
-    width: 80%;
+    z-index: 1;
   }
 </style>

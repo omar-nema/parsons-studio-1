@@ -2,7 +2,7 @@
   import { slide, fade } from 'svelte/transition';
 </script>
 
-<h3>Overview</h3>
+<h3>Record Your Gaze: Overview</h3>
 <p>
   In order to generate a visualization of your viewing session, we’ll ask you to
   study a piece of artwork for 15 seconds with your webcam turned on.

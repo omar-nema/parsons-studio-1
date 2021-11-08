@@ -1,5 +1,5 @@
 import {
-  loadingInd,
+  gazerInitDone,
   gazerInitVideoDone,
   gazerRecordingTraining,
   calibrationPct,
@@ -8,6 +8,7 @@ import {
   sessionID,
 } from '../stores/pageState';
 import { get } from 'svelte/store';
+import * as localforage from 'localforage';
 
 export function gazerMoveVideo(pos) {
   let vidContainer = document.querySelector('#webgazerVideoContainer');
@@ -31,16 +32,34 @@ export function gazerMoveVideo(pos) {
 }
 
 export async function gazerInitVideo() {
+  console.log('gazer video init');
   await webgazer.resume();
   gazerHideCalDot();
   gazerPauseTraining();
   gazerInitVideoDone.set(true);
+  console.log('video done init');
 }
-
 export function gazerInitialize() {
+  console.log('gazer first init');
   webgazer.showVideo(false);
   webgazer.begin();
   gazerLoadCheck();
+}
+async function gazerLoadCheck() {
+  if (!webgazer.isReady()) {
+    await setTimeout(gazerLoadCheck, 100);
+  } else {
+    console.log('gazer fully loaded');
+    webgazer.pause();
+    webgazer.setVideoViewerSize(300, 300);
+    let vidContainer = document.querySelector('#webgazerVideoContainer');
+    document.querySelector('.container-body').append(vidContainer);
+    gazerInitDone.set(true);
+
+    setTimeout(() => {
+      console.log('removing load ind');
+    }, 1500);
+  }
 }
 
 export function gazerHideCalDot() {
@@ -121,6 +140,7 @@ function calculateAccuracy() {
           .width /
           2));
   console.log(pct);
+  localforage.setItem('calibrationPct', Math.round(pct));
   calibrationPct.set(Math.round(pct));
   return;
 }
@@ -137,20 +157,4 @@ export async function gazerTrain() {
 
 export function gazerPauseTraining() {
   webgazer.removeMouseEventListeners();
-}
-
-async function gazerLoadCheck() {
-  if (!webgazer.isReady()) {
-    await setTimeout(gazerLoadCheck, 100);
-  } else {
-    console.log('gazer fully loaded');
-    webgazer.pause();
-    webgazer.setVideoViewerSize(300, 300);
-    let vidContainer = document.querySelector('#webgazerVideoContainer');
-    document.querySelector('.container-body').append(vidContainer);
-
-    setTimeout(() => {
-      loadingInd.set(false);
-    }, 1500);
-  }
 }

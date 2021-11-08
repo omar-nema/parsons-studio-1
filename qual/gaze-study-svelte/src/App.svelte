@@ -31,8 +31,6 @@
   <div class="container">
     {#if $pageState == 'gallery'}
       <Gallery />
-    {:else if $pageState == 'patterns'}
-      <Patterns />
     {:else if $pageState == 'record'}
       <Record />
     {/if}
@@ -55,6 +53,7 @@
     padding: 0;
     color: #efefef;
     font-weight: 400;
+    height: auto;
   }
   :global(:root) {
     --color-accent: #cfd494;

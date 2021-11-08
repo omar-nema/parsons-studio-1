@@ -7,7 +7,8 @@
     calibrationCutoff,
     stateIndex,
     loadingInd,
-    sessionID
+    sessionID,
+gazerInitDone
   } from '../stores/pageState';
   import { slide, fade } from 'svelte/transition';
   import Overview from '../components/RecordOverview.svelte';
@@ -24,27 +25,37 @@
     gazerRestartCalibration,
   } from '../utils/gazerUtils.js';
   import { time_ranges_to_array } from 'svelte/internal';
+  import * as localforage from 'localforage';
+  ////
 
-  let gazerReady, mount; //webgazer library loaded
-  let disableBack = false,
-    disableNext = false;
 
-  let sections = [
+  //reactively update loading indicator for sections
+  //NOT reactively updating
+  $: {
+    console.log('updating loaders')
+    $gazerInitVideoDone, $gazerInitDone;
+    sectionsNotCalibrated[0].loadingVar = $gazerInitDone;
+    sectionsNotCalibrated[1].loadingVar = $gazerInitVideoDone;    
+    sectionsCalibrated[0].loadingVar = $gazerInitVideoDone;
+  }
+
+  let sectionsNotCalibrated = [
     {
       sectionName: 'overview',
       videoShown: false,
       btnLabel: 'Start!',
       disableBack: true,
-      showLoader: true
+      showLoader: true,
     },
     {
       sectionName: 'calibrate-vid',
       videoShown: true,
       videoPos: 'middle',
       disableBack: false,
-      disableNext: true,
+      disableNext: false,
       btnBackLabel: 'Back to Overview',
       btnLabel: 'Got It - Face is Aligned',
+      showLoader: true
     },
     {
       sectionName: 'calibrate-instructions',
@@ -79,6 +90,48 @@
       showLoader: true,
     },
   ];
+  //change from index
+  let sectionsCalibrated = [
+    {
+      sectionName: 'calibrate-vid',
+      videoShown: true,
+      videoPos: 'middle',
+      disableBack: true,
+      disableNext: false,
+      btnBackLabel: 'Back to Overview',
+      btnLabel: 'Got It - Face is Aligned',
+      showLoader: true
+    },
+    sectionsNotCalibrated[4],    
+    sectionsNotCalibrated[5],
+  ]
+  //prob shouldn't do this
+  let sections = sectionsNotCalibrated;
+
+  let calibrated = false;
+  async function checkExistingCalibration(){
+    let gazerData = await localforage.getItem('webgazerGlobalData');
+    let calPct =  await localforage.getItem('calibrationPct');
+    calibrationPct.set(calPct);
+    console.log(gazerData, calibrationPct)
+    if (gazerData.length > 20 && calPct > $calibrationCutoff){
+      sections = sectionsCalibrated;
+      calibrated = true;
+    } else {
+      sections = sectionsNotCalibrated;
+    }
+    //should store the date of calibration
+  }
+  function recalibrate(){
+    calibrated = false;
+    sections = sectionsNotCalibrated;
+    calibrationPct.set(null);
+    //webgazer.clearData();
+  }
+
+  let gazerReady, mount; //webgazer library loaded
+  let disableBack = false,
+    disableNext = false;
 
   afterUpdate(() => {
     mount = true;
@@ -87,25 +140,28 @@
     }
   });
 
+  checkExistingCalibration()   //this should happen and return before anything else loads
+
+  
   function backClick() {
     if (sections[$stateIndex] == 'calibrate-exercise') {
       gazerRestartCalibration();
     }
     $stateIndex--;
   }
-
   $: {
     if (mount && gazerReady) {
       gazerInitialize();
     }
   }
 
-  //anytime page substate changes
+  //anytime page substate changes --- FIX THIS
   let gazeActive, gazeRecording;
   $: {
-    let currSection = sections[$stateIndex];
+    $gazerInitVideoDone;
+      let currSection = sections[$stateIndex];
     if (mount && gazerReady) {
-      if (currSection.videoShown == true) {
+      if (currSection.videoShown == true && $gazerInitDone) {
         webgazer.showVideo(true);
         gazerMoveVideo(currSection.videoPos);
       } else {
@@ -117,22 +173,22 @@
         disableBack = false;
       }
 
-      if (currSection.showLoader == true) {
+      console.log(currSection.showLoader, currSection.loadingVar)
+      if (currSection.showLoader == true && !currSection.loadingVar ) {
         loadingInd.set(true);
       } else {
         loadingInd.set(false);
       }
-
       if (currSection.disableNext) {
         disableNext = true;
       } else {
         disableNext = false;
       }
     }
+   
+ 
   }
-
-  //detect if going back
-
+  //detect if going back BAD BAD BAD code
   $: {
     if ($gazerInitVideoDone) {
       disableNext = false;
@@ -151,11 +207,10 @@
 </svelte:head>
 
 
-
 <section class="experiment-container">
   <div class="container-header">
     <div class="current-selection">
-      <!-- Selected Work:<span class="selection-holder">{$selectedImage.label}</span> -->
+      Selected Work:<span class="selection-holder">{$selectedImage.title} by {$selectedImage.artist}</span>
     </div>
     <div class="nav-ind">
       {#each sections as section}
@@ -163,11 +218,11 @@
       {/each}
     </div>
   </div>
-  <div class="container-body">
+  <div class="container-body" transition:fade>
     {#if sections[$stateIndex].sectionName == 'overview'}
       <Overview />
     {:else if sections[$stateIndex].sectionName == 'calibrate-vid'}
-      <CalibrateVid />
+      <CalibrateVid calibrated={calibrated} />
     {:else if sections[$stateIndex].sectionName == 'calibrate-instructions'}
       <CalibrateInstructions />
     {:else if sections[$stateIndex].sectionName == 'calibrate-exercise'}
@@ -179,6 +234,13 @@
     {/if}
   </div>
   <div class="container-footer">
+   
+    <div class="btn re-cal"
+    class:disabled={calibrated == false}
+    on:click={recalibrate}
+    >
+      Re-Calibrate
+    </div>
     <div
       class="btn-prev btn disabled"
       class:accent={$calibrationPct && $calibrationPct < 70}
@@ -212,7 +274,7 @@
   .experiment-container {
     background: var(--bg-contrast);
     width: 100%;
-    margin-top: 30px;
+    margin-top: 80px;
   }
   .container-header,
   .container-footer,
@@ -244,7 +306,6 @@
     background: var(--bg-contrast);
     padding: 5px 10px;
     margin-left: 10px;
-    width: 150px;
     display: inline-flex;
   }
   #vid-holder {
@@ -266,14 +327,16 @@
     animation: glowing 5000ms infinite;
     pointer-events: none;
   }
-  .btn-prev.disabled {
+  .btn.disabled  {
     opacity: 0;
     pointer-events: none;
   }
+ 
   .btn-next.disabled {
     opacity: 0.2;
     pointer-events: none;
   }
+
 
   @keyframes glowing {
     0% {

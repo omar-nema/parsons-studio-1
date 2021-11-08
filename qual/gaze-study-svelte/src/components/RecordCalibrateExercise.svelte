@@ -11,13 +11,13 @@
 
   let calibrationPoints = [
     { top: '4%', right: '4%', numClicks: 0 },
-    // { top: '50%', right: '4%', numClicks: 0 },
-    // { top: '96%', right: '4%', numClicks: 0 },
-    // { top: '4%', right: 'calc(100% - 400px)', numClicks: 0 },
-    // { top: '50%', right: '96%', numClicks: 0 },
-    // { top: '96%', right: '96%', numClicks: 0 },
-    // { top: '4%', right: '50%', numClicks: 0 },
-    // { top: '96%', right: '50%', numClicks: 0 },
+    { top: '50%', right: '4%', numClicks: 0 },
+    { top: '96%', right: '4%', numClicks: 0 },
+    { top: '4%', right: 'calc(100% - 400px)', numClicks: 0 },
+    { top: '50%', right: '96%', numClicks: 0 },
+    { top: '96%', right: '96%', numClicks: 0 },
+    { top: '4%', right: '50%', numClicks: 0 },
+    { top: '96%', right: '50%', numClicks: 0 },
     // { top: '50%', right: '50%', numClicks: 0 },
   ];
 

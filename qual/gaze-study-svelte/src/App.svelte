@@ -68,6 +68,7 @@
     --header-ht: 50px;
     --color-pos: #5df4c7;
     --color-neg: #ff8f80;
+    --color-accent-sec: #20c6ec;
   }
   :global(.clickable) {
     cursor: pointer;

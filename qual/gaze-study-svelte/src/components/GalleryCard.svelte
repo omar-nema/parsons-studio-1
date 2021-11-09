@@ -8,13 +8,11 @@
   import { dbGet } from '../utils/firebaseUtils.js';
   import { onMount } from 'svelte';
   import { contourMapBlur } from '../utils/generateVisuals';
-  import Slider from '@bulatdashiev/svelte-slider';
+
   export let data;
 
   let maxW = 1000,
     maxH = $screenHeight * 0.85 - 200;
-
-  let sliderRange = [0, 10, 20];
 
   onMount(() => {
     //get this bounding client rect
@@ -57,7 +55,7 @@
   <h2>{data.artist}, <i>{data.title}</i></h2>
   <!-- <Slider bind:value sliderRange /> -->
   <div class="card-filters">
-    <div class="viewer-filter">
+    <div class="viewer-filter  filter-group">
       <div class="label">
         <span class="material-icons-round md-14">people</span>
         <span>Viewer</span>
@@ -99,6 +97,30 @@
         </div>
       </div>
     </div>
+
+    <div class="visual-filter filter-group">
+      <div class="label">
+        <span class="material-icons-round md-14">layers</span>
+        <span>Visual</span>
+      </div>
+      <div class="filter-options">
+        <div class="filter selected time">
+          <span class="material-icons-round md-14 clickable">play_arrow</span>
+          <!-- <span class="material-icons-round md-14 clickable">pause</span> -->
+          <span id="slider-holder">
+            <input
+              type="range"
+              id="slider"
+              name="slider"
+              min="0"
+              max="150"
+              step="1"
+            />
+          </span>
+        </div>
+        <div class="filter clickable">Aggregate</div>
+      </div>
+    </div>
   </div>
   <div class="img-holder" style="width: {width}; height: {ht}">
     <svg style={styleSubstring} id="contour-overlay" />
@@ -109,6 +131,10 @@
 <style>
   #contour-overlay {
     background: black;
+  }
+  .card-filters {
+    display: flex;
+    align-items: center;
   }
 
   p {
@@ -129,6 +155,9 @@
     margin-right: 10px;
     font-size: 14px;
   }
+  .material-icons-round {
+    font-size: 18px;
+  }
 
   .card-outer {
     max-width: 1100px;
@@ -147,7 +176,7 @@
     justify-content: center;
   }
 
-  .viewer-filter {
+  .filter-group {
     min-width: 300px;
     width: 50%;
     margin-bottom: 30px;
@@ -155,7 +184,7 @@
     padding: 10px 0;
   }
 
-  .viewer-filter,
+  .filter-group,
   .filter-options {
     display: flex;
     flex-direction: row;
@@ -190,7 +219,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px 15px;
+    padding: 10px 15px;
   }
 
   .name {
@@ -206,5 +235,59 @@
   .disabled {
     opacity: 0.2;
     pointer-events: none;
+  }
+
+  input {
+    margin: 0;
+    padding: 0;
+  }
+
+  #slider-holder {
+    display: flex;
+    margin-left: 15px;
+    align-items: center;
+  }
+
+  .filter.time span {
+    margin: 0 4px;
+  }
+  input[type='range'] {
+    -webkit-appearance: none !important;
+    height: 7px;
+    border: none;
+    border-radius: 0;
+    background: var(--bg-contrast);
+  }
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    background: white;
+    border-radius: 100%;
+    border: none;
+    box-shadow: none;
+    height: 15px;
+    width: 15px;
+    cursor: pointer !important;
+    transition: opacity 0.1s linear;
+  }
+  input[type='range']::-moz-range-thumb {
+    -webkit-appearance: none !important;
+    background: white;
+    border-radius: 100%;
+    border: none;
+    box-shadow: none;
+    height: 15px;
+    width: 15px;
+    cursor: pointer !important;
+    transition: opacity 0.1s linear;
+  }
+  input[type='range']::-moz-range-thumb:hover {
+    opacity: 0.9;
+  }
+
+  input[type='range']::-webkit-slider-thumb:hover {
+    opacity: 0.9;
+  }
+  input[type='range']:focus {
+    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
   }
 </style>

@@ -1,6 +1,6 @@
 <script>
   import { pageState } from '../stores/pageState';
-  import { slide } from 'svelte/transition';
+  import { slide, fade } from 'svelte/transition';
 </script>
 
 <header>
@@ -20,12 +20,14 @@
     </div>
     <div class="header-right">
       <div
+        transition:fade
         class="btn clickable  btn-about"
         class:active={$pageState === 'gallery'}
       >
         About
       </div>
       <div
+        transition:fade
         class="btn clickable"
         on:click={() => {
           pageState.set('gallery');
@@ -44,6 +46,7 @@
   header {
     background: black;
     height: var(--header-ht);
+    font-weight: 500;
   }
   .header-content {
     max-width: var(--content-width-max);
@@ -52,16 +55,15 @@
     justify-content: space-between;
     align-items: center;
   }
-  .header-left {
-    font-weight: 400;
-  }
+
   .header-right {
     display: flex;
-    font-weight: 400;
   }
-  .divider,
-  .header-sub {
+  .divider {
     color: var(--color-gray-faded);
+  }
+  .header-sub {
+    color: var(--color-accent-sec);
   }
   .header-sub.active {
     opacity: 1;
@@ -79,7 +81,9 @@
   }
 
   .btn-about {
-    text-decoration: underline;
+    border-radius: 0;
+    padding: 5px 10px;
+    background: #393737;
   }
   .btn.active {
     color: var(--color-accent);

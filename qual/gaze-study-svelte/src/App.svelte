@@ -1,6 +1,6 @@
 <script>
   //stores
-  import { pageState, screenWidth, screenHeight } from './stores/pageState';
+  import { pageState, screenWidth, screenHeight, gazerReady } from './stores/pageState';
   import screenSize from './utils/screenSize';
 
   //svelte
@@ -36,6 +36,10 @@
     {/if}
   </div>
 </main>
+
+<svelte:head>
+  <script on:load={() => {gazerReady.set(true)} }  src="./assets/webgazer.min.js" ></script>
+</svelte:head>
 
 <style>
   /* @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap'); */

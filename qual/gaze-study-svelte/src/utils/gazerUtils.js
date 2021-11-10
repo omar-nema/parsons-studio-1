@@ -31,6 +31,21 @@ export function gazerMoveVideo(pos) {
   }
 }
 
+export function hideGazerForLater() {
+  webgazer.pause();
+  webgazer.showVideo(false);
+  let vidContainer = document.querySelector('#webgazerVideoContainer');
+  document.querySelector('body').append(vidContainer);
+}
+
+export async function gazerResume() {
+  let vidContainer = document.querySelector('#webgazerVideoContainer');
+  document.querySelector('.container-body').append(vidContainer);
+  await webgazer.resume();
+  gazerHideCalDot();
+  gazerPauseTraining();
+}
+
 export async function gazerInitVideo() {
   console.log('gazer video init');
   await webgazer.resume();
@@ -39,6 +54,7 @@ export async function gazerInitVideo() {
   gazerInitVideoDone.set(true);
   console.log('video done init');
 }
+
 export function gazerInitialize() {
   console.log('gazer first init');
   webgazer.showVideo(false);

@@ -167,6 +167,9 @@ var app = (function () {
         else if (node.getAttribute(attribute) !== value)
             node.setAttribute(attribute, value);
     }
+    function to_number(value) {
+        return value === '' ? null : +value;
+    }
     function time_ranges_to_array(ranges) {
         const array = [];
         for (let i = 0; i < ranges.length; i += 1) {
@@ -278,9 +281,6 @@ var app = (function () {
     }
     function onMount(fn) {
         get_current_component().$$.on_mount.push(fn);
-    }
-    function afterUpdate(fn) {
-        get_current_component().$$.after_update.push(fn);
     }
 
     const dirty_components = [];
@@ -779,7 +779,11 @@ var app = (function () {
     let gazerRecordingTraining = writable([]);
     let gazerRecordingArt = writable([]);
 
+    //just the library loaded
+    let gazerReady = writable(false);
+    //gazer initialized but video feed not set
     let gazerInitDone = writable(false);
+    //video feed fully loaded
     let gazerInitVideoDone = writable(false);
 
     let calibrationPct = writable(null);
@@ -22352,23 +22356,23 @@ var app = (function () {
 
     function get_each_context$3(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[16] = list[i];
+    	child_ctx[19] = list[i];
     	return child_ctx;
     }
 
-    // (80:12) {#each sessionsArray as session}
+    // (76:12) {#each sessionsArray as session}
     function create_each_block$3(ctx) {
     	let option;
-    	let t_value = /*sessions*/ ctx[6][/*session*/ ctx[16]].name + "";
+    	let t_value = /*sessions*/ ctx[7][/*session*/ ctx[19]].name + "";
     	let t;
 
     	const block = {
     		c: function create() {
     			option = element("option");
     			t = text(t_value);
-    			option.__value = /*session*/ ctx[16];
+    			option.__value = /*session*/ ctx[19];
     			option.value = option.__value;
-    			add_location(option, file$b, 80, 14, 2270);
+    			add_location(option, file$b, 76, 14, 2276);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
@@ -22384,7 +22388,7 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(80:12) {#each sessionsArray as session}",
+    		source: "(76:12) {#each sessionsArray as session}",
     		ctx
     	});
 
@@ -22437,7 +22441,7 @@ var app = (function () {
     	let svg;
     	let mounted;
     	let dispose;
-    	let each_value = /*sessionsArray*/ ctx[7];
+    	let each_value = /*sessionsArray*/ ctx[8];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -22502,70 +22506,70 @@ var app = (function () {
     			t23 = space();
     			div11 = element("div");
     			svg = svg_element("svg");
-    			attr_dev(i, "class", "svelte-xea03q");
-    			add_location(i, file$b, 54, 21, 1277);
-    			attr_dev(h2, "class", "svelte-xea03q");
-    			add_location(h2, file$b, 54, 2, 1258);
-    			attr_dev(span0, "class", "material-icons-round md-14 svelte-xea03q");
-    			add_location(span0, file$b, 59, 8, 1461);
-    			add_location(span1, file$b, 60, 8, 1525);
-    			attr_dev(div0, "class", "label svelte-xea03q");
-    			add_location(div0, file$b, 58, 6, 1432);
-    			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-xea03q");
+    			attr_dev(i, "class", "svelte-1ehkgrr");
+    			add_location(i, file$b, 51, 21, 1329);
+    			attr_dev(h2, "class", "svelte-1ehkgrr");
+    			add_location(h2, file$b, 51, 2, 1310);
+    			attr_dev(span0, "class", "material-icons-round md-14 svelte-1ehkgrr");
+    			add_location(span0, file$b, 55, 8, 1467);
+    			add_location(span1, file$b, 56, 8, 1531);
+    			attr_dev(div0, "class", "label svelte-1ehkgrr");
+    			add_location(div0, file$b, 54, 6, 1438);
+    			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-1ehkgrr");
     			toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[1] == 0);
-    			add_location(span2, file$b, 64, 10, 1645);
-    			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-xea03q");
-    			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[1] == /*sessionsArray*/ ctx[7].length - 1);
-    			add_location(span3, file$b, 71, 10, 1888);
-    			attr_dev(select, "class", "clickable svelte-xea03q");
-    			if (/*currSessionKey*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[11].call(select));
-    			add_location(select, file$b, 78, 10, 2154);
-    			attr_dev(div1, "class", "filter selected svelte-xea03q");
-    			add_location(div1, file$b, 63, 8, 1604);
-    			attr_dev(div2, "class", "filter clickable svelte-xea03q");
-    			add_location(div2, file$b, 88, 8, 2578);
-    			attr_dev(div3, "class", "filter-options svelte-xea03q");
-    			add_location(div3, file$b, 62, 6, 1566);
-    			attr_dev(div4, "class", "viewer-filter filter-group svelte-xea03q");
-    			add_location(div4, file$b, 57, 4, 1383);
-    			attr_dev(span4, "class", "material-icons-round md-14 svelte-xea03q");
-    			add_location(span4, file$b, 102, 8, 2895);
-    			add_location(span5, file$b, 103, 8, 2959);
-    			attr_dev(div5, "class", "label svelte-xea03q");
-    			add_location(div5, file$b, 101, 6, 2866);
-    			attr_dev(span6, "class", "material-icons-round md-14 clickable svelte-xea03q");
-    			add_location(span6, file$b, 107, 10, 3084);
+    			add_location(span2, file$b, 60, 10, 1651);
+    			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-1ehkgrr");
+    			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[1] == /*sessionsArray*/ ctx[8].length - 1);
+    			add_location(span3, file$b, 67, 10, 1894);
+    			attr_dev(select, "class", "clickable svelte-1ehkgrr");
+    			if (/*currSessionKey*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[12].call(select));
+    			add_location(select, file$b, 74, 10, 2160);
+    			attr_dev(div1, "class", "filter selected svelte-1ehkgrr");
+    			add_location(div1, file$b, 59, 8, 1610);
+    			attr_dev(div2, "class", "filter clickable svelte-1ehkgrr");
+    			add_location(div2, file$b, 80, 8, 2401);
+    			attr_dev(div3, "class", "filter-options svelte-1ehkgrr");
+    			add_location(div3, file$b, 58, 6, 1572);
+    			attr_dev(div4, "class", "viewer-filter filter-group svelte-1ehkgrr");
+    			add_location(div4, file$b, 53, 4, 1389);
+    			attr_dev(span4, "class", "material-icons-round md-14 svelte-1ehkgrr");
+    			add_location(span4, file$b, 94, 8, 2718);
+    			add_location(span5, file$b, 95, 8, 2782);
+    			attr_dev(div5, "class", "label svelte-1ehkgrr");
+    			add_location(div5, file$b, 93, 6, 2689);
+    			attr_dev(span6, "class", "material-icons-round md-14 clickable svelte-1ehkgrr");
+    			add_location(span6, file$b, 99, 10, 2907);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "id", "slider");
     			attr_dev(input, "name", "slider");
     			attr_dev(input, "min", "0");
     			attr_dev(input, "max", "150");
     			attr_dev(input, "step", "1");
-    			attr_dev(input, "class", "svelte-xea03q");
-    			add_location(input, file$b, 110, 12, 3287);
+    			attr_dev(input, "class", "svelte-1ehkgrr");
+    			add_location(input, file$b, 102, 12, 3110);
     			attr_dev(span7, "id", "slider-holder");
-    			attr_dev(span7, "class", "svelte-xea03q");
-    			add_location(span7, file$b, 109, 10, 3248);
-    			attr_dev(div6, "class", "filter selected time svelte-xea03q");
-    			add_location(div6, file$b, 106, 8, 3038);
-    			attr_dev(div7, "class", "filter clickable svelte-xea03q");
-    			add_location(div7, file$b, 120, 8, 3510);
-    			attr_dev(div8, "class", "filter-options svelte-xea03q");
-    			add_location(div8, file$b, 105, 6, 3000);
-    			attr_dev(div9, "class", "visual-filter filter-group svelte-xea03q");
-    			add_location(div9, file$b, 100, 4, 2818);
-    			attr_dev(div10, "class", "card-filters svelte-xea03q");
-    			add_location(div10, file$b, 56, 2, 1351);
-    			attr_dev(svg, "style", /*styleSubstring*/ ctx[5]);
+    			attr_dev(span7, "class", "svelte-1ehkgrr");
+    			add_location(span7, file$b, 101, 10, 3071);
+    			attr_dev(div6, "class", "filter selected time svelte-1ehkgrr");
+    			add_location(div6, file$b, 98, 8, 2861);
+    			attr_dev(div7, "class", "filter clickable svelte-1ehkgrr");
+    			add_location(div7, file$b, 113, 8, 3371);
+    			attr_dev(div8, "class", "filter-options svelte-1ehkgrr");
+    			add_location(div8, file$b, 97, 6, 2823);
+    			attr_dev(div9, "class", "visual-filter filter-group svelte-1ehkgrr");
+    			add_location(div9, file$b, 92, 4, 2641);
+    			attr_dev(div10, "class", "card-filters svelte-1ehkgrr");
+    			add_location(div10, file$b, 52, 2, 1357);
+    			attr_dev(svg, "style", /*styleSubstring*/ ctx[6]);
     			attr_dev(svg, "id", "contour-overlay");
-    			attr_dev(svg, "class", "svelte-xea03q");
-    			add_location(svg, file$b, 125, 4, 3662);
-    			attr_dev(div11, "class", "img-holder svelte-xea03q");
-    			set_style(div11, "width", /*width*/ ctx[3]);
-    			set_style(div11, "height", /*ht*/ ctx[4]);
-    			add_location(div11, file$b, 124, 2, 3595);
-    			attr_dev(div12, "class", "card-outer svelte-xea03q");
-    			add_location(div12, file$b, 53, 0, 1230);
+    			attr_dev(svg, "class", "svelte-1ehkgrr");
+    			add_location(svg, file$b, 118, 4, 3523);
+    			attr_dev(div11, "class", "img-holder svelte-1ehkgrr");
+    			set_style(div11, "width", /*width*/ ctx[4]);
+    			set_style(div11, "height", /*ht*/ ctx[5]);
+    			add_location(div11, file$b, 117, 2, 3456);
+    			attr_dev(div12, "class", "card-outer svelte-1ehkgrr");
+    			add_location(div12, file$b, 50, 0, 1282);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -22613,6 +22617,7 @@ var app = (function () {
     			append_dev(div6, t20);
     			append_dev(div6, span7);
     			append_dev(span7, input);
+    			set_input_value(input, /*sliderVal*/ ctx[3]);
     			append_dev(div8, t21);
     			append_dev(div8, div7);
     			append_dev(div12, t23);
@@ -22621,10 +22626,12 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(span2, "click", /*click_handler*/ ctx[9], false, false, false),
-    					listen_dev(span3, "click", /*click_handler_1*/ ctx[10], false, false, false),
-    					listen_dev(select, "change", /*select_change_handler*/ ctx[11]),
-    					listen_dev(div2, "click", /*click_handler_2*/ ctx[12], false, false, false)
+    					listen_dev(span2, "click", /*click_handler*/ ctx[10], false, false, false),
+    					listen_dev(span3, "click", /*click_handler_1*/ ctx[11], false, false, false),
+    					listen_dev(select, "change", /*select_change_handler*/ ctx[12]),
+    					listen_dev(div2, "click", /*click_handler_2*/ ctx[13], false, false, false),
+    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[14]),
+    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[14])
     				];
 
     				mounted = true;
@@ -22638,12 +22645,12 @@ var app = (function () {
     				toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[1] == 0);
     			}
 
-    			if (dirty & /*currSessionIndex, sessionsArray*/ 130) {
-    				toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[1] == /*sessionsArray*/ ctx[7].length - 1);
+    			if (dirty & /*currSessionIndex, sessionsArray*/ 258) {
+    				toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[1] == /*sessionsArray*/ ctx[8].length - 1);
     			}
 
-    			if (dirty & /*sessionsArray, sessions*/ 192) {
-    				each_value = /*sessionsArray*/ ctx[7];
+    			if (dirty & /*sessionsArray, sessions*/ 384) {
+    				each_value = /*sessionsArray*/ ctx[8];
     				validate_each_argument(each_value);
     				let i;
 
@@ -22666,20 +22673,24 @@ var app = (function () {
     				each_blocks.length = each_value.length;
     			}
 
-    			if (dirty & /*currSessionKey, sessionsArray*/ 132) {
+    			if (dirty & /*currSessionKey, sessionsArray*/ 260) {
     				select_option(select, /*currSessionKey*/ ctx[2]);
     			}
 
-    			if (dirty & /*styleSubstring*/ 32) {
-    				attr_dev(svg, "style", /*styleSubstring*/ ctx[5]);
+    			if (dirty & /*sliderVal*/ 8) {
+    				set_input_value(input, /*sliderVal*/ ctx[3]);
     			}
 
-    			if (dirty & /*width*/ 8) {
-    				set_style(div11, "width", /*width*/ ctx[3]);
+    			if (dirty & /*styleSubstring*/ 64) {
+    				attr_dev(svg, "style", /*styleSubstring*/ ctx[6]);
     			}
 
-    			if (dirty & /*ht*/ 16) {
-    				set_style(div11, "height", /*ht*/ ctx[4]);
+    			if (dirty & /*width*/ 16) {
+    				set_style(div11, "width", /*width*/ ctx[4]);
+    			}
+
+    			if (dirty & /*ht*/ 32) {
+    				set_style(div11, "height", /*ht*/ ctx[5]);
     			}
     		},
     		i: noop$3,
@@ -22706,17 +22717,12 @@ var app = (function () {
     function instance$b($$self, $$props, $$invalidate) {
     	let $screenHeight;
     	validate_store(screenHeight, 'screenHeight');
-    	component_subscribe($$self, screenHeight, $$value => $$invalidate(13, $screenHeight = $$value));
+    	component_subscribe($$self, screenHeight, $$value => $$invalidate(16, $screenHeight = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('GalleryCard', slots, []);
     	let { data } = $$props;
     	let maxW = 1000, maxH = $screenHeight * 0.85 - 200;
-
-    	onMount(() => {
-    		
-    	}); //get this bounding client rect
-    	//console.log(document.querySelector('.card-outer').getBoundingClientRect());
-
+    	let sliderVal = 0;
     	let width = 'auto', ht = 'auto', styleSubstring = '';
 
     	if (data.dimsWidthToHt > 1) {
@@ -22730,7 +22736,7 @@ var app = (function () {
     	let sessions = data.sessionData;
     	let sessionsArray = Object.keys(sessions);
     	let currSessionIndex = 0;
-    	let currSessionKey;
+    	let currSessionKey, currSession;
 
     	function navigateKeys(chg) {
     		$$invalidate(1, currSessionIndex = currSessionIndex + chg);
@@ -22752,14 +22758,19 @@ var app = (function () {
 
     	function select_change_handler() {
     		currSessionKey = select_value(this);
-    		(($$invalidate(2, currSessionKey), $$invalidate(7, sessionsArray)), $$invalidate(1, currSessionIndex));
-    		$$invalidate(7, sessionsArray);
+    		((($$invalidate(2, currSessionKey), $$invalidate(8, sessionsArray)), $$invalidate(1, currSessionIndex)), $$invalidate(7, sessions));
+    		$$invalidate(8, sessionsArray);
     	}
 
     	const click_handler_2 = () => {
     		selectedImage.set(data);
     		pageState.set('record');
     	};
+
+    	function input_change_input_handler() {
+    		sliderVal = to_number(this.value);
+    		(((($$invalidate(3, sliderVal), $$invalidate(2, currSessionKey)), $$invalidate(8, sessionsArray)), $$invalidate(1, currSessionIndex)), $$invalidate(7, sessions));
+    	}
 
     	$$self.$$set = $$props => {
     		if ('data' in $$props) $$invalidate(0, data = $$props.data);
@@ -22776,6 +22787,7 @@ var app = (function () {
     		data,
     		maxW,
     		maxH,
+    		sliderVal,
     		width,
     		ht,
     		styleSubstring,
@@ -22783,6 +22795,7 @@ var app = (function () {
     		sessionsArray,
     		currSessionIndex,
     		currSessionKey,
+    		currSession,
     		navigateKeys,
     		$screenHeight
     	});
@@ -22791,13 +22804,15 @@ var app = (function () {
     		if ('data' in $$props) $$invalidate(0, data = $$props.data);
     		if ('maxW' in $$props) maxW = $$props.maxW;
     		if ('maxH' in $$props) maxH = $$props.maxH;
-    		if ('width' in $$props) $$invalidate(3, width = $$props.width);
-    		if ('ht' in $$props) $$invalidate(4, ht = $$props.ht);
-    		if ('styleSubstring' in $$props) $$invalidate(5, styleSubstring = $$props.styleSubstring);
-    		if ('sessions' in $$props) $$invalidate(6, sessions = $$props.sessions);
-    		if ('sessionsArray' in $$props) $$invalidate(7, sessionsArray = $$props.sessionsArray);
+    		if ('sliderVal' in $$props) $$invalidate(3, sliderVal = $$props.sliderVal);
+    		if ('width' in $$props) $$invalidate(4, width = $$props.width);
+    		if ('ht' in $$props) $$invalidate(5, ht = $$props.ht);
+    		if ('styleSubstring' in $$props) $$invalidate(6, styleSubstring = $$props.styleSubstring);
+    		if ('sessions' in $$props) $$invalidate(7, sessions = $$props.sessions);
+    		if ('sessionsArray' in $$props) $$invalidate(8, sessionsArray = $$props.sessionsArray);
     		if ('currSessionIndex' in $$props) $$invalidate(1, currSessionIndex = $$props.currSessionIndex);
     		if ('currSessionKey' in $$props) $$invalidate(2, currSessionKey = $$props.currSessionKey);
+    		if ('currSession' in $$props) currSession = $$props.currSession;
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -22805,18 +22820,22 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*currSessionIndex*/ 2) {
+    		if ($$self.$$.dirty & /*currSessionIndex, currSessionKey*/ 6) {
     			{
     				$$invalidate(2, currSessionKey = sessionsArray[currSessionIndex]);
+    				currSession = sessions[currSessionKey];
     			}
     		}
 
     		if ($$self.$$.dirty & /*currSessionKey*/ 4) {
+    			//on viewer change
     			(async () => {
     				let sessionData = await dbGet('sessionData/' + currSessionKey);
 
     				if (sessionData) {
     					contourMapBlur(sessionData);
+    					document.querySelector('#slider').setAttribute('max', sessionData.length);
+    					$$invalidate(3, sliderVal = 0);
     				}
     			})();
     		}
@@ -22826,6 +22845,7 @@ var app = (function () {
     		data,
     		currSessionIndex,
     		currSessionKey,
+    		sliderVal,
     		width,
     		ht,
     		styleSubstring,
@@ -22835,7 +22855,8 @@ var app = (function () {
     		click_handler,
     		click_handler_1,
     		select_change_handler,
-    		click_handler_2
+    		click_handler_2,
+    		input_change_input_handler
     	];
     }
 
@@ -22910,7 +22931,7 @@ var app = (function () {
 
     /* src\pages\Gallery.svelte generated by Svelte v3.44.0 */
 
-    const { Object: Object_1, console: console_1$3 } = globals;
+    const { Object: Object_1, console: console_1$1 } = globals;
     const file$a = "src\\pages\\Gallery.svelte";
 
     function get_each_context$2(ctx, list, i) {
@@ -23092,7 +23113,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object_1.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$3.warn(`<Gallery> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<Gallery> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$capture_state = () => ({
@@ -23125,513 +23146,6 @@ var app = (function () {
     			tagName: "Gallery",
     			options,
     			id: create_fragment$a.name
-    		});
-    	}
-    }
-
-    /* src\components\Header.svelte generated by Svelte v3.44.0 */
-    const file$9 = "src\\components\\Header.svelte";
-
-    // (15:6) {:else}
-    function create_else_block$2(ctx) {
-    	let span;
-
-    	const block = {
-    		c: function create() {
-    			span = element("span");
-    			span.textContent = "Gaze";
-    			attr_dev(span, "class", "header-sub accent svelte-1kjn57m");
-    			toggle_class(span, "active", /*$pageState*/ ctx[0] === 'record');
-    			add_location(span, file$9, 15, 8, 448);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, span, anchor);
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*$pageState*/ 1) {
-    				toggle_class(span, "active", /*$pageState*/ ctx[0] === 'record');
-    			}
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(span);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_else_block$2.name,
-    		type: "else",
-    		source: "(15:6) {:else}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (11:6) {#if $pageState == 'gallery'}
-    function create_if_block$4(ctx) {
-    	let span;
-
-    	const block = {
-    		c: function create() {
-    			span = element("span");
-    			span.textContent = "Gallery";
-    			attr_dev(span, "class", "header-sub accent svelte-1kjn57m");
-    			toggle_class(span, "active", /*$pageState*/ ctx[0] === 'gallery');
-    			add_location(span, file$9, 11, 8, 315);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, span, anchor);
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*$pageState*/ 1) {
-    				toggle_class(span, "active", /*$pageState*/ ctx[0] === 'gallery');
-    			}
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(span);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_if_block$4.name,
-    		type: "if",
-    		source: "(11:6) {#if $pageState == 'gallery'}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    function create_fragment$9(ctx) {
-    	let header;
-    	let div4;
-    	let div0;
-    	let span0;
-    	let t1;
-    	let span1;
-    	let t3;
-    	let t4;
-    	let div3;
-    	let div1;
-    	let div1_transition;
-    	let t6;
-    	let div2;
-    	let span2;
-    	let t8;
-    	let span3;
-    	let div2_transition;
-    	let current;
-    	let mounted;
-    	let dispose;
-
-    	function select_block_type(ctx, dirty) {
-    		if (/*$pageState*/ ctx[0] == 'gallery') return create_if_block$4;
-    		return create_else_block$2;
-    	}
-
-    	let current_block_type = select_block_type(ctx);
-    	let if_block = current_block_type(ctx);
-
-    	const block = {
-    		c: function create() {
-    			header = element("header");
-    			div4 = element("div");
-    			div0 = element("div");
-    			span0 = element("span");
-    			span0.textContent = "How We Gaze";
-    			t1 = space();
-    			span1 = element("span");
-    			span1.textContent = "•";
-    			t3 = space();
-    			if_block.c();
-    			t4 = space();
-    			div3 = element("div");
-    			div1 = element("div");
-    			div1.textContent = "About";
-    			t6 = space();
-    			div2 = element("div");
-    			span2 = element("span");
-    			span2.textContent = "arrow_back";
-    			t8 = space();
-    			span3 = element("span");
-    			span3.textContent = "Back to Gallery";
-    			add_location(span0, file$9, 8, 6, 206);
-    			attr_dev(span1, "class", "divider svelte-1kjn57m");
-    			add_location(span1, file$9, 9, 6, 238);
-    			attr_dev(div0, "class", "header-left");
-    			add_location(div0, file$9, 7, 4, 173);
-    			attr_dev(div1, "class", "btn clickable btn-about svelte-1kjn57m");
-    			toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'gallery');
-    			add_location(div1, file$9, 21, 6, 617);
-    			attr_dev(span2, "class", "material-icons-round svelte-1kjn57m");
-    			add_location(span2, file$9, 36, 8, 986);
-    			add_location(span3, file$9, 38, 8, 1052);
-    			attr_dev(div2, "class", "btn clickable svelte-1kjn57m");
-    			toggle_class(div2, "active", /*$pageState*/ ctx[0] === 'record');
-    			add_location(div2, file$9, 28, 6, 783);
-    			attr_dev(div3, "class", "header-right svelte-1kjn57m");
-    			add_location(div3, file$9, 20, 4, 583);
-    			attr_dev(div4, "class", "header-content svelte-1kjn57m");
-    			add_location(div4, file$9, 6, 2, 139);
-    			attr_dev(header, "class", "svelte-1kjn57m");
-    			add_location(header, file$9, 5, 0, 127);
-    		},
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, header, anchor);
-    			append_dev(header, div4);
-    			append_dev(div4, div0);
-    			append_dev(div0, span0);
-    			append_dev(div0, t1);
-    			append_dev(div0, span1);
-    			append_dev(div0, t3);
-    			if_block.m(div0, null);
-    			append_dev(div4, t4);
-    			append_dev(div4, div3);
-    			append_dev(div3, div1);
-    			append_dev(div3, t6);
-    			append_dev(div3, div2);
-    			append_dev(div2, span2);
-    			append_dev(div2, t8);
-    			append_dev(div2, span3);
-    			current = true;
-
-    			if (!mounted) {
-    				dispose = listen_dev(div2, "click", /*click_handler*/ ctx[1], false, false, false);
-    				mounted = true;
-    			}
-    		},
-    		p: function update(ctx, [dirty]) {
-    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
-    				if_block.p(ctx, dirty);
-    			} else {
-    				if_block.d(1);
-    				if_block = current_block_type(ctx);
-
-    				if (if_block) {
-    					if_block.c();
-    					if_block.m(div0, null);
-    				}
-    			}
-
-    			if (dirty & /*$pageState*/ 1) {
-    				toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'gallery');
-    			}
-
-    			if (dirty & /*$pageState*/ 1) {
-    				toggle_class(div2, "active", /*$pageState*/ ctx[0] === 'record');
-    			}
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-
-    			add_render_callback(() => {
-    				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fade, {}, true);
-    				div1_transition.run(1);
-    			});
-
-    			add_render_callback(() => {
-    				if (!div2_transition) div2_transition = create_bidirectional_transition(div2, fade, {}, true);
-    				div2_transition.run(1);
-    			});
-
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fade, {}, false);
-    			div1_transition.run(0);
-    			if (!div2_transition) div2_transition = create_bidirectional_transition(div2, fade, {}, false);
-    			div2_transition.run(0);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(header);
-    			if_block.d();
-    			if (detaching && div1_transition) div1_transition.end();
-    			if (detaching && div2_transition) div2_transition.end();
-    			mounted = false;
-    			dispose();
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_fragment$9.name,
-    		type: "component",
-    		source: "",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    function instance$9($$self, $$props, $$invalidate) {
-    	let $pageState;
-    	validate_store(pageState, 'pageState');
-    	component_subscribe($$self, pageState, $$value => $$invalidate(0, $pageState = $$value));
-    	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots('Header', slots, []);
-    	const writable_props = [];
-
-    	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Header> was created with unknown prop '${key}'`);
-    	});
-
-    	const click_handler = () => {
-    		pageState.set('gallery');
-    	};
-
-    	$$self.$capture_state = () => ({ pageState, slide, fade, $pageState });
-    	return [$pageState, click_handler];
-    }
-
-    class Header extends SvelteComponentDev {
-    	constructor(options) {
-    		super(options);
-    		init$1(this, options, instance$9, create_fragment$9, safe_not_equal, {});
-
-    		dispatch_dev("SvelteRegisterComponent", {
-    			component: this,
-    			tagName: "Header",
-    			options,
-    			id: create_fragment$9.name
-    		});
-    	}
-    }
-
-    /* src\pages\Patterns.svelte generated by Svelte v3.44.0 */
-    const file$8 = "src\\pages\\Patterns.svelte";
-
-    function create_fragment$8(ctx) {
-    	let h1;
-    	let t1;
-    	let p;
-    	let t2;
-    	let t3_value = /*$selectedImage*/ ctx[0].artist + "'s" + "";
-    	let t3;
-    	let t4;
-    	let t5_value = /*$selectedImage*/ ctx[0].label + "";
-    	let t5;
-    	let t6;
-    	let t7;
-    	let section;
-    	let div1;
-    	let div0;
-    	let span;
-    	let mounted;
-    	let dispose;
-
-    	const block = {
-    		c: function create() {
-    			h1 = element("h1");
-    			h1.textContent = "Viewing Patterns";
-    			t1 = space();
-    			p = element("p");
-    			t2 = text("Below: a series of visualizations summarizing how participants viewed ");
-    			t3 = text(t3_value);
-    			t4 = space();
-    			t5 = text(t5_value);
-    			t6 = text(". Click on a tile to see a detailed analysis or\r\n  visualize your own viewing session!");
-    			t7 = space();
-    			section = element("section");
-    			div1 = element("div");
-    			div0 = element("div");
-    			span = element("span");
-    			span.textContent = "View & Visualize";
-    			add_location(h1, file$8, 4, 0, 90);
-    			attr_dev(p, "class", "font-lg");
-    			add_location(p, file$8, 5, 0, 117);
-    			add_location(span, file$8, 15, 6, 507);
-    			attr_dev(div0, "class", "card");
-    			add_location(div0, file$8, 14, 4, 481);
-    			attr_dev(div1, "class", "card-outer clickable");
-    			add_location(div1, file$8, 13, 2, 400);
-    			attr_dev(section, "class", "card-holder");
-    			add_location(section, file$8, 12, 0, 367);
-    		},
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, h1, anchor);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, p, anchor);
-    			append_dev(p, t2);
-    			append_dev(p, t3);
-    			append_dev(p, t4);
-    			append_dev(p, t5);
-    			append_dev(p, t6);
-    			insert_dev(target, t7, anchor);
-    			insert_dev(target, section, anchor);
-    			append_dev(section, div1);
-    			append_dev(div1, div0);
-    			append_dev(div0, span);
-
-    			if (!mounted) {
-    				dispose = listen_dev(div1, "click", /*click_handler*/ ctx[1], false, false, false);
-    				mounted = true;
-    			}
-    		},
-    		p: function update(ctx, [dirty]) {
-    			if (dirty & /*$selectedImage*/ 1 && t3_value !== (t3_value = /*$selectedImage*/ ctx[0].artist + "'s" + "")) set_data_dev(t3, t3_value);
-    			if (dirty & /*$selectedImage*/ 1 && t5_value !== (t5_value = /*$selectedImage*/ ctx[0].label + "")) set_data_dev(t5, t5_value);
-    		},
-    		i: noop$3,
-    		o: noop$3,
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(h1);
-    			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(p);
-    			if (detaching) detach_dev(t7);
-    			if (detaching) detach_dev(section);
-    			mounted = false;
-    			dispose();
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_fragment$8.name,
-    		type: "component",
-    		source: "",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    function instance$8($$self, $$props, $$invalidate) {
-    	let $selectedImage;
-    	validate_store(selectedImage, 'selectedImage');
-    	component_subscribe($$self, selectedImage, $$value => $$invalidate(0, $selectedImage = $$value));
-    	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots('Patterns', slots, []);
-    	const writable_props = [];
-
-    	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Patterns> was created with unknown prop '${key}'`);
-    	});
-
-    	const click_handler = () => pageState.set('record');
-    	$$self.$capture_state = () => ({ pageState, selectedImage, $selectedImage });
-    	return [$selectedImage, click_handler];
-    }
-
-    class Patterns extends SvelteComponentDev {
-    	constructor(options) {
-    		super(options);
-    		init$1(this, options, instance$8, create_fragment$8, safe_not_equal, {});
-
-    		dispatch_dev("SvelteRegisterComponent", {
-    			component: this,
-    			tagName: "Patterns",
-    			options,
-    			id: create_fragment$8.name
-    		});
-    	}
-    }
-
-    /* src\components\RecordOverview.svelte generated by Svelte v3.44.0 */
-    const file$7 = "src\\components\\RecordOverview.svelte";
-
-    function create_fragment$7(ctx) {
-    	let h3;
-    	let t1;
-    	let p0;
-    	let t3;
-    	let p1;
-    	let strong;
-    	let t5;
-    	let t6;
-    	let p2;
-
-    	const block = {
-    		c: function create() {
-    			h3 = element("h3");
-    			h3.textContent = "Record Your Gaze: Overview";
-    			t1 = space();
-    			p0 = element("p");
-    			p0.textContent = "In order to generate a visualization of your viewing session, we’ll ask you to\r\n  study a piece of artwork for 15 seconds with your webcam turned on.";
-    			t3 = space();
-    			p1 = element("p");
-    			strong = element("strong");
-    			strong.textContent = "No personal information will be recorded.";
-    			t5 = text(" The only information\r\n  that will be recorded is a series of points corresponding to your eye movement.\r\n  Please enable webcam permission to proceed!");
-    			t6 = space();
-    			p2 = element("p");
-    			p2.textContent = "This should take about 5 minutes total.";
-    			add_location(h3, file$7, 4, 0, 75);
-    			add_location(p0, file$7, 5, 0, 112);
-    			add_location(strong, file$7, 10, 2, 283);
-    			add_location(p1, file$7, 9, 0, 276);
-    			add_location(p2, file$7, 14, 0, 500);
-    		},
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, h3, anchor);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, p0, anchor);
-    			insert_dev(target, t3, anchor);
-    			insert_dev(target, p1, anchor);
-    			append_dev(p1, strong);
-    			append_dev(p1, t5);
-    			insert_dev(target, t6, anchor);
-    			insert_dev(target, p2, anchor);
-    		},
-    		p: noop$3,
-    		i: noop$3,
-    		o: noop$3,
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(h3);
-    			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(p0);
-    			if (detaching) detach_dev(t3);
-    			if (detaching) detach_dev(p1);
-    			if (detaching) detach_dev(t6);
-    			if (detaching) detach_dev(p2);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_fragment$7.name,
-    		type: "component",
-    		source: "",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    function instance$7($$self, $$props, $$invalidate) {
-    	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots('RecordOverview', slots, []);
-    	const writable_props = [];
-
-    	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<RecordOverview> was created with unknown prop '${key}'`);
-    	});
-
-    	$$self.$capture_state = () => ({ slide, fade });
-    	return [];
-    }
-
-    class RecordOverview extends SvelteComponentDev {
-    	constructor(options) {
-    		super(options);
-    		init$1(this, options, instance$7, create_fragment$7, safe_not_equal, {});
-
-    		dispatch_dev("SvelteRegisterComponent", {
-    			component: this,
-    			tagName: "RecordOverview",
-    			options,
-    			id: create_fragment$7.name
     		});
     	}
     }
@@ -26489,6 +26003,20 @@ var app = (function () {
       }
     }
 
+    function hideGazerForLater() {
+      webgazer.pause();
+      webgazer.showVideo(false);
+      let vidContainer = document.querySelector('#webgazerVideoContainer');
+      document.querySelector('body').append(vidContainer);
+    }
+
+    async function gazerResume() {
+      let vidContainer = document.querySelector('#webgazerVideoContainer');
+      document.querySelector('.container-body').append(vidContainer);
+      await webgazer.resume();
+      gazerPauseTraining();
+    }
+
     async function gazerInitVideo() {
       console.log('gazer video init');
       await webgazer.resume();
@@ -26496,6 +26024,7 @@ var app = (function () {
       gazerInitVideoDone.set(true);
       console.log('video done init');
     }
+
     function gazerInitialize() {
       console.log('gazer first init');
       webgazer.showVideo(false);
@@ -26604,13 +26133,539 @@ var app = (function () {
       webgazer.removeMouseEventListeners();
     }
 
-    /* src\components\RecordCalibrateVid.svelte generated by Svelte v3.44.0 */
+    /* src\components\Header.svelte generated by Svelte v3.44.0 */
+    const file$9 = "src\\components\\Header.svelte";
 
-    const { console: console_1$2 } = globals;
+    // (20:6) {:else}
+    function create_else_block$2(ctx) {
+    	let span;
+
+    	const block = {
+    		c: function create() {
+    			span = element("span");
+    			span.textContent = "Gaze";
+    			attr_dev(span, "class", "header-sub accent svelte-1kjn57m");
+    			toggle_class(span, "active", /*$pageState*/ ctx[0] === 'record');
+    			add_location(span, file$9, 20, 8, 562);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, span, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*$pageState*/ 1) {
+    				toggle_class(span, "active", /*$pageState*/ ctx[0] === 'record');
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(span);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block$2.name,
+    		type: "else",
+    		source: "(20:6) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (16:6) {#if $pageState == 'gallery'}
+    function create_if_block$4(ctx) {
+    	let span;
+
+    	const block = {
+    		c: function create() {
+    			span = element("span");
+    			span.textContent = "Gallery";
+    			attr_dev(span, "class", "header-sub accent svelte-1kjn57m");
+    			toggle_class(span, "active", /*$pageState*/ ctx[0] === 'gallery');
+    			add_location(span, file$9, 16, 8, 429);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, span, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*$pageState*/ 1) {
+    				toggle_class(span, "active", /*$pageState*/ ctx[0] === 'gallery');
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(span);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$4.name,
+    		type: "if",
+    		source: "(16:6) {#if $pageState == 'gallery'}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$9(ctx) {
+    	let header;
+    	let div4;
+    	let div0;
+    	let span0;
+    	let t1;
+    	let span1;
+    	let t3;
+    	let t4;
+    	let div3;
+    	let div1;
+    	let div1_transition;
+    	let t6;
+    	let div2;
+    	let span2;
+    	let t8;
+    	let span3;
+    	let div2_transition;
+    	let current;
+    	let mounted;
+    	let dispose;
+
+    	function select_block_type(ctx, dirty) {
+    		if (/*$pageState*/ ctx[0] == 'gallery') return create_if_block$4;
+    		return create_else_block$2;
+    	}
+
+    	let current_block_type = select_block_type(ctx);
+    	let if_block = current_block_type(ctx);
+
+    	const block = {
+    		c: function create() {
+    			header = element("header");
+    			div4 = element("div");
+    			div0 = element("div");
+    			span0 = element("span");
+    			span0.textContent = "How We Gaze";
+    			t1 = space();
+    			span1 = element("span");
+    			span1.textContent = "•";
+    			t3 = space();
+    			if_block.c();
+    			t4 = space();
+    			div3 = element("div");
+    			div1 = element("div");
+    			div1.textContent = "About";
+    			t6 = space();
+    			div2 = element("div");
+    			span2 = element("span");
+    			span2.textContent = "arrow_back";
+    			t8 = space();
+    			span3 = element("span");
+    			span3.textContent = "Back to Gallery";
+    			add_location(span0, file$9, 13, 6, 320);
+    			attr_dev(span1, "class", "divider svelte-1kjn57m");
+    			add_location(span1, file$9, 14, 6, 352);
+    			attr_dev(div0, "class", "header-left");
+    			add_location(div0, file$9, 12, 4, 287);
+    			attr_dev(div1, "class", "btn clickable btn-about svelte-1kjn57m");
+    			toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'gallery');
+    			add_location(div1, file$9, 26, 6, 731);
+    			attr_dev(span2, "class", "material-icons-round svelte-1kjn57m");
+    			add_location(span2, file$9, 44, 8, 1203);
+    			add_location(span3, file$9, 46, 8, 1269);
+    			attr_dev(div2, "class", "btn clickable svelte-1kjn57m");
+    			toggle_class(div2, "active", /*$pageState*/ ctx[0] === 'record');
+    			add_location(div2, file$9, 33, 6, 897);
+    			attr_dev(div3, "class", "header-right svelte-1kjn57m");
+    			add_location(div3, file$9, 25, 4, 697);
+    			attr_dev(div4, "class", "header-content svelte-1kjn57m");
+    			add_location(div4, file$9, 11, 2, 253);
+    			attr_dev(header, "class", "svelte-1kjn57m");
+    			add_location(header, file$9, 10, 0, 241);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, header, anchor);
+    			append_dev(header, div4);
+    			append_dev(div4, div0);
+    			append_dev(div0, span0);
+    			append_dev(div0, t1);
+    			append_dev(div0, span1);
+    			append_dev(div0, t3);
+    			if_block.m(div0, null);
+    			append_dev(div4, t4);
+    			append_dev(div4, div3);
+    			append_dev(div3, div1);
+    			append_dev(div3, t6);
+    			append_dev(div3, div2);
+    			append_dev(div2, span2);
+    			append_dev(div2, t8);
+    			append_dev(div2, span3);
+    			current = true;
+
+    			if (!mounted) {
+    				dispose = listen_dev(div2, "click", /*click_handler*/ ctx[3], false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
+
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(div0, null);
+    				}
+    			}
+
+    			if (dirty & /*$pageState*/ 1) {
+    				toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'gallery');
+    			}
+
+    			if (dirty & /*$pageState*/ 1) {
+    				toggle_class(div2, "active", /*$pageState*/ ctx[0] === 'record');
+    			}
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+
+    			add_render_callback(() => {
+    				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fade, {}, true);
+    				div1_transition.run(1);
+    			});
+
+    			add_render_callback(() => {
+    				if (!div2_transition) div2_transition = create_bidirectional_transition(div2, fade, {}, true);
+    				div2_transition.run(1);
+    			});
+
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fade, {}, false);
+    			div1_transition.run(0);
+    			if (!div2_transition) div2_transition = create_bidirectional_transition(div2, fade, {}, false);
+    			div2_transition.run(0);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(header);
+    			if_block.d();
+    			if (detaching && div1_transition) div1_transition.end();
+    			if (detaching && div2_transition) div2_transition.end();
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$9.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$9($$self, $$props, $$invalidate) {
+    	let $pageState;
+    	let $gazerInitDone;
+    	let $gazerInitVideoDone;
+    	validate_store(pageState, 'pageState');
+    	component_subscribe($$self, pageState, $$value => $$invalidate(0, $pageState = $$value));
+    	validate_store(gazerInitDone, 'gazerInitDone');
+    	component_subscribe($$self, gazerInitDone, $$value => $$invalidate(1, $gazerInitDone = $$value));
+    	validate_store(gazerInitVideoDone, 'gazerInitVideoDone');
+    	component_subscribe($$self, gazerInitVideoDone, $$value => $$invalidate(2, $gazerInitVideoDone = $$value));
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('Header', slots, []);
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Header> was created with unknown prop '${key}'`);
+    	});
+
+    	const click_handler = () => {
+    		if ($gazerInitDone && $gazerInitVideoDone) {
+    			hideGazerForLater();
+    		}
+
+    		pageState.set('gallery');
+    	};
+
+    	$$self.$capture_state = () => ({
+    		gazerInitDone,
+    		gazerInitVideoDone,
+    		pageState,
+    		hideGazerForLater,
+    		slide,
+    		fade,
+    		$pageState,
+    		$gazerInitDone,
+    		$gazerInitVideoDone
+    	});
+
+    	return [$pageState, $gazerInitDone, $gazerInitVideoDone, click_handler];
+    }
+
+    class Header extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init$1(this, options, instance$9, create_fragment$9, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "Header",
+    			options,
+    			id: create_fragment$9.name
+    		});
+    	}
+    }
+
+    /* src\pages\Patterns.svelte generated by Svelte v3.44.0 */
+    const file$8 = "src\\pages\\Patterns.svelte";
+
+    function create_fragment$8(ctx) {
+    	let h1;
+    	let t1;
+    	let p;
+    	let t2;
+    	let t3_value = /*$selectedImage*/ ctx[0].artist + "'s" + "";
+    	let t3;
+    	let t4;
+    	let t5_value = /*$selectedImage*/ ctx[0].label + "";
+    	let t5;
+    	let t6;
+    	let t7;
+    	let section;
+    	let div1;
+    	let div0;
+    	let span;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			h1 = element("h1");
+    			h1.textContent = "Viewing Patterns";
+    			t1 = space();
+    			p = element("p");
+    			t2 = text("Below: a series of visualizations summarizing how participants viewed ");
+    			t3 = text(t3_value);
+    			t4 = space();
+    			t5 = text(t5_value);
+    			t6 = text(". Click on a tile to see a detailed analysis or\r\n  visualize your own viewing session!");
+    			t7 = space();
+    			section = element("section");
+    			div1 = element("div");
+    			div0 = element("div");
+    			span = element("span");
+    			span.textContent = "View & Visualize";
+    			add_location(h1, file$8, 4, 0, 90);
+    			attr_dev(p, "class", "font-lg");
+    			add_location(p, file$8, 5, 0, 117);
+    			add_location(span, file$8, 15, 6, 507);
+    			attr_dev(div0, "class", "card");
+    			add_location(div0, file$8, 14, 4, 481);
+    			attr_dev(div1, "class", "card-outer clickable");
+    			add_location(div1, file$8, 13, 2, 400);
+    			attr_dev(section, "class", "card-holder");
+    			add_location(section, file$8, 12, 0, 367);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, h1, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t2);
+    			append_dev(p, t3);
+    			append_dev(p, t4);
+    			append_dev(p, t5);
+    			append_dev(p, t6);
+    			insert_dev(target, t7, anchor);
+    			insert_dev(target, section, anchor);
+    			append_dev(section, div1);
+    			append_dev(div1, div0);
+    			append_dev(div0, span);
+
+    			if (!mounted) {
+    				dispose = listen_dev(div1, "click", /*click_handler*/ ctx[1], false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*$selectedImage*/ 1 && t3_value !== (t3_value = /*$selectedImage*/ ctx[0].artist + "'s" + "")) set_data_dev(t3, t3_value);
+    			if (dirty & /*$selectedImage*/ 1 && t5_value !== (t5_value = /*$selectedImage*/ ctx[0].label + "")) set_data_dev(t5, t5_value);
+    		},
+    		i: noop$3,
+    		o: noop$3,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h1);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(p);
+    			if (detaching) detach_dev(t7);
+    			if (detaching) detach_dev(section);
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$8.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$8($$self, $$props, $$invalidate) {
+    	let $selectedImage;
+    	validate_store(selectedImage, 'selectedImage');
+    	component_subscribe($$self, selectedImage, $$value => $$invalidate(0, $selectedImage = $$value));
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('Patterns', slots, []);
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Patterns> was created with unknown prop '${key}'`);
+    	});
+
+    	const click_handler = () => pageState.set('record');
+    	$$self.$capture_state = () => ({ pageState, selectedImage, $selectedImage });
+    	return [$selectedImage, click_handler];
+    }
+
+    class Patterns extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init$1(this, options, instance$8, create_fragment$8, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "Patterns",
+    			options,
+    			id: create_fragment$8.name
+    		});
+    	}
+    }
+
+    /* src\components\RecordOverview.svelte generated by Svelte v3.44.0 */
+    const file$7 = "src\\components\\RecordOverview.svelte";
+
+    function create_fragment$7(ctx) {
+    	let h3;
+    	let t1;
+    	let p0;
+    	let t3;
+    	let p1;
+    	let strong;
+    	let t5;
+    	let t6;
+    	let p2;
+
+    	const block = {
+    		c: function create() {
+    			h3 = element("h3");
+    			h3.textContent = "Record Your Gaze: Overview";
+    			t1 = space();
+    			p0 = element("p");
+    			p0.textContent = "In order to generate a visualization of your viewing session, we’ll ask you to\r\n  study a piece of artwork for 15 seconds with your webcam turned on.";
+    			t3 = space();
+    			p1 = element("p");
+    			strong = element("strong");
+    			strong.textContent = "No personal information will be recorded.";
+    			t5 = text(" The only information\r\n  that will be recorded is a series of points corresponding to your eye movement.\r\n  Please enable webcam permission to proceed!");
+    			t6 = space();
+    			p2 = element("p");
+    			p2.textContent = "This should take about 5 minutes total.";
+    			add_location(h3, file$7, 4, 0, 75);
+    			add_location(p0, file$7, 5, 0, 112);
+    			add_location(strong, file$7, 10, 2, 283);
+    			add_location(p1, file$7, 9, 0, 276);
+    			add_location(p2, file$7, 14, 0, 500);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, h3, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, p0, anchor);
+    			insert_dev(target, t3, anchor);
+    			insert_dev(target, p1, anchor);
+    			append_dev(p1, strong);
+    			append_dev(p1, t5);
+    			insert_dev(target, t6, anchor);
+    			insert_dev(target, p2, anchor);
+    		},
+    		p: noop$3,
+    		i: noop$3,
+    		o: noop$3,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h3);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(p0);
+    			if (detaching) detach_dev(t3);
+    			if (detaching) detach_dev(p1);
+    			if (detaching) detach_dev(t6);
+    			if (detaching) detach_dev(p2);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$7.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$7($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('RecordOverview', slots, []);
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<RecordOverview> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$capture_state = () => ({ slide, fade });
+    	return [];
+    }
+
+    class RecordOverview extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init$1(this, options, instance$7, create_fragment$7, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "RecordOverview",
+    			options,
+    			id: create_fragment$7.name
+    		});
+    	}
+    }
+
+    /* src\components\RecordCalibrateVid.svelte generated by Svelte v3.44.0 */
 
     const file$6 = "src\\components\\RecordCalibrateVid.svelte";
 
-    // (29:30) 
+    // (32:30) 
     function create_if_block_2$2(ctx) {
     	let h3;
     	let t1;
@@ -26623,9 +26678,9 @@ var app = (function () {
     			t1 = space();
     			p = element("p");
     			p.textContent = "We’ll need to first calibrate your webcam in order to proceed. Ensure that\r\n    your are in a well-lit environment, and that your face is in the green\r\n    section of the screen below.";
-    			add_location(h3, file$6, 29, 2, 707);
+    			add_location(h3, file$6, 32, 2, 778);
     			attr_dev(p, "class", "inst");
-    			add_location(p, file$6, 30, 2, 736);
+    			add_location(p, file$6, 33, 2, 807);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h3, anchor);
@@ -26644,14 +26699,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2$2.name,
     		type: "if",
-    		source: "(29:30) ",
+    		source: "(32:30) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (22:0) {#if calibrated == true}
+    // (25:0) {#if calibrated == true}
     function create_if_block_1$3(ctx) {
     	let h3;
     	let t1;
@@ -26667,11 +26722,11 @@ var app = (function () {
     			t1 = space();
     			p = element("p");
     			t2 = text("Your webcam was already calibrated with an accuracy rate of ");
-    			t3 = text(/*$calibrationPct*/ ctx[1]);
+    			t3 = text(/*$calibrationPct*/ ctx[2]);
     			t4 = text("%.\r\n    Please ensure your face is centered below, and click to proceed and view\r\n    art!");
-    			add_location(h3, file$6, 22, 2, 434);
+    			add_location(h3, file$6, 25, 2, 505);
     			attr_dev(p, "class", "inst");
-    			add_location(p, file$6, 23, 2, 474);
+    			add_location(p, file$6, 26, 2, 545);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h3, anchor);
@@ -26682,7 +26737,7 @@ var app = (function () {
     			append_dev(p, t4);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*$calibrationPct*/ 2) set_data_dev(t3, /*$calibrationPct*/ ctx[1]);
+    			if (dirty & /*$calibrationPct*/ 4) set_data_dev(t3, /*$calibrationPct*/ ctx[2]);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(h3);
@@ -26695,14 +26750,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$3.name,
     		type: "if",
-    		source: "(22:0) {#if calibrated == true}",
+    		source: "(25:0) {#if calibrated == true}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (38:0) {#if !$gazerInitVideoDone}
+    // (41:0) {#if !$gazerInitVideoDone}
     function create_if_block$3(ctx) {
     	let div;
     	let p;
@@ -26712,9 +26767,9 @@ var app = (function () {
     			div = element("div");
     			p = element("p");
     			p.textContent = "Initializing Video Stream...";
-    			add_location(p, file$6, 39, 4, 1024);
+    			add_location(p, file$6, 42, 4, 1095);
     			attr_dev(div, "class", "video-wrapper svelte-gvevuf");
-    			add_location(div, file$6, 38, 2, 991);
+    			add_location(div, file$6, 41, 2, 1062);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -26729,7 +26784,7 @@ var app = (function () {
     		block,
     		id: create_if_block$3.name,
     		type: "if",
-    		source: "(38:0) {#if !$gazerInitVideoDone}",
+    		source: "(41:0) {#if !$gazerInitVideoDone}",
     		ctx
     	});
 
@@ -26747,7 +26802,7 @@ var app = (function () {
 
     	let current_block_type = select_block_type(ctx);
     	let if_block0 = current_block_type && current_block_type(ctx);
-    	let if_block1 = !/*$gazerInitVideoDone*/ ctx[2] && create_if_block$3(ctx);
+    	let if_block1 = !/*$gazerInitVideoDone*/ ctx[1] && create_if_block$3(ctx);
 
     	const block = {
     		c: function create() {
@@ -26778,7 +26833,7 @@ var app = (function () {
     				}
     			}
 
-    			if (!/*$gazerInitVideoDone*/ ctx[2]) {
+    			if (!/*$gazerInitVideoDone*/ ctx[1]) {
     				if (if_block1) ; else {
     					if_block1 = create_if_block$3(ctx);
     					if_block1.c();
@@ -26814,22 +26869,22 @@ var app = (function () {
     }
 
     function instance$6($$self, $$props, $$invalidate) {
+    	let $gazerInitVideoDone;
     	let $gazerInitDone;
     	let $calibrationPct;
-    	let $gazerInitVideoDone;
+    	validate_store(gazerInitVideoDone, 'gazerInitVideoDone');
+    	component_subscribe($$self, gazerInitVideoDone, $$value => $$invalidate(1, $gazerInitVideoDone = $$value));
     	validate_store(gazerInitDone, 'gazerInitDone');
     	component_subscribe($$self, gazerInitDone, $$value => $$invalidate(3, $gazerInitDone = $$value));
     	validate_store(calibrationPct, 'calibrationPct');
-    	component_subscribe($$self, calibrationPct, $$value => $$invalidate(1, $calibrationPct = $$value));
-    	validate_store(gazerInitVideoDone, 'gazerInitVideoDone');
-    	component_subscribe($$self, gazerInitVideoDone, $$value => $$invalidate(2, $gazerInitVideoDone = $$value));
+    	component_subscribe($$self, calibrationPct, $$value => $$invalidate(2, $calibrationPct = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('RecordCalibrateVid', slots, []);
     	let { calibrated } = $$props;
     	const writable_props = ['calibrated'];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$2.warn(`<RecordCalibrateVid> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<RecordCalibrateVid> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$$set = $$props => {
@@ -26838,14 +26893,15 @@ var app = (function () {
 
     	$$self.$capture_state = () => ({
     		gazerInitVideo,
+    		gazerResume,
     		onMount,
-    		gazerInitVideoDone,
     		gazerInitDone,
     		calibrationPct,
+    		gazerInitVideoDone,
     		calibrated,
+    		$gazerInitVideoDone,
     		$gazerInitDone,
-    		$calibrationPct,
-    		$gazerInitVideoDone
+    		$calibrationPct
     	});
 
     	$$self.$inject_state = $$props => {
@@ -26857,23 +26913,25 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*$gazerInitDone*/ 8) {
+    		if ($$self.$$.dirty & /*$gazerInitDone, $gazerInitVideoDone*/ 10) {
     			{
     				if ($gazerInitDone) {
-    					console.log('yea baby');
-
-    					setTimeout(
-    						() => {
-    							gazerInitVideo();
-    						},
-    						200
-    					);
+    					if (!$gazerInitVideoDone) {
+    						setTimeout(
+    							() => {
+    								gazerInitVideo();
+    							},
+    							200
+    						);
+    					} else {
+    						gazerResume();
+    					}
     				}
     			}
     		}
     	};
 
-    	return [calibrated, $calibrationPct, $gazerInitVideoDone, $gazerInitDone];
+    	return [calibrated, $gazerInitVideoDone, $calibrationPct, $gazerInitDone];
     }
 
     class RecordCalibrateVid extends SvelteComponentDev {
@@ -26892,7 +26950,7 @@ var app = (function () {
     		const props = options.props || {};
 
     		if (/*calibrated*/ ctx[0] === undefined && !('calibrated' in props)) {
-    			console_1$2.warn("<RecordCalibrateVid> was created without expected prop 'calibrated'");
+    			console.warn("<RecordCalibrateVid> was created without expected prop 'calibrated'");
     		}
     	}
 
@@ -27623,7 +27681,7 @@ var app = (function () {
 
     /* src\components\RecordCalibrateResults.svelte generated by Svelte v3.44.0 */
 
-    const { console: console_1$1 } = globals;
+    const { console: console_1 } = globals;
 
     const file$3 = "src\\components\\RecordCalibrateResults.svelte";
 
@@ -27783,7 +27841,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<RecordCalibrateResults> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<RecordCalibrateResults> was created with unknown prop '${key}'`);
     	});
 
     	function input_input_handler() {
@@ -27973,33 +28031,31 @@ var app = (function () {
     }
 
     /* src\pages\Record.svelte generated by Svelte v3.44.0 */
-
-    const { console: console_1 } = globals;
     const file$1 = "src\\pages\\Record.svelte";
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[23] = list[i];
+    	child_ctx[20] = list[i];
     	return child_ctx;
     }
 
-    // (216:6) {#each sections as section}
+    // (190:6) {#each sections as section}
     function create_each_block(ctx) {
     	let div;
 
     	const block = {
     		c: function create() {
     			div = element("div");
-    			attr_dev(div, "class", "nav-dot svelte-1lhiom8");
-    			toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[3]] === /*section*/ ctx[23]);
-    			add_location(div, file$1, 216, 8, 5923);
+    			attr_dev(div, "class", "nav-dot svelte-1shl68w");
+    			toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]] === /*section*/ ctx[20]);
+    			add_location(div, file$1, 190, 8, 5362);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*sections, $stateIndex*/ 9) {
-    				toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[3]] === /*section*/ ctx[23]);
+    			if (dirty & /*sections, $stateIndex*/ 5) {
+    				toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]] === /*section*/ ctx[20]);
     			}
     		},
     		d: function destroy(detaching) {
@@ -28011,14 +28067,14 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(216:6) {#each sections as section}",
+    		source: "(190:6) {#each sections as section}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (232:61) 
+    // (206:61) 
     function create_if_block_6(ctx) {
     	let calibrateresults;
     	let current;
@@ -28051,14 +28107,14 @@ var app = (function () {
     		block,
     		id: create_if_block_6.name,
     		type: "if",
-    		source: "(232:61) ",
+    		source: "(206:61) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (230:58) 
+    // (204:58) 
     function create_if_block_5(ctx) {
     	let calibrateview;
     	let current;
@@ -28091,14 +28147,14 @@ var app = (function () {
     		block,
     		id: create_if_block_5.name,
     		type: "if",
-    		source: "(230:58) ",
+    		source: "(204:58) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (228:72) 
+    // (202:72) 
     function create_if_block_4(ctx) {
     	let calibrateexercise;
     	let current;
@@ -28131,14 +28187,14 @@ var app = (function () {
     		block,
     		id: create_if_block_4.name,
     		type: "if",
-    		source: "(228:72) ",
+    		source: "(202:72) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (226:76) 
+    // (200:76) 
     function create_if_block_3(ctx) {
     	let calibrateinstructions;
     	let current;
@@ -28171,20 +28227,20 @@ var app = (function () {
     		block,
     		id: create_if_block_3.name,
     		type: "if",
-    		source: "(226:76) ",
+    		source: "(200:76) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (224:67) 
+    // (198:67) 
     function create_if_block_2(ctx) {
     	let calibratevid;
     	let current;
 
     	calibratevid = new RecordCalibrateVid({
-    			props: { calibrated: /*calibrated*/ ctx[4] },
+    			props: { calibrated: /*calibrated*/ ctx[5] },
     			$$inline: true
     		});
 
@@ -28198,7 +28254,7 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			const calibratevid_changes = {};
-    			if (dirty & /*calibrated*/ 16) calibratevid_changes.calibrated = /*calibrated*/ ctx[4];
+    			if (dirty & /*calibrated*/ 32) calibratevid_changes.calibrated = /*calibrated*/ ctx[5];
     			calibratevid.$set(calibratevid_changes);
     		},
     		i: function intro(local) {
@@ -28219,14 +28275,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(224:67) ",
+    		source: "(198:67) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (222:4) {#if sections[$stateIndex].sectionName == 'overview'}
+    // (196:4) {#if sections[$stateIndex].sectionName == 'overview'}
     function create_if_block_1$1(ctx) {
     	let overview;
     	let current;
@@ -28259,16 +28315,16 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(222:4) {#if sections[$stateIndex].sectionName == 'overview'}",
+    		source: "(196:4) {#if sections[$stateIndex].sectionName == 'overview'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (260:6) {:else}
+    // (239:6) {:else}
     function create_else_block(ctx) {
-    	let t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].btnLabel + "";
+    	let t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnLabel + "";
     	let t;
 
     	const block = {
@@ -28279,7 +28335,7 @@ var app = (function () {
     			insert_dev(target, t, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*sections, $stateIndex*/ 9 && t_value !== (t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].btnLabel + "")) set_data_dev(t, t_value);
+    			if (dirty & /*sections, $stateIndex*/ 5 && t_value !== (t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnLabel + "")) set_data_dev(t, t_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(t);
@@ -28290,14 +28346,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(260:6) {:else}",
+    		source: "(239:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (258:6) {#if $loadingInd}
+    // (237:6) {#if $loadingInd}
     function create_if_block$1(ctx) {
     	let t;
 
@@ -28318,7 +28374,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(258:6) {#if $loadingInd}",
+    		source: "(237:6) {#if $loadingInd}",
     		ctx
     	});
 
@@ -28326,34 +28382,31 @@ var app = (function () {
     }
 
     function create_fragment$1(ctx) {
-    	let script;
-    	let script_src_value;
-    	let t0;
     	let section;
     	let div2;
     	let div0;
-    	let t1;
+    	let t0;
     	let span;
-    	let t2_value = /*$selectedImage*/ ctx[7].title + "";
+    	let t1_value = /*$selectedImage*/ ctx[6].title + "";
+    	let t1;
     	let t2;
+    	let t3_value = /*$selectedImage*/ ctx[6].artist + "";
     	let t3;
-    	let t4_value = /*$selectedImage*/ ctx[7].artist + "";
     	let t4;
-    	let t5;
     	let div1;
-    	let t6;
+    	let t5;
     	let div3;
     	let current_block_type_index;
     	let if_block0;
     	let div3_transition;
-    	let t7;
+    	let t6;
     	let div7;
     	let div4;
-    	let t9;
+    	let t8;
     	let div5;
-    	let t10_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].btnBackLabel + "";
+    	let t9_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnBackLabel + "";
+    	let t9;
     	let t10;
-    	let t11;
     	let div6;
     	let current;
     	let mounted;
@@ -28378,12 +28431,12 @@ var app = (function () {
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
-    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].sectionName == 'overview') return 0;
-    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].sectionName == 'calibrate-vid') return 1;
-    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].sectionName == 'calibrate-instructions') return 2;
-    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].sectionName == 'calibrate-exercise') return 3;
-    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].sectionName == 'view') return 4;
-    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].sectionName == 'results') return 5;
+    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].sectionName == 'overview') return 0;
+    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].sectionName == 'calibrate-vid') return 1;
+    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].sectionName == 'calibrate-instructions') return 2;
+    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].sectionName == 'calibrate-exercise') return 3;
+    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].sectionName == 'view') return 4;
+    		if (/*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].sectionName == 'results') return 5;
     		return -1;
     	}
 
@@ -28392,7 +28445,7 @@ var app = (function () {
     	}
 
     	function select_block_type_1(ctx, dirty) {
-    		if (/*$loadingInd*/ ctx[8]) return create_if_block$1;
+    		if (/*$loadingInd*/ ctx[7]) return create_if_block$1;
     		return create_else_block;
     	}
 
@@ -28401,119 +28454,112 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			script = element("script");
-    			t0 = space();
     			section = element("section");
     			div2 = element("div");
     			div0 = element("div");
-    			t1 = text("Selected Work:");
+    			t0 = text("Selected Work:");
     			span = element("span");
-    			t2 = text(t2_value);
-    			t3 = text(" by ");
-    			t4 = text(t4_value);
-    			t5 = space();
+    			t1 = text(t1_value);
+    			t2 = text(" by ");
+    			t3 = text(t3_value);
+    			t4 = space();
     			div1 = element("div");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t6 = space();
+    			t5 = space();
     			div3 = element("div");
     			if (if_block0) if_block0.c();
-    			t7 = space();
+    			t6 = space();
     			div7 = element("div");
     			div4 = element("div");
     			div4.textContent = "Re-Calibrate";
-    			t9 = space();
+    			t8 = space();
     			div5 = element("div");
-    			t10 = text(t10_value);
-    			t11 = space();
+    			t9 = text(t9_value);
+    			t10 = space();
     			div6 = element("div");
     			if_block1.c();
-    			if (!src_url_equal(script.src, script_src_value = "./assets/webgazer.min.js")) attr_dev(script, "src", script_src_value);
-    			add_location(script, file$1, 205, 2, 5512);
-    			attr_dev(span, "class", "selection-holder svelte-1lhiom8");
-    			add_location(span, file$1, 212, 20, 5752);
+    			attr_dev(span, "class", "selection-holder svelte-1shl68w");
+    			add_location(span, file$1, 184, 20, 5173);
     			attr_dev(div0, "class", "current-selection");
-    			add_location(div0, file$1, 211, 4, 5699);
-    			attr_dev(div1, "class", "nav-ind svelte-1lhiom8");
-    			add_location(div1, file$1, 214, 4, 5857);
-    			attr_dev(div2, "class", "container-header svelte-1lhiom8");
-    			add_location(div2, file$1, 210, 2, 5663);
-    			attr_dev(div3, "class", "container-body svelte-1lhiom8");
-    			add_location(div3, file$1, 220, 2, 6036);
-    			attr_dev(div4, "class", "btn re-cal svelte-1lhiom8");
-    			toggle_class(div4, "disabled", /*calibrated*/ ctx[4] == false);
-    			add_location(div4, file$1, 237, 4, 6732);
-    			attr_dev(div5, "class", "btn-prev btn disabled svelte-1lhiom8");
-    			toggle_class(div5, "accent", /*$calibrationPct*/ ctx[2] && /*$calibrationPct*/ ctx[2] < 70);
-    			toggle_class(div5, "disabled", /*disableBack*/ ctx[5] == true);
-    			add_location(div5, file$1, 243, 4, 6870);
-    			attr_dev(div6, "class", "btn-next btn accent clickable svelte-1lhiom8");
-    			toggle_class(div6, "disabled", /*disableNext*/ ctx[6] == true);
-    			toggle_class(div6, "glow", /*$loadingInd*/ ctx[8] == true);
-    			add_location(div6, file$1, 251, 4, 7114);
-    			attr_dev(div7, "class", "container-footer svelte-1lhiom8");
-    			add_location(div7, file$1, 235, 2, 6691);
-    			attr_dev(section, "class", "experiment-container svelte-1lhiom8");
-    			add_location(section, file$1, 209, 0, 5621);
+    			add_location(div0, file$1, 183, 4, 5120);
+    			attr_dev(div1, "class", "nav-ind svelte-1shl68w");
+    			add_location(div1, file$1, 188, 4, 5296);
+    			attr_dev(div2, "class", "container-header svelte-1shl68w");
+    			add_location(div2, file$1, 182, 2, 5084);
+    			attr_dev(div3, "class", "container-body svelte-1shl68w");
+    			add_location(div3, file$1, 194, 2, 5475);
+    			attr_dev(div4, "class", "btn re-cal svelte-1shl68w");
+    			toggle_class(div4, "disabled", /*calibrated*/ ctx[5] == false);
+    			add_location(div4, file$1, 210, 4, 6155);
+    			attr_dev(div5, "class", "btn-prev btn disabled svelte-1shl68w");
+    			toggle_class(div5, "accent", /*$calibrationPct*/ ctx[1] && /*$calibrationPct*/ ctx[1] < 70);
+    			toggle_class(div5, "disabled", /*disableBack*/ ctx[3] == true);
+    			add_location(div5, file$1, 217, 4, 6304);
+    			attr_dev(div6, "class", "btn-next btn accent clickable svelte-1shl68w");
+    			toggle_class(div6, "disabled", /*disableNext*/ ctx[4] == true);
+    			toggle_class(div6, "glow", /*$loadingInd*/ ctx[7] == true);
+    			add_location(div6, file$1, 230, 4, 6690);
+    			attr_dev(div7, "class", "container-footer svelte-1shl68w");
+    			add_location(div7, file$1, 209, 2, 6119);
+    			attr_dev(section, "class", "experiment-container svelte-1shl68w");
+    			add_location(section, file$1, 181, 0, 5042);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			append_dev(document.head, script);
-    			insert_dev(target, t0, anchor);
     			insert_dev(target, section, anchor);
     			append_dev(section, div2);
     			append_dev(div2, div0);
-    			append_dev(div0, t1);
+    			append_dev(div0, t0);
     			append_dev(div0, span);
+    			append_dev(span, t1);
     			append_dev(span, t2);
     			append_dev(span, t3);
-    			append_dev(span, t4);
-    			append_dev(div2, t5);
+    			append_dev(div2, t4);
     			append_dev(div2, div1);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(div1, null);
     			}
 
-    			append_dev(section, t6);
+    			append_dev(section, t5);
     			append_dev(section, div3);
 
     			if (~current_block_type_index) {
     				if_blocks[current_block_type_index].m(div3, null);
     			}
 
-    			append_dev(section, t7);
+    			append_dev(section, t6);
     			append_dev(section, div7);
     			append_dev(div7, div4);
-    			append_dev(div7, t9);
+    			append_dev(div7, t8);
     			append_dev(div7, div5);
-    			append_dev(div5, t10);
-    			append_dev(div7, t11);
+    			append_dev(div5, t9);
+    			append_dev(div7, t10);
     			append_dev(div7, div6);
     			if_block1.m(div6, null);
     			current = true;
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(script, "load", /*load_handler*/ ctx[15], false, false, false),
-    					listen_dev(div4, "click", /*recalibrate*/ ctx[9], false, false, false),
-    					listen_dev(div5, "click", /*backClick*/ ctx[10], false, false, false),
-    					listen_dev(div6, "click", /*click_handler*/ ctx[16], false, false, false)
+    					listen_dev(div4, "click", /*recalibrate*/ ctx[8], false, false, false),
+    					listen_dev(div5, "click", /*click_handler*/ ctx[12], false, false, false),
+    					listen_dev(div6, "click", /*click_handler_1*/ ctx[13], false, false, false)
     				];
 
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if ((!current || dirty & /*$selectedImage*/ 128) && t2_value !== (t2_value = /*$selectedImage*/ ctx[7].title + "")) set_data_dev(t2, t2_value);
-    			if ((!current || dirty & /*$selectedImage*/ 128) && t4_value !== (t4_value = /*$selectedImage*/ ctx[7].artist + "")) set_data_dev(t4, t4_value);
+    			if ((!current || dirty & /*$selectedImage*/ 64) && t1_value !== (t1_value = /*$selectedImage*/ ctx[6].title + "")) set_data_dev(t1, t1_value);
+    			if ((!current || dirty & /*$selectedImage*/ 64) && t3_value !== (t3_value = /*$selectedImage*/ ctx[6].artist + "")) set_data_dev(t3, t3_value);
 
-    			if (dirty & /*sections, $stateIndex*/ 9) {
+    			if (dirty & /*sections, $stateIndex*/ 5) {
     				each_value = /*sections*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
@@ -28572,18 +28618,18 @@ var app = (function () {
     				}
     			}
 
-    			if (dirty & /*calibrated*/ 16) {
-    				toggle_class(div4, "disabled", /*calibrated*/ ctx[4] == false);
+    			if (dirty & /*calibrated*/ 32) {
+    				toggle_class(div4, "disabled", /*calibrated*/ ctx[5] == false);
     			}
 
-    			if ((!current || dirty & /*sections, $stateIndex*/ 9) && t10_value !== (t10_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[3]].btnBackLabel + "")) set_data_dev(t10, t10_value);
+    			if ((!current || dirty & /*sections, $stateIndex*/ 5) && t9_value !== (t9_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnBackLabel + "")) set_data_dev(t9, t9_value);
 
-    			if (dirty & /*$calibrationPct*/ 4) {
-    				toggle_class(div5, "accent", /*$calibrationPct*/ ctx[2] && /*$calibrationPct*/ ctx[2] < 70);
+    			if (dirty & /*$calibrationPct*/ 2) {
+    				toggle_class(div5, "accent", /*$calibrationPct*/ ctx[1] && /*$calibrationPct*/ ctx[1] < 70);
     			}
 
-    			if (dirty & /*disableBack*/ 32) {
-    				toggle_class(div5, "disabled", /*disableBack*/ ctx[5] == true);
+    			if (dirty & /*disableBack*/ 8) {
+    				toggle_class(div5, "disabled", /*disableBack*/ ctx[3] == true);
     			}
 
     			if (current_block_type === (current_block_type = select_block_type_1(ctx)) && if_block1) {
@@ -28598,12 +28644,12 @@ var app = (function () {
     				}
     			}
 
-    			if (dirty & /*disableNext*/ 64) {
-    				toggle_class(div6, "disabled", /*disableNext*/ ctx[6] == true);
+    			if (dirty & /*disableNext*/ 16) {
+    				toggle_class(div6, "disabled", /*disableNext*/ ctx[4] == true);
     			}
 
-    			if (dirty & /*$loadingInd*/ 256) {
-    				toggle_class(div6, "glow", /*$loadingInd*/ ctx[8] == true);
+    			if (dirty & /*$loadingInd*/ 128) {
+    				toggle_class(div6, "glow", /*$loadingInd*/ ctx[7] == true);
     			}
     		},
     		i: function intro(local) {
@@ -28624,8 +28670,6 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			detach_dev(script);
-    			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(section);
     			destroy_each(each_blocks, detaching);
 
@@ -28655,27 +28699,27 @@ var app = (function () {
     	let $calibrationCutoff;
     	let $calibrationPct;
     	let $gazerInitVideoDone;
-    	let $gazerInitDone;
     	let $stateIndex;
+    	let $gazerInitDone;
     	let $sessionID;
     	let $selectedImage;
     	let $loadingInd;
     	validate_store(calibrationCutoff, 'calibrationCutoff');
-    	component_subscribe($$self, calibrationCutoff, $$value => $$invalidate(12, $calibrationCutoff = $$value));
+    	component_subscribe($$self, calibrationCutoff, $$value => $$invalidate(9, $calibrationCutoff = $$value));
     	validate_store(calibrationPct, 'calibrationPct');
-    	component_subscribe($$self, calibrationPct, $$value => $$invalidate(2, $calibrationPct = $$value));
+    	component_subscribe($$self, calibrationPct, $$value => $$invalidate(1, $calibrationPct = $$value));
     	validate_store(gazerInitVideoDone, 'gazerInitVideoDone');
-    	component_subscribe($$self, gazerInitVideoDone, $$value => $$invalidate(13, $gazerInitVideoDone = $$value));
-    	validate_store(gazerInitDone, 'gazerInitDone');
-    	component_subscribe($$self, gazerInitDone, $$value => $$invalidate(14, $gazerInitDone = $$value));
+    	component_subscribe($$self, gazerInitVideoDone, $$value => $$invalidate(10, $gazerInitVideoDone = $$value));
     	validate_store(stateIndex, 'stateIndex');
-    	component_subscribe($$self, stateIndex, $$value => $$invalidate(3, $stateIndex = $$value));
+    	component_subscribe($$self, stateIndex, $$value => $$invalidate(2, $stateIndex = $$value));
+    	validate_store(gazerInitDone, 'gazerInitDone');
+    	component_subscribe($$self, gazerInitDone, $$value => $$invalidate(11, $gazerInitDone = $$value));
     	validate_store(sessionID, 'sessionID');
-    	component_subscribe($$self, sessionID, $$value => $$invalidate(19, $sessionID = $$value));
+    	component_subscribe($$self, sessionID, $$value => $$invalidate(16, $sessionID = $$value));
     	validate_store(selectedImage, 'selectedImage');
-    	component_subscribe($$self, selectedImage, $$value => $$invalidate(7, $selectedImage = $$value));
+    	component_subscribe($$self, selectedImage, $$value => $$invalidate(6, $selectedImage = $$value));
     	validate_store(loadingInd, 'loadingInd');
-    	component_subscribe($$self, loadingInd, $$value => $$invalidate(8, $loadingInd = $$value));
+    	component_subscribe($$self, loadingInd, $$value => $$invalidate(7, $loadingInd = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Record', slots, []);
 
@@ -28746,51 +28790,41 @@ var app = (function () {
     		sectionsNotCalibrated[5]
     	];
 
-    	//prob shouldn't do this
-    	let sections = sectionsNotCalibrated;
-
+    	let disableBack = false, disableNext = false;
     	let calibrated = false;
+    	let sections = sectionsNotCalibrated;
 
     	async function checkExistingCalibration() {
     		let gazerData = await localforage.getItem('webgazerGlobalData');
     		let calPct = await localforage.getItem('calibrationPct');
     		calibrationPct.set(calPct);
-    		console.log(gazerData, calibrationPct);
 
     		if (gazerData.length > 20 && calPct > $calibrationCutoff) {
     			$$invalidate(0, sections = sectionsCalibrated);
-    			$$invalidate(4, calibrated = true);
+    			$$invalidate(5, calibrated = true);
     		} else {
     			$$invalidate(0, sections = sectionsNotCalibrated);
     		}
-    	} //should store the date of calibration
+    	} //should store the date of calibration. if more than a day then it don't count sry bb
 
     	function recalibrate() {
-    		$$invalidate(4, calibrated = false);
+    		$$invalidate(5, calibrated = false);
     		$$invalidate(0, sections = sectionsNotCalibrated);
     		calibrationPct.set(null);
     	} //webgazer.clearData();
 
-    	let gazerReady, mount; //webgazer library loaded
-    	let disableBack = false, disableNext = false;
+    	checkExistingCalibration(); //this should happen and return before anything else loads
 
-    	afterUpdate(() => {
-    		$$invalidate(11, mount = true);
-
+    	//set unique ID for session
+    	onMount(() => {
     		if (!$sessionID) {
     			sessionID.set(new Date().getTime());
     		}
-    	});
 
-    	checkExistingCalibration(); //this should happen and return before anything else loads
-
-    	function backClick() {
-    		if (sections[$stateIndex] == 'calibrate-exercise') {
-    			gazerRestartCalibration();
+    		if (!$gazerInitDone) {
+    			gazerInitialize();
     		}
-
-    		set_store_value(stateIndex, $stateIndex--, $stateIndex);
-    	}
+    	});
 
     	//anytime page substate changes --- FIX THIS
     	let gazeActive, gazeRecording;
@@ -28798,18 +28832,23 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<Record> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Record> was created with unknown prop '${key}'`);
     	});
 
-    	const load_handler = () => {
-    		$$invalidate(1, gazerReady = true);
+    	const click_handler = () => {
+    		if (sections[$stateIndex] == 'calibrate-exercise') {
+    			gazerRestartCalibration();
+    		}
+
+    		set_store_value(stateIndex, $stateIndex--, $stateIndex);
     	};
 
-    	const click_handler = () => set_store_value(stateIndex, $stateIndex++, $stateIndex);
+    	const click_handler_1 = () => set_store_value(stateIndex, $stateIndex++, $stateIndex);
 
     	$$self.$capture_state = () => ({
     		pageState,
     		selectedImage,
+    		gazerReady,
     		gazerInitVideoDone,
     		calibrationPct,
     		calibrationCutoff,
@@ -28825,7 +28864,7 @@ var app = (function () {
     		CalibrateInstructions: RecordCalibrateInstructions,
     		CalibrateResults: RecordCalibrateResults,
     		CalibrateView: RecordView,
-    		afterUpdate,
+    		onMount,
     		gazerInitialize,
     		gazerMoveVideo,
     		gazerInitVideo,
@@ -28834,22 +28873,19 @@ var app = (function () {
     		localforage: localforage$1,
     		sectionsNotCalibrated,
     		sectionsCalibrated,
-    		sections,
-    		calibrated,
-    		checkExistingCalibration,
-    		recalibrate,
-    		gazerReady,
-    		mount,
     		disableBack,
     		disableNext,
-    		backClick,
+    		calibrated,
+    		sections,
+    		checkExistingCalibration,
+    		recalibrate,
     		gazeActive,
     		gazeRecording,
     		$calibrationCutoff,
     		$calibrationPct,
     		$gazerInitVideoDone,
-    		$gazerInitDone,
     		$stateIndex,
+    		$gazerInitDone,
     		$sessionID,
     		$selectedImage,
     		$loadingInd
@@ -28858,12 +28894,10 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ('sectionsNotCalibrated' in $$props) sectionsNotCalibrated = $$props.sectionsNotCalibrated;
     		if ('sectionsCalibrated' in $$props) sectionsCalibrated = $$props.sectionsCalibrated;
+    		if ('disableBack' in $$props) $$invalidate(3, disableBack = $$props.disableBack);
+    		if ('disableNext' in $$props) $$invalidate(4, disableNext = $$props.disableNext);
+    		if ('calibrated' in $$props) $$invalidate(5, calibrated = $$props.calibrated);
     		if ('sections' in $$props) $$invalidate(0, sections = $$props.sections);
-    		if ('calibrated' in $$props) $$invalidate(4, calibrated = $$props.calibrated);
-    		if ('gazerReady' in $$props) $$invalidate(1, gazerReady = $$props.gazerReady);
-    		if ('mount' in $$props) $$invalidate(11, mount = $$props.mount);
-    		if ('disableBack' in $$props) $$invalidate(5, disableBack = $$props.disableBack);
-    		if ('disableNext' in $$props) $$invalidate(6, disableNext = $$props.disableNext);
     		if ('gazeActive' in $$props) gazeActive = $$props.gazeActive;
     		if ('gazeRecording' in $$props) gazeRecording = $$props.gazeRecording;
     	};
@@ -28873,74 +28907,59 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*$gazerInitVideoDone, $gazerInitDone*/ 24576) {
-    			////
+    		if ($$self.$$.dirty & /*$gazerInitVideoDone, $gazerInitDone*/ 3072) {
     			//reactively update loading indicator for sections
-    			//NOT reactively updating
     			{
-    				console.log('updating loaders');
     				sectionsNotCalibrated[0].loadingVar = $gazerInitDone;
     				sectionsNotCalibrated[1].loadingVar = $gazerInitVideoDone;
     				sectionsCalibrated[0].loadingVar = $gazerInitVideoDone;
     			}
     		}
 
-    		if ($$self.$$.dirty & /*mount, gazerReady*/ 2050) {
-    			{
-    				if (mount && gazerReady) {
-    					gazerInitialize();
-    				}
-    			}
-    		}
-
-    		if ($$self.$$.dirty & /*$gazerInitVideoDone, sections, $stateIndex, mount, gazerReady, $gazerInitDone*/ 26635) {
+    		if ($$self.$$.dirty & /*$gazerInitVideoDone, sections, $stateIndex*/ 1029) {
     			{
     				let currSection = sections[$stateIndex];
 
-    				if (mount && gazerReady) {
-    					if (currSection.videoShown == true && $gazerInitDone) {
-    						webgazer.showVideo(true);
-    						gazerMoveVideo(currSection.videoPos);
-    					} else {
-    						webgazer.showVideo(false);
-    					}
+    				if (currSection.videoShown == true && $gazerInitVideoDone == true) {
+    					webgazer.showVideo(true);
+    					gazerMoveVideo(currSection.videoPos);
+    				} else {
+    					webgazer.showVideo(false);
+    				}
 
-    					if (currSection.disableBack) {
-    						$$invalidate(5, disableBack = true);
-    					} else {
-    						$$invalidate(5, disableBack = false);
-    					}
+    				if (currSection.disableBack) {
+    					$$invalidate(3, disableBack = true);
+    				} else {
+    					$$invalidate(3, disableBack = false);
+    				}
 
-    					console.log(currSection.showLoader, currSection.loadingVar);
+    				if (currSection.showLoader == true && !currSection.loadingVar) {
+    					loadingInd.set(true);
+    				} else {
+    					loadingInd.set(false);
+    				}
 
-    					if (currSection.showLoader == true && !currSection.loadingVar) {
-    						loadingInd.set(true);
-    					} else {
-    						loadingInd.set(false);
-    					}
-
-    					if (currSection.disableNext) {
-    						$$invalidate(6, disableNext = true);
-    					} else {
-    						$$invalidate(6, disableNext = false);
-    					}
+    				if (currSection.disableNext) {
+    					$$invalidate(4, disableNext = true);
+    				} else {
+    					$$invalidate(4, disableNext = false);
     				}
     			}
     		}
 
-    		if ($$self.$$.dirty & /*$gazerInitVideoDone*/ 8192) {
+    		if ($$self.$$.dirty & /*$gazerInitVideoDone*/ 1024) {
     			//detect if going back BAD BAD BAD code
     			{
     				if ($gazerInitVideoDone) {
-    					$$invalidate(6, disableNext = false);
+    					$$invalidate(4, disableNext = false);
     				}
     			}
     		}
 
-    		if ($$self.$$.dirty & /*$calibrationPct, $calibrationCutoff*/ 4100) {
+    		if ($$self.$$.dirty & /*$calibrationPct, $calibrationCutoff*/ 514) {
     			{
     				if ($calibrationPct > $calibrationCutoff) {
-    					$$invalidate(6, disableNext = false);
+    					$$invalidate(4, disableNext = false);
     				}
     			}
     		}
@@ -28948,22 +28967,19 @@ var app = (function () {
 
     	return [
     		sections,
-    		gazerReady,
     		$calibrationPct,
     		$stateIndex,
-    		calibrated,
     		disableBack,
     		disableNext,
+    		calibrated,
     		$selectedImage,
     		$loadingInd,
     		recalibrate,
-    		backClick,
-    		mount,
     		$calibrationCutoff,
     		$gazerInitVideoDone,
     		$gazerInitDone,
-    		load_handler,
-    		click_handler
+    		click_handler,
+    		click_handler_1
     	];
     }
 
@@ -29065,11 +29081,16 @@ var app = (function () {
     function create_fragment(ctx) {
     	let main;
     	let header;
-    	let t;
+    	let t0;
     	let div;
     	let current_block_type_index;
     	let if_block;
+    	let t1;
+    	let script;
+    	let script_src_value;
     	let current;
+    	let mounted;
+    	let dispose;
     	header = new Header({ $$inline: true });
     	const if_block_creators = [create_if_block, create_if_block_1];
     	const if_blocks = [];
@@ -29088,12 +29109,16 @@ var app = (function () {
     		c: function create() {
     			main = element("main");
     			create_component(header.$$.fragment);
-    			t = space();
+    			t0 = space();
     			div = element("div");
     			if (if_block) if_block.c();
+    			t1 = space();
+    			script = element("script");
     			attr_dev(div, "class", "container svelte-1i8s65b");
-    			add_location(div, file, 30, 2, 682);
-    			add_location(main, file, 28, 0, 660);
+    			add_location(div, file, 30, 2, 694);
+    			add_location(main, file, 28, 0, 672);
+    			if (!src_url_equal(script.src, script_src_value = "./assets/webgazer.min.js")) attr_dev(script, "src", script_src_value);
+    			add_location(script, file, 40, 2, 869);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -29101,14 +29126,21 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
     			mount_component(header, main, null);
-    			append_dev(main, t);
+    			append_dev(main, t0);
     			append_dev(main, div);
 
     			if (~current_block_type_index) {
     				if_blocks[current_block_type_index].m(div, null);
     			}
 
+    			insert_dev(target, t1, anchor);
+    			append_dev(document.head, script);
     			current = true;
+
+    			if (!mounted) {
+    				dispose = listen_dev(script, "load", /*load_handler*/ ctx[1], false, false, false);
+    				mounted = true;
+    			}
     		},
     		p: function update(ctx, [dirty]) {
     			let previous_block_index = current_block_type_index;
@@ -29158,6 +29190,11 @@ var app = (function () {
     			if (~current_block_type_index) {
     				if_blocks[current_block_type_index].d();
     			}
+
+    			if (detaching) detach_dev(t1);
+    			detach_dev(script);
+    			mounted = false;
+    			dispose();
     		}
     	};
 
@@ -29198,10 +29235,15 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
+    	const load_handler = () => {
+    		gazerReady.set(true);
+    	};
+
     	$$self.$capture_state = () => ({
     		pageState,
     		screenWidth,
     		screenHeight,
+    		gazerReady,
     		screenSize,
     		onMount,
     		Gallery,
@@ -29212,7 +29254,7 @@ var app = (function () {
     		$pageState
     	});
 
-    	return [$pageState];
+    	return [$pageState, load_handler];
     }
 
     class App extends SvelteComponentDev {

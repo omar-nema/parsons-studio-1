@@ -1,20 +1,23 @@
 <script>
-  import { gazerInitVideo } from '../utils/gazerUtils';
+  import { gazerInitVideo, gazerResume } from '../utils/gazerUtils';
   import { onMount } from 'svelte';
   import {
-    gazerInitVideoDone,
     gazerInitDone,
     calibrationPct,
+    gazerInitVideoDone,
   } from '../stores/pageState';
 
   export let calibrated;
 
   $: {
     if ($gazerInitDone) {
-      console.log('yea baby');
-      setTimeout(() => {
-        gazerInitVideo();
-      }, 200);
+      if (!$gazerInitVideoDone) {
+        setTimeout(() => {
+          gazerInitVideo();
+        }, 200);
+      } else {
+        gazerResume();
+      }
     }
   }
 </script>

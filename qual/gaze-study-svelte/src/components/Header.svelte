@@ -1,5 +1,10 @@
 <script>
-  import { pageState } from '../stores/pageState';
+  import {
+    gazerInitDone,
+    gazerInitVideoDone,
+    pageState,
+  } from '../stores/pageState';
+  import { hideGazerForLater } from '../utils/gazerUtils';
   import { slide, fade } from 'svelte/transition';
 </script>
 
@@ -30,6 +35,9 @@
         transition:fade
         class="btn clickable"
         on:click={() => {
+          if ($gazerInitDone && $gazerInitVideoDone) {
+            hideGazerForLater();
+          }
           pageState.set('gallery');
         }}
         class:active={$pageState === 'record'}

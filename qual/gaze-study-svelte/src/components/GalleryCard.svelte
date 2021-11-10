@@ -10,14 +10,10 @@
   import { contourMapBlur } from '../utils/generateVisuals';
 
   export let data;
-
   let maxW = 1000,
     maxH = $screenHeight * 0.85 - 200;
 
-  onMount(() => {
-    //get this bounding client rect
-    //console.log(document.querySelector('.card-outer').getBoundingClientRect());
-  });
+  let sliderVal = 0;
 
   let width = 'auto',
     ht = 'auto',
@@ -29,31 +25,31 @@
     width = maxW + 'px';
     styleSubstring = 'width: 100%';
   }
-
   let sessions = data.sessionData;
   let sessionsArray = Object.keys(sessions);
   let currSessionIndex = 0;
-  let currSessionKey;
-
+  let currSessionKey, currSession;
+  $: {
+    currSessionKey = sessionsArray[currSessionIndex];
+    currSession = sessions[currSessionKey];
+  }
   function navigateKeys(chg) {
     currSessionIndex = currSessionIndex + chg;
   }
 
-  $: {
-    currSessionKey = sessionsArray[currSessionIndex];
-  }
-
+  //on viewer change
   $: (async () => {
     let sessionData = await dbGet('sessionData/' + currSessionKey);
     if (sessionData) {
       contourMapBlur(sessionData);
+      document.querySelector('#slider').setAttribute('max', sessionData.length);
+      sliderVal = 0;
     }
   })();
 </script>
 
 <div class="card-outer">
   <h2>{data.artist}, <i>{data.title}</i></h2>
-  <!-- <Slider bind:value sliderRange /> -->
   <div class="card-filters">
     <div class="viewer-filter  filter-group">
       <div class="label">
@@ -80,11 +76,7 @@
             {#each sessionsArray as session}
               <option value={session}>{sessions[session].name}</option>
             {/each}
-
-            <!-- <option value={b}>b</option>
-            <option value={c}>c</option> -->
           </select>
-          <!-- <span class="name clickable">{sessions[currSessionKey].name}</span> -->
         </div>
         <div
           class="filter clickable"
@@ -115,6 +107,7 @@
               min="0"
               max="150"
               step="1"
+              bind:value={sliderVal}
             />
           </span>
         </div>
@@ -268,6 +261,9 @@
     width: 15px;
     cursor: pointer !important;
     transition: opacity 0.1s linear;
+  }
+  input[type='range']::-ms-fill-lower {
+    background: blue !important;
   }
   input[type='range']::-moz-range-thumb {
     -webkit-appearance: none !important;

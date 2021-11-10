@@ -6,7 +6,11 @@ export let calibrationState = writable(null);
 export let gazerRecordingTraining = writable([]);
 export let gazerRecordingArt = writable([]);
 
+//just the library loaded
+export let gazerReady = writable(false);
+//gazer initialized but video feed not set
 export let gazerInitDone = writable(false);
+//video feed fully loaded
 export let gazerInitVideoDone = writable(false);
 
 export let calibrationPct = writable(null);

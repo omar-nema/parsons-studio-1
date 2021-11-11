@@ -2,11 +2,11 @@
   import { artworkMetadata } from '../stores/artworkMetadata';
   import {
     gazerRecordingArt,
-    artworkID,
     sessionID,
     loadingInd,
     stateIndex,
     pageState,
+    selectedImage,
   } from '../stores/pageState';
   import {
     dbGet,
@@ -19,8 +19,8 @@
   //get data from stores
   let sessionId = $sessionID;
   let sessionData = $gazerRecordingArt;
-  let artworkId = $artworkID,
-    artworkData = $artworkMetadata[$artworkID];
+  let artworkId = $selectedImage.key,
+    artworkData = selectedImage;
   //name input ind
   let nameInputted = false;
   let userName;

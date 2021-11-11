@@ -1,31 +1,36 @@
 <script>
   import GalleryCard from '../components/GalleryCard.svelte';
-  import { dbGet } from '../utils/firebaseUtils.js';
+  import { dbGet, dbWrite } from '../utils/firebaseUtils.js';
   import { slide, fade } from 'svelte/transition';
+  import { artworkMetadata } from '../stores/artworkMetadata';
 
   //load the works in real time
 
-  let works = [];
+  let worksArray = [],
+    worksKeys = [];
   async function getAllWorks() {
-    works = Object.values(await dbGet('works'));
-    console.log(works);
+    let worksObject = await dbGet('works');
+    if (worksObject) {
+      worksArray = Object.values(worksObject);
+      worksKeys = Object.keys(worksObject);
+    }
+    //write any new artwork that is not yet in DB to DB
+    for (let key in $artworkMetadata) {
+      if (!worksKeys.includes(key)) {
+        let objToAdd = $artworkMetadata[key];
+        console.log(key, objToAdd);
+        dbWrite('works/' + key, objToAdd);
+      }
+    }
+
+    console.log(worksArray);
   }
 
   getAllWorks();
-
-  ///get imgdata instead from API
-  //ping the works
-
-  //artworkdata, create card for each
 </script>
 
-<!-- <p class="font-lg" style="margin-bottom: 30px">
-  Welcome to the gallery! Select a piece of artwork to see how participating
-  individuals viewed it.
-</p> -->
-
 <div class="card-holder">
-  {#each works as img}
+  {#each worksArray as img}
     <GalleryCard data={img} />
   {/each}
 </div>

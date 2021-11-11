@@ -679,6 +679,10 @@ var app = (function () {
         else
             dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
     }
+    function prop_dev(node, property, value) {
+        node[property] = value;
+        dispatch_dev('SvelteDOMSetProperty', { node, property, value });
+    }
     function set_data_dev(text, data) {
         data = '' + data;
         if (text.wholeText === data)
@@ -797,7 +801,7 @@ var app = (function () {
     let stateIndex = writable(0);
     let loadingInd = writable(true);
 
-    let artworkID = writable('mehretuUntitled');
+    // export let artworkID = writable(null); //is this used?
     let sessionID = writable(null);
 
     let screenWidth = writable(null);
@@ -22410,13 +22414,13 @@ var app = (function () {
     }
 
     //we need to update this to blur better
-    async function contourMapBlur(data) {
+    async function contourMapBlur(svgInput, data) {
       console.log(data);
       let bbox = select('.img-holder').node().getBoundingClientRect();
       let width = bbox.width;
       let height = 0.705 * width;
 
-      let svg = select('#contour-overlay')
+      let svg = select(svgInput)
         .attr('viewBox', [0, 0, width, height])
         .attr('preserveAspectRatio', 'xMinYMin meet');
       let margin = 30;
@@ -22481,30 +22485,38 @@ var app = (function () {
 
     function get_each_context$3(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[18] = list[i];
+    	child_ctx[20] = list[i];
     	return child_ctx;
     }
 
-    // (78:12) {#each sessionsArray as session}
+    // (85:12) {#each sessionsArray as session}
     function create_each_block$3(ctx) {
     	let option;
-    	let t_value = /*sessions*/ ctx[7][/*session*/ ctx[18]].name + "";
+    	let t_value = /*sessions*/ ctx[3][/*session*/ ctx[20]].name + "";
     	let t;
+    	let option_value_value;
 
     	const block = {
     		c: function create() {
     			option = element("option");
     			t = text(t_value);
-    			option.__value = /*session*/ ctx[18];
+    			option.__value = option_value_value = /*session*/ ctx[20];
     			option.value = option.__value;
     			attr_dev(option, "class", "svelte-4p1f8k");
-    			add_location(option, file$b, 78, 14, 2353);
+    			add_location(option, file$b, 85, 14, 2477);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
     			append_dev(option, t);
     		},
-    		p: noop$3,
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*sessions, sessionsArray*/ 264 && t_value !== (t_value = /*sessions*/ ctx[3][/*session*/ ctx[20]].name + "")) set_data_dev(t, t_value);
+
+    			if (dirty & /*sessionsArray*/ 256 && option_value_value !== (option_value_value = /*session*/ ctx[20])) {
+    				prop_dev(option, "__value", option_value_value);
+    				option.value = option.__value;
+    			}
+    		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(option);
     		}
@@ -22514,7 +22526,7 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(78:12) {#each sessionsArray as session}",
+    		source: "(85:12) {#each sessionsArray as session}",
     		ctx
     	});
 
@@ -22633,38 +22645,38 @@ var app = (function () {
     			div11 = element("div");
     			svg = svg_element("svg");
     			attr_dev(i, "class", "svelte-4p1f8k");
-    			add_location(i, file$b, 51, 21, 1271);
+    			add_location(i, file$b, 58, 21, 1395);
     			attr_dev(h2, "class", "svelte-4p1f8k");
-    			add_location(h2, file$b, 51, 2, 1252);
+    			add_location(h2, file$b, 58, 2, 1376);
     			attr_dev(span0, "class", "material-icons-round md-14 svelte-4p1f8k");
-    			add_location(span0, file$b, 55, 8, 1409);
-    			add_location(span1, file$b, 56, 8, 1473);
+    			add_location(span0, file$b, 62, 8, 1533);
+    			add_location(span1, file$b, 63, 8, 1597);
     			attr_dev(div0, "class", "label svelte-4p1f8k");
-    			add_location(div0, file$b, 54, 6, 1380);
+    			add_location(div0, file$b, 61, 6, 1504);
     			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-4p1f8k");
-    			toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[6] == 0);
-    			add_location(span2, file$b, 60, 10, 1593);
+    			toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[9] == 0);
+    			add_location(span2, file$b, 67, 10, 1717);
     			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-4p1f8k");
-    			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[6] == /*sessionsArray*/ ctx[8].length - 1);
-    			add_location(span3, file$b, 68, 10, 1903);
+    			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[9] == /*sessionsArray*/ ctx[8].length - 1);
+    			add_location(span3, file$b, 75, 10, 2027);
     			attr_dev(select, "class", "clickable svelte-4p1f8k");
-    			if (/*currSessionKey*/ ctx[1] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[11].call(select));
-    			add_location(select, file$b, 76, 10, 2237);
+    			if (/*currSessionKey*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[12].call(select));
+    			add_location(select, file$b, 83, 10, 2361);
     			attr_dev(div1, "class", "filter selected svelte-4p1f8k");
-    			add_location(div1, file$b, 59, 8, 1552);
+    			add_location(div1, file$b, 66, 8, 1676);
     			attr_dev(div2, "class", "filter clickable svelte-4p1f8k");
-    			add_location(div2, file$b, 82, 8, 2478);
+    			add_location(div2, file$b, 89, 8, 2602);
     			attr_dev(div3, "class", "filter-options svelte-4p1f8k");
-    			add_location(div3, file$b, 58, 6, 1514);
+    			add_location(div3, file$b, 65, 6, 1638);
     			attr_dev(div4, "class", "viewer-filter filter-group svelte-4p1f8k");
-    			add_location(div4, file$b, 53, 4, 1331);
+    			add_location(div4, file$b, 60, 4, 1455);
     			attr_dev(span4, "class", "material-icons-round md-14 svelte-4p1f8k");
-    			add_location(span4, file$b, 96, 8, 2795);
-    			add_location(span5, file$b, 97, 8, 2859);
+    			add_location(span4, file$b, 103, 8, 2919);
+    			add_location(span5, file$b, 104, 8, 2983);
     			attr_dev(div5, "class", "label svelte-4p1f8k");
-    			add_location(div5, file$b, 95, 6, 2766);
+    			add_location(div5, file$b, 102, 6, 2890);
     			attr_dev(span6, "class", "material-icons-round md-14 clickable svelte-4p1f8k");
-    			add_location(span6, file$b, 101, 10, 2984);
+    			add_location(span6, file$b, 108, 10, 3108);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "id", "slider");
     			attr_dev(input, "name", "slider");
@@ -22672,30 +22684,30 @@ var app = (function () {
     			attr_dev(input, "max", "150");
     			attr_dev(input, "step", "1");
     			attr_dev(input, "class", "svelte-4p1f8k");
-    			add_location(input, file$b, 104, 12, 3187);
+    			add_location(input, file$b, 111, 12, 3311);
     			attr_dev(span7, "id", "slider-holder");
     			attr_dev(span7, "class", "svelte-4p1f8k");
-    			add_location(span7, file$b, 103, 10, 3148);
+    			add_location(span7, file$b, 110, 10, 3272);
     			attr_dev(div6, "class", "filter selected time svelte-4p1f8k");
-    			add_location(div6, file$b, 100, 8, 2938);
+    			add_location(div6, file$b, 107, 8, 3062);
     			attr_dev(div7, "class", "filter clickable svelte-4p1f8k");
-    			add_location(div7, file$b, 115, 8, 3448);
+    			add_location(div7, file$b, 122, 8, 3572);
     			attr_dev(div8, "class", "filter-options svelte-4p1f8k");
-    			add_location(div8, file$b, 99, 6, 2900);
+    			add_location(div8, file$b, 106, 6, 3024);
     			attr_dev(div9, "class", "visual-filter filter-group svelte-4p1f8k");
-    			add_location(div9, file$b, 94, 4, 2718);
+    			add_location(div9, file$b, 101, 4, 2842);
     			attr_dev(div10, "class", "card-filters svelte-4p1f8k");
-    			add_location(div10, file$b, 52, 2, 1299);
-    			attr_dev(svg, "style", /*styleSubstring*/ ctx[5]);
+    			add_location(div10, file$b, 59, 2, 1423);
+    			attr_dev(svg, "style", /*styleSubstring*/ ctx[7]);
     			attr_dev(svg, "id", "contour-overlay");
     			attr_dev(svg, "class", "svelte-4p1f8k");
-    			add_location(svg, file$b, 120, 4, 3600);
+    			add_location(svg, file$b, 127, 4, 3724);
     			attr_dev(div11, "class", "img-holder svelte-4p1f8k");
-    			set_style(div11, "width", /*width*/ ctx[3]);
-    			set_style(div11, "height", /*ht*/ ctx[4]);
-    			add_location(div11, file$b, 119, 2, 3533);
+    			set_style(div11, "width", /*width*/ ctx[5]);
+    			set_style(div11, "height", /*ht*/ ctx[6]);
+    			add_location(div11, file$b, 126, 2, 3657);
     			attr_dev(div12, "class", "card-outer svelte-4p1f8k");
-    			add_location(div12, file$b, 50, 0, 1224);
+    			add_location(div12, file$b, 57, 0, 1348);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -22727,7 +22739,7 @@ var app = (function () {
     				each_blocks[i].m(select, null);
     			}
 
-    			select_option(select, /*currSessionKey*/ ctx[1]);
+    			select_option(select, /*currSessionKey*/ ctx[2]);
     			append_dev(div3, t12);
     			append_dev(div3, div2);
     			append_dev(div10, t14);
@@ -22743,21 +22755,22 @@ var app = (function () {
     			append_dev(div6, t20);
     			append_dev(div6, span7);
     			append_dev(span7, input);
-    			set_input_value(input, /*sliderVal*/ ctx[2]);
+    			set_input_value(input, /*sliderVal*/ ctx[4]);
     			append_dev(div8, t21);
     			append_dev(div8, div7);
     			append_dev(div12, t23);
     			append_dev(div12, div11);
     			append_dev(div11, svg);
+    			/*svg_binding*/ ctx[15](svg);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(span2, "click", /*click_handler*/ ctx[9], false, false, false),
-    					listen_dev(span3, "click", /*click_handler_1*/ ctx[10], false, false, false),
-    					listen_dev(select, "change", /*select_change_handler*/ ctx[11]),
-    					listen_dev(div2, "click", /*click_handler_2*/ ctx[12], false, false, false),
-    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[13]),
-    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[13])
+    					listen_dev(span2, "click", /*click_handler*/ ctx[10], false, false, false),
+    					listen_dev(span3, "click", /*click_handler_1*/ ctx[11], false, false, false),
+    					listen_dev(select, "change", /*select_change_handler*/ ctx[12]),
+    					listen_dev(div2, "click", /*click_handler_2*/ ctx[13], false, false, false),
+    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[14]),
+    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[14])
     				];
 
     				mounted = true;
@@ -22767,15 +22780,15 @@ var app = (function () {
     			if (dirty & /*data*/ 1 && t0_value !== (t0_value = /*data*/ ctx[0].artist + "")) set_data_dev(t0, t0_value);
     			if (dirty & /*data*/ 1 && t2_value !== (t2_value = /*data*/ ctx[0].title + "")) set_data_dev(t2, t2_value);
 
-    			if (dirty & /*currSessionIndex*/ 64) {
-    				toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[6] == 0);
+    			if (dirty & /*currSessionIndex*/ 512) {
+    				toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[9] == 0);
     			}
 
-    			if (dirty & /*currSessionIndex, sessionsArray*/ 320) {
-    				toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[6] == /*sessionsArray*/ ctx[8].length - 1);
+    			if (dirty & /*currSessionIndex, sessionsArray*/ 768) {
+    				toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[9] == /*sessionsArray*/ ctx[8].length - 1);
     			}
 
-    			if (dirty & /*sessionsArray, sessions*/ 384) {
+    			if (dirty & /*sessionsArray, sessions*/ 264) {
     				each_value = /*sessionsArray*/ ctx[8];
     				validate_each_argument(each_value);
     				let i;
@@ -22799,24 +22812,24 @@ var app = (function () {
     				each_blocks.length = each_value.length;
     			}
 
-    			if (dirty & /*currSessionKey, sessionsArray*/ 258) {
-    				select_option(select, /*currSessionKey*/ ctx[1]);
+    			if (dirty & /*currSessionKey, sessionsArray*/ 260) {
+    				select_option(select, /*currSessionKey*/ ctx[2]);
     			}
 
-    			if (dirty & /*sliderVal*/ 4) {
-    				set_input_value(input, /*sliderVal*/ ctx[2]);
+    			if (dirty & /*sliderVal*/ 16) {
+    				set_input_value(input, /*sliderVal*/ ctx[4]);
     			}
 
-    			if (dirty & /*styleSubstring*/ 32) {
-    				attr_dev(svg, "style", /*styleSubstring*/ ctx[5]);
+    			if (dirty & /*styleSubstring*/ 128) {
+    				attr_dev(svg, "style", /*styleSubstring*/ ctx[7]);
     			}
 
-    			if (dirty & /*width*/ 8) {
-    				set_style(div11, "width", /*width*/ ctx[3]);
+    			if (dirty & /*width*/ 32) {
+    				set_style(div11, "width", /*width*/ ctx[5]);
     			}
 
-    			if (dirty & /*ht*/ 16) {
-    				set_style(div11, "height", /*ht*/ ctx[4]);
+    			if (dirty & /*ht*/ 64) {
+    				set_style(div11, "height", /*ht*/ ctx[6]);
     			}
     		},
     		i: noop$3,
@@ -22824,6 +22837,7 @@ var app = (function () {
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div12);
     			destroy_each(each_blocks, detaching);
+    			/*svg_binding*/ ctx[15](null);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -22843,9 +22857,10 @@ var app = (function () {
     function instance$b($$self, $$props, $$invalidate) {
     	let $screenHeight;
     	validate_store(screenHeight, 'screenHeight');
-    	component_subscribe($$self, screenHeight, $$value => $$invalidate(15, $screenHeight = $$value));
+    	component_subscribe($$self, screenHeight, $$value => $$invalidate(17, $screenHeight = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('GalleryCard', slots, []);
+    	let visSvg;
     	let { data } = $$props;
     	let maxW = 1000, maxH = $screenHeight * 0.85 - 200;
     	let sliderVal = 0;
@@ -22860,8 +22875,18 @@ var app = (function () {
     	}
 
     	let currSessionKey, currSession;
-    	let sessions = data.sessionData;
-    	let sessionsArray = Object.keys(sessions);
+    	let sessions = [];
+
+    	if (data.sessionData) {
+    		sessions = data.sessionData;
+    	}
+
+    	let sessionsArray = [];
+
+    	if (sessions) {
+    		sessionsArray = Object.keys(sessions);
+    	}
+
     	let currSessionIndex = sessionsArray.length - 1;
     	currSessionKey = sessionsArray[currSessionIndex];
     	const writable_props = ['data'];
@@ -22871,18 +22896,18 @@ var app = (function () {
     	});
 
     	const click_handler = () => {
-    		$$invalidate(6, currSessionIndex--, currSessionIndex);
-    		$$invalidate(1, currSessionKey = sessionsArray[currSessionIndex]);
+    		$$invalidate(9, currSessionIndex--, currSessionIndex);
+    		$$invalidate(2, currSessionKey = sessionsArray[currSessionIndex]);
     	};
 
     	const click_handler_1 = () => {
-    		$$invalidate(6, currSessionIndex++, currSessionIndex);
-    		$$invalidate(1, currSessionKey = sessionsArray[currSessionIndex]);
+    		$$invalidate(9, currSessionIndex++, currSessionIndex);
+    		$$invalidate(2, currSessionKey = sessionsArray[currSessionIndex]);
     	};
 
     	function select_change_handler() {
     		currSessionKey = select_value(this);
-    		$$invalidate(1, currSessionKey);
+    		$$invalidate(2, currSessionKey);
     		$$invalidate(8, sessionsArray);
     	}
 
@@ -22893,7 +22918,14 @@ var app = (function () {
 
     	function input_change_input_handler() {
     		sliderVal = to_number(this.value);
-    		($$invalidate(2, sliderVal), $$invalidate(1, currSessionKey));
+    		(($$invalidate(4, sliderVal), $$invalidate(2, currSessionKey)), $$invalidate(1, visSvg));
+    	}
+
+    	function svg_binding($$value) {
+    		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+    			visSvg = $$value;
+    			$$invalidate(1, visSvg);
+    		});
     	}
 
     	$$self.$$set = $$props => {
@@ -22908,6 +22940,7 @@ var app = (function () {
     		dbGet,
     		onMount,
     		contourMapBlur,
+    		visSvg,
     		data,
     		maxW,
     		maxH,
@@ -22924,18 +22957,19 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
+    		if ('visSvg' in $$props) $$invalidate(1, visSvg = $$props.visSvg);
     		if ('data' in $$props) $$invalidate(0, data = $$props.data);
     		if ('maxW' in $$props) maxW = $$props.maxW;
     		if ('maxH' in $$props) maxH = $$props.maxH;
-    		if ('sliderVal' in $$props) $$invalidate(2, sliderVal = $$props.sliderVal);
-    		if ('width' in $$props) $$invalidate(3, width = $$props.width);
-    		if ('ht' in $$props) $$invalidate(4, ht = $$props.ht);
-    		if ('styleSubstring' in $$props) $$invalidate(5, styleSubstring = $$props.styleSubstring);
-    		if ('currSessionKey' in $$props) $$invalidate(1, currSessionKey = $$props.currSessionKey);
+    		if ('sliderVal' in $$props) $$invalidate(4, sliderVal = $$props.sliderVal);
+    		if ('width' in $$props) $$invalidate(5, width = $$props.width);
+    		if ('ht' in $$props) $$invalidate(6, ht = $$props.ht);
+    		if ('styleSubstring' in $$props) $$invalidate(7, styleSubstring = $$props.styleSubstring);
+    		if ('currSessionKey' in $$props) $$invalidate(2, currSessionKey = $$props.currSessionKey);
     		if ('currSession' in $$props) currSession = $$props.currSession;
-    		if ('sessions' in $$props) $$invalidate(7, sessions = $$props.sessions);
+    		if ('sessions' in $$props) $$invalidate(3, sessions = $$props.sessions);
     		if ('sessionsArray' in $$props) $$invalidate(8, sessionsArray = $$props.sessionsArray);
-    		if ('currSessionIndex' in $$props) $$invalidate(6, currSessionIndex = $$props.currSessionIndex);
+    		if ('currSessionIndex' in $$props) $$invalidate(9, currSessionIndex = $$props.currSessionIndex);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -22943,21 +22977,21 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*currSessionKey*/ 2) {
+    		if ($$self.$$.dirty & /*sessions, currSessionKey*/ 12) {
     			{
     				currSession = sessions[currSessionKey];
     			}
     		}
 
-    		if ($$self.$$.dirty & /*currSessionKey*/ 2) {
+    		if ($$self.$$.dirty & /*currSessionKey, visSvg*/ 6) {
     			//on viewer change
     			(async () => {
     				let sessionData = await dbGet('sessionData/' + currSessionKey);
 
     				if (sessionData) {
-    					contourMapBlur(sessionData);
+    					contourMapBlur(visSvg, sessionData);
     					document.querySelector('#slider').setAttribute('max', sessionData.length);
-    					$$invalidate(2, sliderVal = 0);
+    					$$invalidate(4, sliderVal = 0);
     				}
     			})();
     		}
@@ -22965,19 +22999,21 @@ var app = (function () {
 
     	return [
     		data,
+    		visSvg,
     		currSessionKey,
+    		sessions,
     		sliderVal,
     		width,
     		ht,
     		styleSubstring,
-    		currSessionIndex,
-    		sessions,
     		sessionsArray,
+    		currSessionIndex,
     		click_handler,
     		click_handler_1,
     		select_change_handler,
     		click_handler_2,
-    		input_change_input_handler
+    		input_change_input_handler,
+    		svg_binding
     	];
     }
 
@@ -23010,6 +23046,25 @@ var app = (function () {
     	}
     }
 
+    let artworkData = {
+      mehretuUntitled: {
+        artist: 'Julie Mehretu',
+        title: 'Untitled',
+        url: './assets/img/mehretuCropped.png',
+        sessionData: {},
+        key: 'mehretuUntitled',
+      },
+      rothko: {
+        key: 'rothko',
+        artist: 'Mark Rothko',
+        title: 'Record Number 24',
+        url: './assets/img/rothko.png',
+        sessionData: {},
+      },
+    };
+
+    let artworkMetadata = writable(artworkData);
+
     /* src\pages\Gallery.svelte generated by Svelte v3.44.0 */
 
     const { Object: Object_1, console: console_1$2 } = globals;
@@ -23017,17 +23072,17 @@ var app = (function () {
 
     function get_each_context$2(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[2] = list[i];
+    	child_ctx[4] = list[i];
     	return child_ctx;
     }
 
-    // (28:2) {#each works as img}
+    // (33:2) {#each worksArray as img}
     function create_each_block$2(ctx) {
     	let gallerycard;
     	let current;
 
     	gallerycard = new GalleryCard({
-    			props: { data: /*img*/ ctx[2] },
+    			props: { data: /*img*/ ctx[4] },
     			$$inline: true
     		});
 
@@ -23041,7 +23096,7 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			const gallerycard_changes = {};
-    			if (dirty & /*works*/ 1) gallerycard_changes.data = /*img*/ ctx[2];
+    			if (dirty & /*worksArray*/ 1) gallerycard_changes.data = /*img*/ ctx[4];
     			gallerycard.$set(gallerycard_changes);
     		},
     		i: function intro(local) {
@@ -23062,7 +23117,7 @@ var app = (function () {
     		block,
     		id: create_each_block$2.name,
     		type: "each",
-    		source: "(28:2) {#each works as img}",
+    		source: "(33:2) {#each worksArray as img}",
     		ctx
     	});
 
@@ -23072,7 +23127,7 @@ var app = (function () {
     function create_fragment$a(ctx) {
     	let div;
     	let current;
-    	let each_value = /*works*/ ctx[0];
+    	let each_value = /*worksArray*/ ctx[0];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -23093,7 +23148,7 @@ var app = (function () {
     			}
 
     			attr_dev(div, "class", "card-holder svelte-q1jwsq");
-    			add_location(div, file$a, 26, 0, 650);
+    			add_location(div, file$a, 31, 0, 888);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -23108,8 +23163,8 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*works*/ 1) {
-    				each_value = /*works*/ ctx[0];
+    			if (dirty & /*worksArray*/ 1) {
+    				each_value = /*worksArray*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
 
@@ -23172,13 +23227,31 @@ var app = (function () {
     }
 
     function instance$a($$self, $$props, $$invalidate) {
+    	let $artworkMetadata;
+    	validate_store(artworkMetadata, 'artworkMetadata');
+    	component_subscribe($$self, artworkMetadata, $$value => $$invalidate(2, $artworkMetadata = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Gallery', slots, []);
-    	let works = [];
+    	let worksArray = [], worksKeys = [];
 
     	async function getAllWorks() {
-    		$$invalidate(0, works = Object.values(await dbGet('works')));
-    		console.log(works);
+    		let worksObject = await dbGet('works');
+
+    		if (worksObject) {
+    			$$invalidate(0, worksArray = Object.values(worksObject));
+    			worksKeys = Object.keys(worksObject);
+    		}
+
+    		//write any new artwork that is not yet in DB to DB
+    		for (let key in $artworkMetadata) {
+    			if (!worksKeys.includes(key)) {
+    				let objToAdd = $artworkMetadata[key];
+    				console.log(key, objToAdd);
+    				dbWrite('works/' + key, objToAdd);
+    			}
+    		}
+
+    		console.log(worksArray);
     	}
 
     	getAllWorks();
@@ -23191,21 +23264,26 @@ var app = (function () {
     	$$self.$capture_state = () => ({
     		GalleryCard,
     		dbGet,
+    		dbWrite,
     		slide,
     		fade,
-    		works,
-    		getAllWorks
+    		artworkMetadata,
+    		worksArray,
+    		worksKeys,
+    		getAllWorks,
+    		$artworkMetadata
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('works' in $$props) $$invalidate(0, works = $$props.works);
+    		if ('worksArray' in $$props) $$invalidate(0, worksArray = $$props.worksArray);
+    		if ('worksKeys' in $$props) worksKeys = $$props.worksKeys;
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [works];
+    	return [worksArray];
     }
 
     class Gallery extends SvelteComponentDev {
@@ -27756,17 +27834,6 @@ var app = (function () {
     	}
     }
 
-    let artworkData = {
-      mehretuUntitled: {
-        artist: 'Julie Mehretu',
-        title: 'Untitled',
-        url: './assets/img/mehretuCropped.png',
-        sessionData: {},
-      },
-    };
-
-    let artworkMetadata = writable(artworkData);
-
     /* src\components\RecordCalibrateResults.svelte generated by Svelte v3.44.0 */
 
     const { console: console_1$1 } = globals;
@@ -27798,16 +27865,16 @@ var app = (function () {
     			t4 = space();
     			div0 = element("div");
     			div0.textContent = "Save & View";
-    			add_location(h3, file$3, 80, 0, 2054);
-    			add_location(p, file$3, 81, 0, 2083);
+    			add_location(h3, file$3, 80, 0, 2051);
+    			add_location(p, file$3, 81, 0, 2080);
     			attr_dev(input, "placeholder", "Enter name here");
     			attr_dev(input, "class", "svelte-bwlty8");
-    			add_location(input, file$3, 87, 2, 2321);
+    			add_location(input, file$3, 87, 2, 2318);
     			attr_dev(div0, "class", "btn accent clickable svelte-bwlty8");
     			toggle_class(div0, "disabled-part", /*nameInputted*/ ctx[0] == true);
-    			add_location(div0, file$3, 98, 2, 2545);
+    			add_location(div0, file$3, 98, 2, 2542);
     			attr_dev(div1, "class", "input-wrapper svelte-bwlty8");
-    			add_location(div1, file$3, 86, 0, 2290);
+    			add_location(div1, file$3, 86, 0, 2287);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -27867,23 +27934,20 @@ var app = (function () {
     }
 
     function instance$3($$self, $$props, $$invalidate) {
-    	let $artworkID;
-    	let $artworkMetadata;
+    	let $selectedImage;
     	let $gazerRecordingArt;
     	let $sessionID;
-    	validate_store(artworkID, 'artworkID');
-    	component_subscribe($$self, artworkID, $$value => $$invalidate(5, $artworkID = $$value));
-    	validate_store(artworkMetadata, 'artworkMetadata');
-    	component_subscribe($$self, artworkMetadata, $$value => $$invalidate(6, $artworkMetadata = $$value));
+    	validate_store(selectedImage, 'selectedImage');
+    	component_subscribe($$self, selectedImage, $$value => $$invalidate(5, $selectedImage = $$value));
     	validate_store(gazerRecordingArt, 'gazerRecordingArt');
-    	component_subscribe($$self, gazerRecordingArt, $$value => $$invalidate(7, $gazerRecordingArt = $$value));
+    	component_subscribe($$self, gazerRecordingArt, $$value => $$invalidate(6, $gazerRecordingArt = $$value));
     	validate_store(sessionID, 'sessionID');
-    	component_subscribe($$self, sessionID, $$value => $$invalidate(8, $sessionID = $$value));
+    	component_subscribe($$self, sessionID, $$value => $$invalidate(7, $sessionID = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('RecordCalibrateResults', slots, []);
     	let sessionId = $sessionID;
     	let sessionData = $gazerRecordingArt;
-    	let artworkId = $artworkID, artworkData = $artworkMetadata[$artworkID];
+    	let artworkId = $selectedImage.key, artworkData = selectedImage;
 
     	//name input ind
     	let nameInputted = false;
@@ -27936,11 +28000,11 @@ var app = (function () {
     	$$self.$capture_state = () => ({
     		artworkMetadata,
     		gazerRecordingArt,
-    		artworkID,
     		sessionID,
     		loadingInd,
     		stateIndex,
     		pageState,
+    		selectedImage,
     		dbGet,
     		dbWrite,
     		postTest,
@@ -27955,8 +28019,7 @@ var app = (function () {
     		writeSessionToArtwork,
     		storeSessionData,
     		updateUserName,
-    		$artworkID,
-    		$artworkMetadata,
+    		$selectedImage,
     		$gazerRecordingArt,
     		$sessionID
     	});
@@ -28011,17 +28074,17 @@ var app = (function () {
     			p = element("p");
     			p.textContent = "Please look at the following image for 20 seconds";
     			attr_dev(img, "id", "artView");
-    			if (!src_url_equal(img.src, img_src_value = "./assets/img/mehretuCropped.png")) attr_dev(img, "src", img_src_value);
+    			if (!src_url_equal(img.src, img_src_value = /*$selectedImage*/ ctx[1].url)) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "class", "svelte-8viv0t");
     			toggle_class(img, "inactive", /*imageInactive*/ ctx[0] == true);
-    			add_location(img, file$2, 15, 4, 386);
+    			add_location(img, file$2, 16, 4, 442);
     			attr_dev(p, "class", "svelte-8viv0t");
     			toggle_class(p, "inactive", /*imageInactive*/ ctx[0] == false);
-    			add_location(p, file$2, 20, 4, 515);
+    			add_location(p, file$2, 21, 4, 558);
     			attr_dev(div0, "class", "img-holder svelte-8viv0t");
-    			add_location(div0, file$2, 14, 2, 356);
+    			add_location(div0, file$2, 15, 2, 412);
     			attr_dev(div1, "class", "wrapper-full svelte-8viv0t");
-    			add_location(div1, file$2, 13, 0, 326);
+    			add_location(div1, file$2, 14, 0, 382);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -28034,6 +28097,10 @@ var app = (function () {
     			append_dev(div0, p);
     		},
     		p: function update(ctx, [dirty]) {
+    			if (dirty & /*$selectedImage*/ 2 && !src_url_equal(img.src, img_src_value = /*$selectedImage*/ ctx[1].url)) {
+    				attr_dev(img, "src", img_src_value);
+    			}
+
     			if (dirty & /*imageInactive*/ 1) {
     				toggle_class(img, "inactive", /*imageInactive*/ ctx[0] == true);
     			}
@@ -28061,6 +28128,9 @@ var app = (function () {
     }
 
     function instance$2($$self, $$props, $$invalidate) {
+    	let $selectedImage;
+    	validate_store(selectedImage, 'selectedImage');
+    	component_subscribe($$self, selectedImage, $$value => $$invalidate(1, $selectedImage = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('RecordView', slots, []);
     	let imageInactive = true;
@@ -28079,7 +28149,12 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<RecordView> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ gazerArtRecording, imageInactive });
+    	$$self.$capture_state = () => ({
+    		gazerArtRecording,
+    		selectedImage,
+    		imageInactive,
+    		$selectedImage
+    	});
 
     	$$self.$inject_state = $$props => {
     		if ('imageInactive' in $$props) $$invalidate(0, imageInactive = $$props.imageInactive);
@@ -28089,7 +28164,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [imageInactive];
+    	return [imageInactive, $selectedImage];
     }
 
     class RecordView extends SvelteComponentDev {

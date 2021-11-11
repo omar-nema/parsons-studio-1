@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
 
 //we need to update this to blur better
-export async function contourMapBlur(data) {
+export async function contourMapBlur(svgInput, data) {
   console.log(data);
   let bbox = d3.select('.img-holder').node().getBoundingClientRect();
   let width = bbox.width;
   let height = 0.705 * width;
 
   let svg = d3
-    .select('#contour-overlay')
+    .select(svgInput)
     .attr('viewBox', [0, 0, width, height])
     .attr('preserveAspectRatio', 'xMinYMin meet');
   let margin = 30;

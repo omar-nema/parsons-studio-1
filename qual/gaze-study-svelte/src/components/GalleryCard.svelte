@@ -9,6 +9,7 @@
   import { onMount } from 'svelte';
   import { contourMapBlur } from '../utils/generateVisuals';
 
+  let visSvg;
   export let data;
   let maxW = 1000,
     maxH = $screenHeight * 0.85 - 200;
@@ -28,8 +29,14 @@
 
   let currSessionKey, currSession;
 
-  let sessions = data.sessionData;
-  let sessionsArray = Object.keys(sessions);
+  let sessions = [];
+  if (data.sessionData) {
+    sessions = data.sessionData;
+  }
+  let sessionsArray = [];
+  if (sessions) {
+    sessionsArray = Object.keys(sessions);
+  }
   let currSessionIndex = sessionsArray.length - 1;
   currSessionKey = sessionsArray[currSessionIndex];
 
@@ -41,7 +48,7 @@
   $: (async () => {
     let sessionData = await dbGet('sessionData/' + currSessionKey);
     if (sessionData) {
-      contourMapBlur(sessionData);
+      contourMapBlur(visSvg, sessionData);
       document.querySelector('#slider').setAttribute('max', sessionData.length);
       sliderVal = 0;
     }
@@ -118,7 +125,7 @@
     </div>
   </div>
   <div class="img-holder" style="width: {width}; height: {ht}">
-    <svg style={styleSubstring} id="contour-overlay" />
+    <svg bind:this={visSvg} style={styleSubstring} id="contour-overlay" />
     <!-- <img src={data.url} style={styleSubstring} /> -->
   </div>
 </div>

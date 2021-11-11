@@ -5,6 +5,14 @@ let artworkData = {
     title: 'Untitled',
     url: './assets/img/mehretuCropped.png',
     sessionData: {},
+    key: 'mehretuUntitled',
+  },
+  rothko: {
+    key: 'rothko',
+    artist: 'Mark Rothko',
+    title: 'Record Number 24',
+    url: './assets/img/rothko.png',
+    sessionData: {},
   },
 };
 

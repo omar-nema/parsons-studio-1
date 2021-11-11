@@ -32,7 +32,7 @@
         About
       </div>
       <div
-        transition:fade
+        transition:slide={{ duration: 500 }}
         class="btn clickable"
         on:click={() => {
           if ($gazerInitDone && $gazerInitVideoDone) {

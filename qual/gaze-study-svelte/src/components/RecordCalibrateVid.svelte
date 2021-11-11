@@ -25,8 +25,9 @@
 {#if calibrated == true}
   <h3>Existing Calibration Loaded</h3>
   <p class="inst">
-    Your webcam was already calibrated with an accuracy rate of {$calibrationPct}%.
-    Please ensure your face is centered below, and click to proceed and view
+    Your webcam was already calibrated with an accuracy rate of <strong
+      >{$calibrationPct}%</strong
+    >. Please ensure your face is centered below, then click to proceed and view
     art!
   </p>
 {:else if calibrated == false}
@@ -39,12 +40,30 @@
 {/if}
 
 {#if !$gazerInitVideoDone}
-  <div class="video-wrapper">
+  <div class="video-wrapper glow">
     <p>Initializing Video Stream...</p>
   </div>
 {/if}
 
 <style>
+  @keyframes glowing {
+    0% {
+      background-color: var(--bg-contrast-dark);
+      opacity: 0.5;
+    }
+    50% {
+      background-color: var(--bg-contrast-dark);
+      opacity: 0;
+    }
+    100% {
+      background-color: var(--bg-contrast-dark);
+      opacity: 0.5;
+    }
+  }
+  .glow {
+    animation: glowing 5000ms infinite;
+    pointer-events: none;
+  }
   .video-wrapper {
     position: absolute;
     width: 500px;

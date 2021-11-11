@@ -28,6 +28,11 @@
   import { time_ranges_to_array } from 'svelte/internal';
   import * as localforage from 'localforage';
 
+  let disableBack = false,
+    disableNext = false,
+    hideNext = false;
+  let calibrated = false;
+
   let sectionsNotCalibrated = [
     {
       sectionName: 'overview',
@@ -35,6 +40,7 @@
       btnLabel: 'Start!',
       disableBack: true,
       showLoader: true,
+      btnBackLabel: 'Back to Overview',
     },
     {
       sectionName: 'calibrate-vid',
@@ -66,7 +72,7 @@
       sectionName: 'view',
       videoShown: false,
       btnLabel: 'Proceed',
-      disableNext: true,
+      disableNext: false,
       btnBackLabel: 'Back to Calibration',
       showLoader: true,
     },
@@ -74,9 +80,9 @@
       sectionName: 'results',
       videoShown: false,
       btnLabel: 'View Pattern',
-
+      disableBack: true,
+      hideNext: true,
       btnBackLabel: 'Back to Calibration',
-      showLoader: true,
     },
   ];
   //change from index
@@ -94,34 +100,34 @@
     sectionsNotCalibrated[4],
     sectionsNotCalibrated[5],
   ];
-  let disableBack = false,
-    disableNext = false;
-  let calibrated = false;
+
   let sections = sectionsNotCalibrated;
 
   async function checkExistingCalibration() {
     let gazerData = await localforage.getItem('webgazerGlobalData');
     let calPct = await localforage.getItem('calibrationPct');
     calibrationPct.set(calPct);
-    if (gazerData.length > 20 && calPct > $calibrationCutoff) {
-      sections = sectionsCalibrated;
-      calibrated = true;
-    } else {
-      sections = sectionsNotCalibrated;
+    if (gazerData) {
+      if (gazerData.length > 20 && calPct > $calibrationCutoff) {
+        sections = sectionsCalibrated;
+        calibrated = true;
+      } else {
+        sections = sectionsNotCalibrated;
+      }
     }
+
     //should store the date of calibration. if more than a day then it don't count sry bb
   }
   function recalibrate() {
     calibrated = false;
     sections = sectionsNotCalibrated;
     calibrationPct.set(null);
-    //webgazer.clearData();
+    webgazer.clearData();
   }
   checkExistingCalibration(); //this should happen and return before anything else loads
 
-  //set unique ID for session
-
   onMount(() => {
+    //set unique ID for session
     if (!$sessionID) {
       sessionID.set(new Date().getTime());
     }
@@ -130,59 +136,60 @@
     }
   });
 
-  //reactively update loading indicator for sections
-  $: {
-    $gazerInitVideoDone, $gazerInitDone;
-    sectionsNotCalibrated[0].loadingVar = $gazerInitDone;
-    sectionsNotCalibrated[1].loadingVar = $gazerInitVideoDone;
-    sectionsCalibrated[0].loadingVar = $gazerInitVideoDone;
-  }
-  //anytime page substate changes --- FIX THIS
-  let gazeActive, gazeRecording;
+  //move video, disable next and prev buttons on subpage change
+  let gazeActive, gazeRecording, currSection;
   $: {
     $gazerInitVideoDone;
-    let currSection = sections[$stateIndex];
-
+    currSection = sections[$stateIndex];
     if (currSection.videoShown == true && $gazerInitVideoDone == true) {
       webgazer.showVideo(true);
       gazerMoveVideo(currSection.videoPos);
     } else {
       webgazer.showVideo(false);
     }
-    if (currSection.disableBack) {
-      disableBack = true;
-    } else {
-      disableBack = false;
-    }
+    currSection.disableBack ? (disableBack = true) : (disableBack = false);
+    currSection.disableNext ? (disableNext = true) : (disableNext = false);
+    currSection.hideNext ? (hideNext = true) : (hideNext = false);
+  }
 
-    if (currSection.showLoader == true && !currSection.loadingVar) {
-      loadingInd.set(true);
-    } else {
-      loadingInd.set(false);
-    }
-    if (currSection.disableNext) {
-      disableNext = true;
-    } else {
-      disableNext = false;
-    }
-  }
-  //detect if going back BAD BAD BAD code
+  //reactively update loading indicator for sections
   $: {
-    if ($gazerInitVideoDone) {
-      disableNext = false;
+    $gazerInitVideoDone, $gazerInitDone;
+    sectionsNotCalibrated[0].loadingVar = $gazerInitDone;
+    sectionsNotCalibrated[1].loadingVar = $gazerInitVideoDone;
+    sectionsCalibrated[0].loadingVar = $gazerInitVideoDone;
+    if (currSection) {
+      if (currSection.showLoader == true && !currSection.loadingVar) {
+        loadingInd.set(true);
+      } else {
+        loadingInd.set(false);
+      }
     }
   }
+
   $: {
     if ($calibrationPct > $calibrationCutoff) {
       disableNext = false;
     }
   }
+
+  //detect if going back BAD BAD BAD code
+  // $: {
+  //   if ($gazerInitVideoDone) {
+  //     disableNext = false;
+  //   }
+  // }
+  // $: {
+  //   if ($calibrationPct > $calibrationCutoff) {
+  //     disableNext = false;
+  //   }
+  // }
 </script>
 
 <section class="experiment-container">
   <div class="container-header">
     <div class="current-selection">
-      Selected Work:<span class="selection-holder"
+      Gazing at:<span class="selection-holder"
         >{$selectedImage.title} by {$selectedImage.artist}</span
       >
     </div>
@@ -192,11 +199,15 @@
       {/each}
     </div>
   </div>
-  <div class="container-body" transition:fade>
+  <div class="container-body">
     {#if sections[$stateIndex].sectionName == 'overview'}
-      <Overview />
+      <div>
+        <Overview />
+      </div>
     {:else if sections[$stateIndex].sectionName == 'calibrate-vid'}
-      <CalibrateVid {calibrated} />
+      <div>
+        <CalibrateVid {calibrated} />
+      </div>
     {:else if sections[$stateIndex].sectionName == 'calibrate-instructions'}
       <CalibrateInstructions />
     {:else if sections[$stateIndex].sectionName == 'calibrate-exercise'}
@@ -208,38 +219,49 @@
     {/if}
   </div>
   <div class="container-footer">
-    <div
-      class="btn re-cal"
-      class:disabled={calibrated == false}
-      on:click={recalibrate}
-    >
-      Re-Calibrate
-    </div>
-    <div
-      class="btn-prev btn disabled"
-      class:accent={$calibrationPct && $calibrationPct < 70}
-      class:disabled={disableBack == true}
-      on:click={() => {
-        if (sections[$stateIndex] == 'calibrate-exercise') {
-          gazerRestartCalibration();
-        }
-        $stateIndex--;
-      }}
-    >
-      {sections[$stateIndex].btnBackLabel}
-    </div>
-    <div
-      on:click={() => $stateIndex++}
-      class="btn-next btn accent clickable"
-      class:disabled={disableNext == true}
-      class:glow={$loadingInd == true}
-    >
-      {#if $loadingInd}
-        Loading...
-      {:else}
-        {sections[$stateIndex].btnLabel}
-      {/if}
-    </div>
+    {#if calibrated && $stateIndex !== sections.length - 1}
+      <div
+        class="btn re-cal clickable"
+        class:disabled={calibrated == false}
+        on:click={recalibrate}
+      >
+        Re-Calibrate
+      </div>
+    {:else}
+      <div
+        class="btn-prev btn disabled"
+        class:accent={$calibrationPct && $calibrationPct < 70}
+        class:disabled={disableBack == true}
+        on:click={() => {
+          if (sections[$stateIndex].sectionName == 'calibrate-exercise') {
+            console.log('yea that me');
+            gazerRestartCalibration();
+          }
+          $stateIndex--;
+        }}
+      >
+        {sections[$stateIndex].btnBackLabel}
+      </div>
+    {/if}
+
+    {#if !hideNext}
+      <div
+        on:click={() => {
+          if ($stateIndex < sections.length - 2) {
+            $stateIndex++;
+          }
+        }}
+        class="btn-next btn accent clickable"
+        class:disabled={$loadingInd || disableNext}
+        class:glow={$loadingInd}
+      >
+        {#if $loadingInd}
+          Loading...
+        {:else}
+          {sections[$stateIndex].btnLabel}
+        {/if}
+      </div>
+    {/if}
   </div>
 </section>
 
@@ -254,6 +276,7 @@
     background: var(--bg-contrast);
     width: 100%;
     margin-top: 80px;
+    height: auto;
   }
   .container-header,
   .container-footer,
@@ -314,6 +337,7 @@
   .btn-next.disabled {
     opacity: 0.2;
     pointer-events: none;
+    display: block;
   }
 
   @keyframes glowing {

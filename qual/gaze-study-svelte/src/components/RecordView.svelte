@@ -53,8 +53,10 @@
     padding: 50px;
   }
   img {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
   }
   img.inactive {
     opacity: 0.1;

@@ -20,6 +20,12 @@ var app = (function () {
 
     function noop$3() { }
     const identity$4 = x => x;
+    function assign(tar, src) {
+        // @ts-ignore
+        for (const k in src)
+            tar[k] = src[k];
+        return tar;
+    }
     function add_location(element, file, line, column, char) {
         element.__svelte_meta = {
             loc: { file, line, column, char }
@@ -818,6 +824,125 @@ var app = (function () {
         screenSize: screenSize,
       };
     };
+
+    function cubicOut(t) {
+        const f = t - 1.0;
+        return f * f * f + 1.0;
+    }
+    function quintOut(t) {
+        return --t * t * t * t * t + 1;
+    }
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation.
+
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
+    ***************************************************************************** */
+
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    }
+    function fade(node, { delay = 0, duration = 400, easing = identity$4 } = {}) {
+        const o = +getComputedStyle(node).opacity;
+        return {
+            delay,
+            duration,
+            easing,
+            css: t => `opacity: ${t * o}`
+        };
+    }
+    function slide(node, { delay = 0, duration = 400, easing = cubicOut } = {}) {
+        const style = getComputedStyle(node);
+        const opacity = +style.opacity;
+        const height = parseFloat(style.height);
+        const padding_top = parseFloat(style.paddingTop);
+        const padding_bottom = parseFloat(style.paddingBottom);
+        const margin_top = parseFloat(style.marginTop);
+        const margin_bottom = parseFloat(style.marginBottom);
+        const border_top_width = parseFloat(style.borderTopWidth);
+        const border_bottom_width = parseFloat(style.borderBottomWidth);
+        return {
+            delay,
+            duration,
+            easing,
+            css: t => 'overflow: hidden;' +
+                `opacity: ${Math.min(t * 20, 1) * opacity};` +
+                `height: ${t * height}px;` +
+                `padding-top: ${t * padding_top}px;` +
+                `padding-bottom: ${t * padding_bottom}px;` +
+                `margin-top: ${t * margin_top}px;` +
+                `margin-bottom: ${t * margin_bottom}px;` +
+                `border-top-width: ${t * border_top_width}px;` +
+                `border-bottom-width: ${t * border_bottom_width}px;`
+        };
+    }
+    function crossfade(_a) {
+        var { fallback } = _a, defaults = __rest(_a, ["fallback"]);
+        const to_receive = new Map();
+        const to_send = new Map();
+        function crossfade(from, node, params) {
+            const { delay = 0, duration = d => Math.sqrt(d) * 30, easing = cubicOut } = assign(assign({}, defaults), params);
+            const to = node.getBoundingClientRect();
+            const dx = from.left - to.left;
+            const dy = from.top - to.top;
+            const dw = from.width / to.width;
+            const dh = from.height / to.height;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            const style = getComputedStyle(node);
+            const transform = style.transform === 'none' ? '' : style.transform;
+            const opacity = +style.opacity;
+            return {
+                delay,
+                duration: is_function(duration) ? duration(d) : duration,
+                easing,
+                css: (t, u) => `
+				opacity: ${t * opacity};
+				transform-origin: top left;
+				transform: ${transform} translate(${u * dx}px,${u * dy}px) scale(${t + (1 - t) * dw}, ${t + (1 - t) * dh});
+			`
+            };
+        }
+        function transition(items, counterparts, intro) {
+            return (node, params) => {
+                items.set(params.key, {
+                    rect: node.getBoundingClientRect()
+                });
+                return () => {
+                    if (counterparts.has(params.key)) {
+                        const { rect } = counterparts.get(params.key);
+                        counterparts.delete(params.key);
+                        return crossfade(rect, node, params);
+                    }
+                    // if the node is disappearing altogether
+                    // (i.e. wasn't claimed by the other list)
+                    // then we need to supply an outro
+                    items.delete(params.key);
+                    return fallback && fallback(node, params, intro);
+                };
+            };
+        }
+        return [
+            transition(to_send, to_receive, false),
+            transition(to_receive, to_send, true)
+        ];
+    }
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -22356,23 +22481,24 @@ var app = (function () {
 
     function get_each_context$3(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[19] = list[i];
+    	child_ctx[18] = list[i];
     	return child_ctx;
     }
 
-    // (76:12) {#each sessionsArray as session}
+    // (78:12) {#each sessionsArray as session}
     function create_each_block$3(ctx) {
     	let option;
-    	let t_value = /*sessions*/ ctx[7][/*session*/ ctx[19]].name + "";
+    	let t_value = /*sessions*/ ctx[7][/*session*/ ctx[18]].name + "";
     	let t;
 
     	const block = {
     		c: function create() {
     			option = element("option");
     			t = text(t_value);
-    			option.__value = /*session*/ ctx[19];
+    			option.__value = /*session*/ ctx[18];
     			option.value = option.__value;
-    			add_location(option, file$b, 76, 14, 2276);
+    			attr_dev(option, "class", "svelte-4p1f8k");
+    			add_location(option, file$b, 78, 14, 2353);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
@@ -22388,7 +22514,7 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(76:12) {#each sessionsArray as session}",
+    		source: "(78:12) {#each sessionsArray as session}",
     		ctx
     	});
 
@@ -22506,70 +22632,70 @@ var app = (function () {
     			t23 = space();
     			div11 = element("div");
     			svg = svg_element("svg");
-    			attr_dev(i, "class", "svelte-1ehkgrr");
-    			add_location(i, file$b, 51, 21, 1329);
-    			attr_dev(h2, "class", "svelte-1ehkgrr");
-    			add_location(h2, file$b, 51, 2, 1310);
-    			attr_dev(span0, "class", "material-icons-round md-14 svelte-1ehkgrr");
-    			add_location(span0, file$b, 55, 8, 1467);
-    			add_location(span1, file$b, 56, 8, 1531);
-    			attr_dev(div0, "class", "label svelte-1ehkgrr");
-    			add_location(div0, file$b, 54, 6, 1438);
-    			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-1ehkgrr");
-    			toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[1] == 0);
-    			add_location(span2, file$b, 60, 10, 1651);
-    			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-1ehkgrr");
-    			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[1] == /*sessionsArray*/ ctx[8].length - 1);
-    			add_location(span3, file$b, 67, 10, 1894);
-    			attr_dev(select, "class", "clickable svelte-1ehkgrr");
-    			if (/*currSessionKey*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[12].call(select));
-    			add_location(select, file$b, 74, 10, 2160);
-    			attr_dev(div1, "class", "filter selected svelte-1ehkgrr");
-    			add_location(div1, file$b, 59, 8, 1610);
-    			attr_dev(div2, "class", "filter clickable svelte-1ehkgrr");
-    			add_location(div2, file$b, 80, 8, 2401);
-    			attr_dev(div3, "class", "filter-options svelte-1ehkgrr");
-    			add_location(div3, file$b, 58, 6, 1572);
-    			attr_dev(div4, "class", "viewer-filter filter-group svelte-1ehkgrr");
-    			add_location(div4, file$b, 53, 4, 1389);
-    			attr_dev(span4, "class", "material-icons-round md-14 svelte-1ehkgrr");
-    			add_location(span4, file$b, 94, 8, 2718);
-    			add_location(span5, file$b, 95, 8, 2782);
-    			attr_dev(div5, "class", "label svelte-1ehkgrr");
-    			add_location(div5, file$b, 93, 6, 2689);
-    			attr_dev(span6, "class", "material-icons-round md-14 clickable svelte-1ehkgrr");
-    			add_location(span6, file$b, 99, 10, 2907);
+    			attr_dev(i, "class", "svelte-4p1f8k");
+    			add_location(i, file$b, 51, 21, 1271);
+    			attr_dev(h2, "class", "svelte-4p1f8k");
+    			add_location(h2, file$b, 51, 2, 1252);
+    			attr_dev(span0, "class", "material-icons-round md-14 svelte-4p1f8k");
+    			add_location(span0, file$b, 55, 8, 1409);
+    			add_location(span1, file$b, 56, 8, 1473);
+    			attr_dev(div0, "class", "label svelte-4p1f8k");
+    			add_location(div0, file$b, 54, 6, 1380);
+    			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-4p1f8k");
+    			toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[6] == 0);
+    			add_location(span2, file$b, 60, 10, 1593);
+    			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-4p1f8k");
+    			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[6] == /*sessionsArray*/ ctx[8].length - 1);
+    			add_location(span3, file$b, 68, 10, 1903);
+    			attr_dev(select, "class", "clickable svelte-4p1f8k");
+    			if (/*currSessionKey*/ ctx[1] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[11].call(select));
+    			add_location(select, file$b, 76, 10, 2237);
+    			attr_dev(div1, "class", "filter selected svelte-4p1f8k");
+    			add_location(div1, file$b, 59, 8, 1552);
+    			attr_dev(div2, "class", "filter clickable svelte-4p1f8k");
+    			add_location(div2, file$b, 82, 8, 2478);
+    			attr_dev(div3, "class", "filter-options svelte-4p1f8k");
+    			add_location(div3, file$b, 58, 6, 1514);
+    			attr_dev(div4, "class", "viewer-filter filter-group svelte-4p1f8k");
+    			add_location(div4, file$b, 53, 4, 1331);
+    			attr_dev(span4, "class", "material-icons-round md-14 svelte-4p1f8k");
+    			add_location(span4, file$b, 96, 8, 2795);
+    			add_location(span5, file$b, 97, 8, 2859);
+    			attr_dev(div5, "class", "label svelte-4p1f8k");
+    			add_location(div5, file$b, 95, 6, 2766);
+    			attr_dev(span6, "class", "material-icons-round md-14 clickable svelte-4p1f8k");
+    			add_location(span6, file$b, 101, 10, 2984);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "id", "slider");
     			attr_dev(input, "name", "slider");
     			attr_dev(input, "min", "0");
     			attr_dev(input, "max", "150");
     			attr_dev(input, "step", "1");
-    			attr_dev(input, "class", "svelte-1ehkgrr");
-    			add_location(input, file$b, 102, 12, 3110);
+    			attr_dev(input, "class", "svelte-4p1f8k");
+    			add_location(input, file$b, 104, 12, 3187);
     			attr_dev(span7, "id", "slider-holder");
-    			attr_dev(span7, "class", "svelte-1ehkgrr");
-    			add_location(span7, file$b, 101, 10, 3071);
-    			attr_dev(div6, "class", "filter selected time svelte-1ehkgrr");
-    			add_location(div6, file$b, 98, 8, 2861);
-    			attr_dev(div7, "class", "filter clickable svelte-1ehkgrr");
-    			add_location(div7, file$b, 113, 8, 3371);
-    			attr_dev(div8, "class", "filter-options svelte-1ehkgrr");
-    			add_location(div8, file$b, 97, 6, 2823);
-    			attr_dev(div9, "class", "visual-filter filter-group svelte-1ehkgrr");
-    			add_location(div9, file$b, 92, 4, 2641);
-    			attr_dev(div10, "class", "card-filters svelte-1ehkgrr");
-    			add_location(div10, file$b, 52, 2, 1357);
-    			attr_dev(svg, "style", /*styleSubstring*/ ctx[6]);
+    			attr_dev(span7, "class", "svelte-4p1f8k");
+    			add_location(span7, file$b, 103, 10, 3148);
+    			attr_dev(div6, "class", "filter selected time svelte-4p1f8k");
+    			add_location(div6, file$b, 100, 8, 2938);
+    			attr_dev(div7, "class", "filter clickable svelte-4p1f8k");
+    			add_location(div7, file$b, 115, 8, 3448);
+    			attr_dev(div8, "class", "filter-options svelte-4p1f8k");
+    			add_location(div8, file$b, 99, 6, 2900);
+    			attr_dev(div9, "class", "visual-filter filter-group svelte-4p1f8k");
+    			add_location(div9, file$b, 94, 4, 2718);
+    			attr_dev(div10, "class", "card-filters svelte-4p1f8k");
+    			add_location(div10, file$b, 52, 2, 1299);
+    			attr_dev(svg, "style", /*styleSubstring*/ ctx[5]);
     			attr_dev(svg, "id", "contour-overlay");
-    			attr_dev(svg, "class", "svelte-1ehkgrr");
-    			add_location(svg, file$b, 118, 4, 3523);
-    			attr_dev(div11, "class", "img-holder svelte-1ehkgrr");
-    			set_style(div11, "width", /*width*/ ctx[4]);
-    			set_style(div11, "height", /*ht*/ ctx[5]);
-    			add_location(div11, file$b, 117, 2, 3456);
-    			attr_dev(div12, "class", "card-outer svelte-1ehkgrr");
-    			add_location(div12, file$b, 50, 0, 1282);
+    			attr_dev(svg, "class", "svelte-4p1f8k");
+    			add_location(svg, file$b, 120, 4, 3600);
+    			attr_dev(div11, "class", "img-holder svelte-4p1f8k");
+    			set_style(div11, "width", /*width*/ ctx[3]);
+    			set_style(div11, "height", /*ht*/ ctx[4]);
+    			add_location(div11, file$b, 119, 2, 3533);
+    			attr_dev(div12, "class", "card-outer svelte-4p1f8k");
+    			add_location(div12, file$b, 50, 0, 1224);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -22601,7 +22727,7 @@ var app = (function () {
     				each_blocks[i].m(select, null);
     			}
 
-    			select_option(select, /*currSessionKey*/ ctx[2]);
+    			select_option(select, /*currSessionKey*/ ctx[1]);
     			append_dev(div3, t12);
     			append_dev(div3, div2);
     			append_dev(div10, t14);
@@ -22617,7 +22743,7 @@ var app = (function () {
     			append_dev(div6, t20);
     			append_dev(div6, span7);
     			append_dev(span7, input);
-    			set_input_value(input, /*sliderVal*/ ctx[3]);
+    			set_input_value(input, /*sliderVal*/ ctx[2]);
     			append_dev(div8, t21);
     			append_dev(div8, div7);
     			append_dev(div12, t23);
@@ -22626,12 +22752,12 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(span2, "click", /*click_handler*/ ctx[10], false, false, false),
-    					listen_dev(span3, "click", /*click_handler_1*/ ctx[11], false, false, false),
-    					listen_dev(select, "change", /*select_change_handler*/ ctx[12]),
-    					listen_dev(div2, "click", /*click_handler_2*/ ctx[13], false, false, false),
-    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[14]),
-    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[14])
+    					listen_dev(span2, "click", /*click_handler*/ ctx[9], false, false, false),
+    					listen_dev(span3, "click", /*click_handler_1*/ ctx[10], false, false, false),
+    					listen_dev(select, "change", /*select_change_handler*/ ctx[11]),
+    					listen_dev(div2, "click", /*click_handler_2*/ ctx[12], false, false, false),
+    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[13]),
+    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[13])
     				];
 
     				mounted = true;
@@ -22641,12 +22767,12 @@ var app = (function () {
     			if (dirty & /*data*/ 1 && t0_value !== (t0_value = /*data*/ ctx[0].artist + "")) set_data_dev(t0, t0_value);
     			if (dirty & /*data*/ 1 && t2_value !== (t2_value = /*data*/ ctx[0].title + "")) set_data_dev(t2, t2_value);
 
-    			if (dirty & /*currSessionIndex*/ 2) {
-    				toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[1] == 0);
+    			if (dirty & /*currSessionIndex*/ 64) {
+    				toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[6] == 0);
     			}
 
-    			if (dirty & /*currSessionIndex, sessionsArray*/ 258) {
-    				toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[1] == /*sessionsArray*/ ctx[8].length - 1);
+    			if (dirty & /*currSessionIndex, sessionsArray*/ 320) {
+    				toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[6] == /*sessionsArray*/ ctx[8].length - 1);
     			}
 
     			if (dirty & /*sessionsArray, sessions*/ 384) {
@@ -22673,24 +22799,24 @@ var app = (function () {
     				each_blocks.length = each_value.length;
     			}
 
-    			if (dirty & /*currSessionKey, sessionsArray*/ 260) {
-    				select_option(select, /*currSessionKey*/ ctx[2]);
+    			if (dirty & /*currSessionKey, sessionsArray*/ 258) {
+    				select_option(select, /*currSessionKey*/ ctx[1]);
     			}
 
-    			if (dirty & /*sliderVal*/ 8) {
-    				set_input_value(input, /*sliderVal*/ ctx[3]);
+    			if (dirty & /*sliderVal*/ 4) {
+    				set_input_value(input, /*sliderVal*/ ctx[2]);
     			}
 
-    			if (dirty & /*styleSubstring*/ 64) {
-    				attr_dev(svg, "style", /*styleSubstring*/ ctx[6]);
+    			if (dirty & /*styleSubstring*/ 32) {
+    				attr_dev(svg, "style", /*styleSubstring*/ ctx[5]);
     			}
 
-    			if (dirty & /*width*/ 16) {
-    				set_style(div11, "width", /*width*/ ctx[4]);
+    			if (dirty & /*width*/ 8) {
+    				set_style(div11, "width", /*width*/ ctx[3]);
     			}
 
-    			if (dirty & /*ht*/ 32) {
-    				set_style(div11, "height", /*ht*/ ctx[5]);
+    			if (dirty & /*ht*/ 16) {
+    				set_style(div11, "height", /*ht*/ ctx[4]);
     			}
     		},
     		i: noop$3,
@@ -22717,7 +22843,7 @@ var app = (function () {
     function instance$b($$self, $$props, $$invalidate) {
     	let $screenHeight;
     	validate_store(screenHeight, 'screenHeight');
-    	component_subscribe($$self, screenHeight, $$value => $$invalidate(16, $screenHeight = $$value));
+    	component_subscribe($$self, screenHeight, $$value => $$invalidate(15, $screenHeight = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('GalleryCard', slots, []);
     	let { data } = $$props;
@@ -22733,15 +22859,11 @@ var app = (function () {
     		styleSubstring = 'width: 100%';
     	}
 
+    	let currSessionKey, currSession;
     	let sessions = data.sessionData;
     	let sessionsArray = Object.keys(sessions);
-    	let currSessionIndex = 0;
-    	let currSessionKey, currSession;
-
-    	function navigateKeys(chg) {
-    		$$invalidate(1, currSessionIndex = currSessionIndex + chg);
-    	}
-
+    	let currSessionIndex = sessionsArray.length - 1;
+    	currSessionKey = sessionsArray[currSessionIndex];
     	const writable_props = ['data'];
 
     	Object_1$1.keys($$props).forEach(key => {
@@ -22749,16 +22871,18 @@ var app = (function () {
     	});
 
     	const click_handler = () => {
-    		navigateKeys(-1);
+    		$$invalidate(6, currSessionIndex--, currSessionIndex);
+    		$$invalidate(1, currSessionKey = sessionsArray[currSessionIndex]);
     	};
 
     	const click_handler_1 = () => {
-    		navigateKeys(1);
+    		$$invalidate(6, currSessionIndex++, currSessionIndex);
+    		$$invalidate(1, currSessionKey = sessionsArray[currSessionIndex]);
     	};
 
     	function select_change_handler() {
     		currSessionKey = select_value(this);
-    		((($$invalidate(2, currSessionKey), $$invalidate(8, sessionsArray)), $$invalidate(1, currSessionIndex)), $$invalidate(7, sessions));
+    		$$invalidate(1, currSessionKey);
     		$$invalidate(8, sessionsArray);
     	}
 
@@ -22769,7 +22893,7 @@ var app = (function () {
 
     	function input_change_input_handler() {
     		sliderVal = to_number(this.value);
-    		(((($$invalidate(3, sliderVal), $$invalidate(2, currSessionKey)), $$invalidate(8, sessionsArray)), $$invalidate(1, currSessionIndex)), $$invalidate(7, sessions));
+    		($$invalidate(2, sliderVal), $$invalidate(1, currSessionKey));
     	}
 
     	$$self.$$set = $$props => {
@@ -22791,12 +22915,11 @@ var app = (function () {
     		width,
     		ht,
     		styleSubstring,
+    		currSessionKey,
+    		currSession,
     		sessions,
     		sessionsArray,
     		currSessionIndex,
-    		currSessionKey,
-    		currSession,
-    		navigateKeys,
     		$screenHeight
     	});
 
@@ -22804,15 +22927,15 @@ var app = (function () {
     		if ('data' in $$props) $$invalidate(0, data = $$props.data);
     		if ('maxW' in $$props) maxW = $$props.maxW;
     		if ('maxH' in $$props) maxH = $$props.maxH;
-    		if ('sliderVal' in $$props) $$invalidate(3, sliderVal = $$props.sliderVal);
-    		if ('width' in $$props) $$invalidate(4, width = $$props.width);
-    		if ('ht' in $$props) $$invalidate(5, ht = $$props.ht);
-    		if ('styleSubstring' in $$props) $$invalidate(6, styleSubstring = $$props.styleSubstring);
+    		if ('sliderVal' in $$props) $$invalidate(2, sliderVal = $$props.sliderVal);
+    		if ('width' in $$props) $$invalidate(3, width = $$props.width);
+    		if ('ht' in $$props) $$invalidate(4, ht = $$props.ht);
+    		if ('styleSubstring' in $$props) $$invalidate(5, styleSubstring = $$props.styleSubstring);
+    		if ('currSessionKey' in $$props) $$invalidate(1, currSessionKey = $$props.currSessionKey);
+    		if ('currSession' in $$props) currSession = $$props.currSession;
     		if ('sessions' in $$props) $$invalidate(7, sessions = $$props.sessions);
     		if ('sessionsArray' in $$props) $$invalidate(8, sessionsArray = $$props.sessionsArray);
-    		if ('currSessionIndex' in $$props) $$invalidate(1, currSessionIndex = $$props.currSessionIndex);
-    		if ('currSessionKey' in $$props) $$invalidate(2, currSessionKey = $$props.currSessionKey);
-    		if ('currSession' in $$props) currSession = $$props.currSession;
+    		if ('currSessionIndex' in $$props) $$invalidate(6, currSessionIndex = $$props.currSessionIndex);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -22820,14 +22943,13 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*currSessionIndex, currSessionKey*/ 6) {
+    		if ($$self.$$.dirty & /*currSessionKey*/ 2) {
     			{
-    				$$invalidate(2, currSessionKey = sessionsArray[currSessionIndex]);
     				currSession = sessions[currSessionKey];
     			}
     		}
 
-    		if ($$self.$$.dirty & /*currSessionKey*/ 4) {
+    		if ($$self.$$.dirty & /*currSessionKey*/ 2) {
     			//on viewer change
     			(async () => {
     				let sessionData = await dbGet('sessionData/' + currSessionKey);
@@ -22835,7 +22957,7 @@ var app = (function () {
     				if (sessionData) {
     					contourMapBlur(sessionData);
     					document.querySelector('#slider').setAttribute('max', sessionData.length);
-    					$$invalidate(3, sliderVal = 0);
+    					$$invalidate(2, sliderVal = 0);
     				}
     			})();
     		}
@@ -22843,15 +22965,14 @@ var app = (function () {
 
     	return [
     		data,
-    		currSessionIndex,
     		currSessionKey,
     		sliderVal,
     		width,
     		ht,
     		styleSubstring,
+    		currSessionIndex,
     		sessions,
     		sessionsArray,
-    		navigateKeys,
     		click_handler,
     		click_handler_1,
     		select_change_handler,
@@ -22889,49 +23010,9 @@ var app = (function () {
     	}
     }
 
-    function cubicOut(t) {
-        const f = t - 1.0;
-        return f * f * f + 1.0;
-    }
-
-    function fade(node, { delay = 0, duration = 400, easing = identity$4 } = {}) {
-        const o = +getComputedStyle(node).opacity;
-        return {
-            delay,
-            duration,
-            easing,
-            css: t => `opacity: ${t * o}`
-        };
-    }
-    function slide(node, { delay = 0, duration = 400, easing = cubicOut } = {}) {
-        const style = getComputedStyle(node);
-        const opacity = +style.opacity;
-        const height = parseFloat(style.height);
-        const padding_top = parseFloat(style.paddingTop);
-        const padding_bottom = parseFloat(style.paddingBottom);
-        const margin_top = parseFloat(style.marginTop);
-        const margin_bottom = parseFloat(style.marginBottom);
-        const border_top_width = parseFloat(style.borderTopWidth);
-        const border_bottom_width = parseFloat(style.borderBottomWidth);
-        return {
-            delay,
-            duration,
-            easing,
-            css: t => 'overflow: hidden;' +
-                `opacity: ${Math.min(t * 20, 1) * opacity};` +
-                `height: ${t * height}px;` +
-                `padding-top: ${t * padding_top}px;` +
-                `padding-bottom: ${t * padding_bottom}px;` +
-                `margin-top: ${t * margin_top}px;` +
-                `margin-bottom: ${t * margin_bottom}px;` +
-                `border-top-width: ${t * border_top_width}px;` +
-                `border-bottom-width: ${t * border_bottom_width}px;`
-        };
-    }
-
     /* src\pages\Gallery.svelte generated by Svelte v3.44.0 */
 
-    const { Object: Object_1, console: console_1$1 } = globals;
+    const { Object: Object_1, console: console_1$2 } = globals;
     const file$a = "src\\pages\\Gallery.svelte";
 
     function get_each_context$2(ctx, list, i) {
@@ -22990,7 +23071,6 @@ var app = (function () {
 
     function create_fragment$a(ctx) {
     	let div;
-    	let div_transition;
     	let current;
     	let each_value = /*works*/ ctx[0];
     	validate_each_argument(each_value);
@@ -23063,11 +23143,6 @@ var app = (function () {
     				transition_in(each_blocks[i]);
     			}
 
-    			add_render_callback(() => {
-    				if (!div_transition) div_transition = create_bidirectional_transition(div, fade, {}, true);
-    				div_transition.run(1);
-    			});
-
     			current = true;
     		},
     		o: function outro(local) {
@@ -23077,14 +23152,11 @@ var app = (function () {
     				transition_out(each_blocks[i]);
     			}
 
-    			if (!div_transition) div_transition = create_bidirectional_transition(div, fade, {}, false);
-    			div_transition.run(0);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
     			destroy_each(each_blocks, detaching);
-    			if (detaching && div_transition) div_transition.end();
     		}
     	};
 
@@ -23113,7 +23185,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object_1.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<Gallery> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$2.warn(`<Gallery> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$capture_state = () => ({
@@ -26041,10 +26113,7 @@ var app = (function () {
         let vidContainer = document.querySelector('#webgazerVideoContainer');
         document.querySelector('.container-body').append(vidContainer);
         gazerInitDone.set(true);
-
-        setTimeout(() => {
-          console.log('removing load ind');
-        }, 1500);
+        console.log('gazer initialized');
       }
     }
 
@@ -26270,8 +26339,8 @@ var app = (function () {
     			toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'gallery');
     			add_location(div1, file$9, 26, 6, 731);
     			attr_dev(span2, "class", "material-icons-round svelte-1kjn57m");
-    			add_location(span2, file$9, 44, 8, 1203);
-    			add_location(span3, file$9, 46, 8, 1269);
+    			add_location(span2, file$9, 44, 8, 1224);
+    			add_location(span3, file$9, 46, 8, 1290);
     			attr_dev(div2, "class", "btn clickable svelte-1kjn57m");
     			toggle_class(div2, "active", /*$pageState*/ ctx[0] === 'record');
     			add_location(div2, file$9, 33, 6, 897);
@@ -26339,7 +26408,7 @@ var app = (function () {
     			});
 
     			add_render_callback(() => {
-    				if (!div2_transition) div2_transition = create_bidirectional_transition(div2, fade, {}, true);
+    				if (!div2_transition) div2_transition = create_bidirectional_transition(div2, slide, { duration: 500 }, true);
     				div2_transition.run(1);
     			});
 
@@ -26348,7 +26417,7 @@ var app = (function () {
     		o: function outro(local) {
     			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fade, {}, false);
     			div1_transition.run(0);
-    			if (!div2_transition) div2_transition = create_bidirectional_transition(div2, fade, {}, false);
+    			if (!div2_transition) div2_transition = create_bidirectional_transition(div2, slide, { duration: 500 }, false);
     			div2_transition.run(0);
     			current = false;
     		},
@@ -26665,7 +26734,7 @@ var app = (function () {
 
     const file$6 = "src\\components\\RecordCalibrateVid.svelte";
 
-    // (32:30) 
+    // (33:30) 
     function create_if_block_2$2(ctx) {
     	let h3;
     	let t1;
@@ -26678,9 +26747,9 @@ var app = (function () {
     			t1 = space();
     			p = element("p");
     			p.textContent = "We’ll need to first calibrate your webcam in order to proceed. Ensure that\r\n    your are in a well-lit environment, and that your face is in the green\r\n    section of the screen below.";
-    			add_location(h3, file$6, 32, 2, 778);
+    			add_location(h3, file$6, 33, 2, 805);
     			attr_dev(p, "class", "inst");
-    			add_location(p, file$6, 33, 2, 807);
+    			add_location(p, file$6, 34, 2, 834);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h3, anchor);
@@ -26699,7 +26768,7 @@ var app = (function () {
     		block,
     		id: create_if_block_2$2.name,
     		type: "if",
-    		source: "(32:30) ",
+    		source: "(33:30) ",
     		ctx
     	});
 
@@ -26712,8 +26781,10 @@ var app = (function () {
     	let t1;
     	let p;
     	let t2;
+    	let strong;
     	let t3;
     	let t4;
+    	let t5;
 
     	const block = {
     		c: function create() {
@@ -26722,9 +26793,12 @@ var app = (function () {
     			t1 = space();
     			p = element("p");
     			t2 = text("Your webcam was already calibrated with an accuracy rate of ");
+    			strong = element("strong");
     			t3 = text(/*$calibrationPct*/ ctx[2]);
-    			t4 = text("%.\r\n    Please ensure your face is centered below, and click to proceed and view\r\n    art!");
+    			t4 = text("%");
+    			t5 = text(". Please ensure your face is centered below, then click to proceed and view\r\n    art!");
     			add_location(h3, file$6, 25, 2, 505);
+    			add_location(strong, file$6, 27, 64, 627);
     			attr_dev(p, "class", "inst");
     			add_location(p, file$6, 26, 2, 545);
     		},
@@ -26733,8 +26807,10 @@ var app = (function () {
     			insert_dev(target, t1, anchor);
     			insert_dev(target, p, anchor);
     			append_dev(p, t2);
-    			append_dev(p, t3);
-    			append_dev(p, t4);
+    			append_dev(p, strong);
+    			append_dev(strong, t3);
+    			append_dev(strong, t4);
+    			append_dev(p, t5);
     		},
     		p: function update(ctx, dirty) {
     			if (dirty & /*$calibrationPct*/ 4) set_data_dev(t3, /*$calibrationPct*/ ctx[2]);
@@ -26757,7 +26833,7 @@ var app = (function () {
     	return block;
     }
 
-    // (41:0) {#if !$gazerInitVideoDone}
+    // (42:0) {#if !$gazerInitVideoDone}
     function create_if_block$3(ctx) {
     	let div;
     	let p;
@@ -26767,9 +26843,9 @@ var app = (function () {
     			div = element("div");
     			p = element("p");
     			p.textContent = "Initializing Video Stream...";
-    			add_location(p, file$6, 42, 4, 1095);
-    			attr_dev(div, "class", "video-wrapper svelte-gvevuf");
-    			add_location(div, file$6, 41, 2, 1062);
+    			add_location(p, file$6, 43, 4, 1127);
+    			attr_dev(div, "class", "video-wrapper glow svelte-10bw9l4");
+    			add_location(div, file$6, 42, 2, 1089);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -26784,7 +26860,7 @@ var app = (function () {
     		block,
     		id: create_if_block$3.name,
     		type: "if",
-    		source: "(41:0) {#if !$gazerInitVideoDone}",
+    		source: "(42:0) {#if !$gazerInitVideoDone}",
     		ctx
     	});
 
@@ -26969,16 +27045,16 @@ var app = (function () {
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[8] = list[i];
+    	child_ctx[9] = list[i];
     	return child_ctx;
     }
 
-    // (89:36) 
+    // (91:36) 
     function create_if_block_2$1(ctx) {
     	let if_block_anchor;
 
     	function select_block_type_1(ctx, dirty) {
-    		if (/*$calibrationPct*/ ctx[1] > 70) return create_if_block_3$1;
+    		if (/*$calibrationPct*/ ctx[1] > /*$calibrationCutoff*/ ctx[3]) return create_if_block_3$1;
     		return create_else_block$1;
     	}
 
@@ -27017,14 +27093,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2$1.name,
     		type: "if",
-    		source: "(89:36) ",
+    		source: "(91:36) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (73:37) 
+    // (75:37) 
     function create_if_block_1$2(ctx) {
     	let p;
     	let t1;
@@ -27043,13 +27119,13 @@ var app = (function () {
     			div0.textContent = "Start staring!";
     			t3 = space();
     			div1 = element("div");
-    			attr_dev(p, "class", "svelte-1ttilq9");
-    			add_location(p, file$5, 73, 2, 2009);
-    			attr_dev(div0, "class", "clickable btn btn-stare accent svelte-1ttilq9");
+    			attr_dev(p, "class", "svelte-iun2vv");
+    			add_location(p, file$5, 75, 2, 1948);
+    			attr_dev(div0, "class", "clickable btn btn-stare accent svelte-iun2vv");
     			toggle_class(div0, "disabled", /*initStare*/ ctx[2]);
-    			add_location(div0, file$5, 77, 2, 2149);
-    			attr_dev(div1, "class", "center-dot svelte-1ttilq9");
-    			add_location(div1, file$5, 87, 2, 2360);
+    			add_location(div0, file$5, 79, 2, 2088);
+    			attr_dev(div1, "class", "center-dot svelte-iun2vv");
+    			add_location(div1, file$5, 89, 2, 2299);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -27059,7 +27135,7 @@ var app = (function () {
     			insert_dev(target, div1, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(div0, "click", /*click_handler*/ ctx[5], false, false, false);
+    				dispose = listen_dev(div0, "click", /*click_handler*/ ctx[6], false, false, false);
     				mounted = true;
     			}
     		},
@@ -27083,17 +27159,17 @@ var app = (function () {
     		block,
     		id: create_if_block_1$2.name,
     		type: "if",
-    		source: "(73:37) ",
+    		source: "(75:37) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (64:0) {#if calibrationMode == 'dots'}
+    // (66:0) {#if calibrationMode == 'dots'}
     function create_if_block$2(ctx) {
     	let each_1_anchor;
-    	let each_value = /*calibrationPoints*/ ctx[3];
+    	let each_value = /*calibrationPoints*/ ctx[4];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -27117,8 +27193,8 @@ var app = (function () {
     			insert_dev(target, each_1_anchor, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*calibrationPoints, calibrateClick*/ 24) {
-    				each_value = /*calibrationPoints*/ ctx[3];
+    			if (dirty & /*calibrationPoints, calibrateClick*/ 48) {
+    				each_value = /*calibrationPoints*/ ctx[4];
     				validate_each_argument(each_value);
     				let i;
 
@@ -27151,14 +27227,14 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(64:0) {#if calibrationMode == 'dots'}",
+    		source: "(66:0) {#if calibrationMode == 'dots'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (105:2) {:else}
+    // (107:2) {:else}
     function create_else_block$1(ctx) {
     	let p0;
     	let t0;
@@ -27168,6 +27244,9 @@ var app = (function () {
     	let t3;
     	let t4;
     	let p1;
+    	let t5;
+    	let t6;
+    	let t7;
 
     	const block = {
     		c: function create() {
@@ -27179,13 +27258,15 @@ var app = (function () {
     			t3 = text(".");
     			t4 = space();
     			p1 = element("p");
-    			p1.textContent = ":( Unfortunately we require an accuracy rate of 75% or higher to proceed";
-    			add_location(strong, file$5, 106, 34, 3147);
+    			t5 = text("Unfortunately we require an accuracy rate of ");
+    			t6 = text(/*$calibrationCutoff*/ ctx[3]);
+    			t7 = text("% or\r\n      higher to proceed! Please re-do your calibration, or exit to gallery.");
+    			add_location(strong, file$5, 108, 34, 3102);
     			set_style(p0, "color", "var(--color-neg)");
-    			attr_dev(p0, "class", "svelte-1ttilq9");
-    			add_location(p0, file$5, 105, 4, 3076);
-    			attr_dev(p1, "class", "svelte-1ttilq9");
-    			add_location(p1, file$5, 108, 4, 3199);
+    			attr_dev(p0, "class", "svelte-iun2vv");
+    			add_location(p0, file$5, 107, 4, 3031);
+    			attr_dev(p1, "class", "svelte-iun2vv");
+    			add_location(p1, file$5, 110, 4, 3154);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p0, anchor);
@@ -27196,9 +27277,13 @@ var app = (function () {
     			append_dev(p0, t3);
     			insert_dev(target, t4, anchor);
     			insert_dev(target, p1, anchor);
+    			append_dev(p1, t5);
+    			append_dev(p1, t6);
+    			append_dev(p1, t7);
     		},
     		p: function update(ctx, dirty) {
     			if (dirty & /*$calibrationPct*/ 2) set_data_dev(t1, /*$calibrationPct*/ ctx[1]);
+    			if (dirty & /*$calibrationCutoff*/ 8) set_data_dev(t6, /*$calibrationCutoff*/ ctx[3]);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(p0);
@@ -27211,14 +27296,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(105:2) {:else}",
+    		source: "(107:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (90:2) {#if $calibrationPct > 70}
+    // (92:2) {#if $calibrationPct > $calibrationCutoff}
     function create_if_block_3$1(ctx) {
     	let p0;
     	let t0;
@@ -27251,14 +27336,14 @@ var app = (function () {
     			t8 = space();
     			p2 = element("p");
     			p2.textContent = "Not perfect, but good enough to deduce patterns in how you look at art!\r\n      Lastly, please look at the selected piece of artwork (full-screen) for 20\r\n      seconds, and we’ll generate a custom visual summarizing how you viewed the\r\n      painting.";
-    			add_location(strong, file$5, 91, 34, 2531);
+    			add_location(strong, file$5, 93, 34, 2486);
     			set_style(p0, "color", "var(--color-pos)");
-    			attr_dev(p0, "class", "svelte-1ttilq9");
-    			add_location(p0, file$5, 90, 4, 2460);
-    			attr_dev(p1, "class", "svelte-1ttilq9");
-    			add_location(p1, file$5, 93, 4, 2583);
-    			attr_dev(p2, "class", "svelte-1ttilq9");
-    			add_location(p2, file$5, 98, 4, 2787);
+    			attr_dev(p0, "class", "svelte-iun2vv");
+    			add_location(p0, file$5, 92, 4, 2415);
+    			attr_dev(p1, "class", "svelte-iun2vv");
+    			add_location(p1, file$5, 95, 4, 2538);
+    			attr_dev(p2, "class", "svelte-iun2vv");
+    			add_location(p2, file$5, 100, 4, 2742);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p0, anchor);
@@ -27292,14 +27377,14 @@ var app = (function () {
     		block,
     		id: create_if_block_3$1.name,
     		type: "if",
-    		source: "(90:2) {#if $calibrationPct > 70}",
+    		source: "(92:2) {#if $calibrationPct > $calibrationCutoff}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (65:2) {#each calibrationPoints as pt}
+    // (67:2) {#each calibrationPoints as pt}
     function create_each_block$1(ctx) {
     	let div;
     	let mounted;
@@ -27308,17 +27393,17 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			div = element("div");
-    			attr_dev(div, "class", "calibration-pt svelte-1ttilq9");
-    			set_style(div, "top", /*pt*/ ctx[8].top);
-    			set_style(div, "right", /*pt*/ ctx[8].right);
+    			attr_dev(div, "class", "calibration-pt svelte-iun2vv");
+    			set_style(div, "top", /*pt*/ ctx[9].top);
+    			set_style(div, "right", /*pt*/ ctx[9].right);
     			attr_dev(div, "numclicks", "0");
-    			add_location(div, file$5, 65, 4, 1813);
+    			add_location(div, file$5, 67, 4, 1752);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(div, "click", /*calibrateClick*/ ctx[4], false, false, false);
+    				dispose = listen_dev(div, "click", /*calibrateClick*/ ctx[5], false, false, false);
     				mounted = true;
     			}
     		},
@@ -27334,7 +27419,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(65:2) {#each calibrationPoints as pt}",
+    		source: "(67:2) {#each calibrationPoints as pt}",
     		ctx
     	});
 
@@ -27362,7 +27447,7 @@ var app = (function () {
     			t1 = space();
     			if (if_block) if_block.c();
     			if_block_anchor = empty$1();
-    			add_location(h3, file$5, 61, 0, 1709);
+    			add_location(h3, file$5, 63, 0, 1648);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -27413,27 +27498,27 @@ var app = (function () {
 
     function instance$5($$self, $$props, $$invalidate) {
     	let $calibrationPct;
+    	let $calibrationCutoff;
     	validate_store(calibrationPct, 'calibrationPct');
     	component_subscribe($$self, calibrationPct, $$value => $$invalidate(1, $calibrationPct = $$value));
+    	validate_store(calibrationCutoff, 'calibrationCutoff');
+    	component_subscribe($$self, calibrationCutoff, $$value => $$invalidate(3, $calibrationCutoff = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('RecordCalibrateExercise', slots, []);
     	let calibrationMode = 'dots';
     	gazerTrain();
 
     	let calibrationPoints = [
-    		{ top: '4%', right: '4%', numClicks: 0 },
+    		{ top: '10%', right: '4%', numClicks: 0 },
     		{ top: '50%', right: '4%', numClicks: 0 },
-    		{ top: '96%', right: '4%', numClicks: 0 },
-    		{
-    			top: '4%',
-    			right: 'calc(100% - 400px)',
-    			numClicks: 0
-    		},
+    		{ top: '90%', right: '4%', numClicks: 0 },
+    		{ top: '10%', right: '96%', numClicks: 0 },
     		{ top: '50%', right: '96%', numClicks: 0 },
-    		{ top: '96%', right: '96%', numClicks: 0 },
-    		{ top: '4%', right: '50%', numClicks: 0 },
-    		{ top: '96%', right: '50%', numClicks: 0 }
-    	]; // { top: '50%', right: '50%', numClicks: 0 },
+    		{ top: '90%', right: '96%', numClicks: 0 },
+    		{ top: '10%', right: '50%', numClicks: 0 },
+    		{ top: '50%', right: '50%', numClicks: 0 },
+    		{ top: '90%', right: '50%', numClicks: 0 }
+    	];
 
     	let maxClicks = 4;
 
@@ -27477,6 +27562,7 @@ var app = (function () {
     	$$self.$capture_state = () => ({
     		gazerRecordingTraining,
     		calibrationPct,
+    		calibrationCutoff,
     		gazerPauseTraining,
     		gazerCalibrationRecording,
     		gazerTrain,
@@ -27486,12 +27572,13 @@ var app = (function () {
     		calibrateClick,
     		checkDotsClicked,
     		initStare,
-    		$calibrationPct
+    		$calibrationPct,
+    		$calibrationCutoff
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('calibrationMode' in $$props) $$invalidate(0, calibrationMode = $$props.calibrationMode);
-    		if ('calibrationPoints' in $$props) $$invalidate(3, calibrationPoints = $$props.calibrationPoints);
+    		if ('calibrationPoints' in $$props) $$invalidate(4, calibrationPoints = $$props.calibrationPoints);
     		if ('maxClicks' in $$props) maxClicks = $$props.maxClicks;
     		if ('initStare' in $$props) $$invalidate(2, initStare = $$props.initStare);
     	};
@@ -27512,12 +27599,15 @@ var app = (function () {
     				}
     			}
     		}
+
+    		if ($$self.$$.dirty & /*$calibrationPct*/ 2) ;
     	};
 
     	return [
     		calibrationMode,
     		$calibrationPct,
     		initStare,
+    		$calibrationCutoff,
     		calibrationPoints,
     		calibrateClick,
     		click_handler
@@ -27570,33 +27660,31 @@ var app = (function () {
     			div2 = element("div");
     			div0 = element("div");
     			p1 = element("p");
-    			p1.textContent = "Eyes on cursor at all times";
+    			p1.textContent = "#1: Eyes on cursor at all times";
     			t5 = space();
     			img0 = element("img");
     			t6 = space();
     			div1 = element("div");
     			p2 = element("p");
-    			p2.textContent = "Move cursor to each red dot, and click on dot until it disappears";
+    			p2.textContent = "#2: Move cursor to each red dot, and click on dot until it disappears";
     			t8 = space();
     			img1 = element("img");
     			add_location(h3, file$4, 4, 0, 75);
-    			attr_dev(p0, "class", "instr svelte-1t38vns");
+    			attr_dev(p0, "class", "instr svelte-1e0aoky");
     			add_location(p0, file$4, 5, 0, 109);
-    			attr_dev(p1, "class", "svelte-1t38vns");
+    			attr_dev(p1, "class", "svelte-1e0aoky");
     			add_location(p1, file$4, 13, 4, 346);
     			if (!src_url_equal(img0.src, img0_src_value = "./assets/img/explain-eye.svg")) attr_dev(img0, "src", img0_src_value);
-    			attr_dev(img0, "class", "svelte-1t38vns");
-    			add_location(img0, file$4, 14, 4, 386);
-    			attr_dev(div0, "class", "svelte-1t38vns");
+    			add_location(img0, file$4, 14, 4, 390);
+    			attr_dev(div0, "class", "svelte-1e0aoky");
     			add_location(div0, file$4, 12, 2, 335);
-    			attr_dev(p2, "class", "svelte-1t38vns");
-    			add_location(p2, file$4, 17, 4, 453);
+    			attr_dev(p2, "class", "svelte-1e0aoky");
+    			add_location(p2, file$4, 17, 4, 457);
     			if (!src_url_equal(img1.src, img1_src_value = "./assets/img/explain-cursor.svg")) attr_dev(img1, "src", img1_src_value);
-    			attr_dev(img1, "class", "svelte-1t38vns");
-    			add_location(img1, file$4, 18, 4, 531);
-    			attr_dev(div1, "class", "svelte-1t38vns");
-    			add_location(div1, file$4, 16, 2, 442);
-    			attr_dev(div2, "class", "explain svelte-1t38vns");
+    			add_location(img1, file$4, 18, 4, 539);
+    			attr_dev(div1, "class", "svelte-1e0aoky");
+    			add_location(div1, file$4, 16, 2, 446);
+    			attr_dev(div2, "class", "explain svelte-1e0aoky");
     			add_location(div2, file$4, 11, 0, 310);
     		},
     		l: function claim(nodes) {
@@ -27681,7 +27769,7 @@ var app = (function () {
 
     /* src\components\RecordCalibrateResults.svelte generated by Svelte v3.44.0 */
 
-    const { console: console_1 } = globals;
+    const { console: console_1$1 } = globals;
 
     const file$3 = "src\\components\\RecordCalibrateResults.svelte";
 
@@ -27709,17 +27797,17 @@ var app = (function () {
     			input = element("input");
     			t4 = space();
     			div0 = element("div");
-    			div0.textContent = "Save";
-    			add_location(h3, file$3, 73, 0, 1889);
-    			add_location(p, file$3, 74, 0, 1918);
+    			div0.textContent = "Save & View";
+    			add_location(h3, file$3, 80, 0, 2054);
+    			add_location(p, file$3, 81, 0, 2083);
     			attr_dev(input, "placeholder", "Enter name here");
     			attr_dev(input, "class", "svelte-bwlty8");
-    			add_location(input, file$3, 80, 2, 2156);
+    			add_location(input, file$3, 87, 2, 2321);
     			attr_dev(div0, "class", "btn accent clickable svelte-bwlty8");
     			toggle_class(div0, "disabled-part", /*nameInputted*/ ctx[0] == true);
-    			add_location(div0, file$3, 91, 2, 2380);
+    			add_location(div0, file$3, 98, 2, 2545);
     			attr_dev(div1, "class", "input-wrapper svelte-bwlty8");
-    			add_location(div1, file$3, 79, 0, 2125);
+    			add_location(div1, file$3, 86, 0, 2290);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -27779,21 +27867,18 @@ var app = (function () {
     }
 
     function instance$3($$self, $$props, $$invalidate) {
-    	let $loadingInd;
     	let $artworkID;
     	let $artworkMetadata;
     	let $gazerRecordingArt;
     	let $sessionID;
-    	validate_store(loadingInd, 'loadingInd');
-    	component_subscribe($$self, loadingInd, $$value => $$invalidate(5, $loadingInd = $$value));
     	validate_store(artworkID, 'artworkID');
-    	component_subscribe($$self, artworkID, $$value => $$invalidate(6, $artworkID = $$value));
+    	component_subscribe($$self, artworkID, $$value => $$invalidate(5, $artworkID = $$value));
     	validate_store(artworkMetadata, 'artworkMetadata');
-    	component_subscribe($$self, artworkMetadata, $$value => $$invalidate(7, $artworkMetadata = $$value));
+    	component_subscribe($$self, artworkMetadata, $$value => $$invalidate(6, $artworkMetadata = $$value));
     	validate_store(gazerRecordingArt, 'gazerRecordingArt');
-    	component_subscribe($$self, gazerRecordingArt, $$value => $$invalidate(8, $gazerRecordingArt = $$value));
+    	component_subscribe($$self, gazerRecordingArt, $$value => $$invalidate(7, $gazerRecordingArt = $$value));
     	validate_store(sessionID, 'sessionID');
-    	component_subscribe($$self, sessionID, $$value => $$invalidate(9, $sessionID = $$value));
+    	component_subscribe($$self, sessionID, $$value => $$invalidate(8, $sessionID = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('RecordCalibrateResults', slots, []);
     	let sessionId = $sessionID;
@@ -27813,7 +27898,7 @@ var app = (function () {
     			await dbWrite('works/' + artworkId, artworkData);
     		}
 
-    		return await dbWrite('works/' + artworkId + '/sessionData/' + sessionId, { name: 'none' });
+    		return await dbWrite('works/' + artworkId + '/sessionData/' + sessionId, { name: 'Anonymous' });
     	}
 
     	async function storeSessionData() {
@@ -27823,25 +27908,16 @@ var app = (function () {
 
     	async function updateUserName() {
     		$$invalidate(0, nameInputted = true);
-    		return await dbWrite('works/' + artworkId + '/sessionData/' + sessionId + '/name', userName);
+    		await dbWrite('works/' + artworkId + '/sessionData/' + sessionId + '/name', userName);
+    		pageState.set('gallery');
     	}
 
-    	async function writeAllData() {
-    		storeSessionData();
-    		writeSessionToArtwork();
-    		let vis = generateContour();
-    		let svgBlob = await new Blob([vis], { type: 'image/svg+xml;charset=utf-8' });
-    		await uploadBlob('svgContours/' + artworkId + '/contours/' + sessionId + '.svg', svgBlob);
-    		console.log('made it ma');
-    		loadingInd.set(false);
-    		console.log($loadingInd);
-    	}
-
-    	writeAllData();
+    	storeSessionData();
+    	writeSessionToArtwork();
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<RecordCalibrateResults> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<RecordCalibrateResults> was created with unknown prop '${key}'`);
     	});
 
     	function input_input_handler() {
@@ -27863,6 +27939,8 @@ var app = (function () {
     		artworkID,
     		sessionID,
     		loadingInd,
+    		stateIndex,
+    		pageState,
     		dbGet,
     		dbWrite,
     		postTest,
@@ -27877,8 +27955,6 @@ var app = (function () {
     		writeSessionToArtwork,
     		storeSessionData,
     		updateUserName,
-    		writeAllData,
-    		$loadingInd,
     		$artworkID,
     		$artworkMetadata,
     		$gazerRecordingArt,
@@ -27936,15 +28012,15 @@ var app = (function () {
     			p.textContent = "Please look at the following image for 20 seconds";
     			attr_dev(img, "id", "artView");
     			if (!src_url_equal(img.src, img_src_value = "./assets/img/mehretuCropped.png")) attr_dev(img, "src", img_src_value);
-    			attr_dev(img, "class", "svelte-pcr7ku");
+    			attr_dev(img, "class", "svelte-8viv0t");
     			toggle_class(img, "inactive", /*imageInactive*/ ctx[0] == true);
     			add_location(img, file$2, 15, 4, 386);
-    			attr_dev(p, "class", "svelte-pcr7ku");
+    			attr_dev(p, "class", "svelte-8viv0t");
     			toggle_class(p, "inactive", /*imageInactive*/ ctx[0] == false);
     			add_location(p, file$2, 20, 4, 515);
-    			attr_dev(div0, "class", "img-holder svelte-pcr7ku");
+    			attr_dev(div0, "class", "img-holder svelte-8viv0t");
     			add_location(div0, file$2, 14, 2, 356);
-    			attr_dev(div1, "class", "wrapper-full svelte-pcr7ku");
+    			attr_dev(div1, "class", "wrapper-full svelte-8viv0t");
     			add_location(div1, file$2, 13, 0, 326);
     		},
     		l: function claim(nodes) {
@@ -28031,31 +28107,33 @@ var app = (function () {
     }
 
     /* src\pages\Record.svelte generated by Svelte v3.44.0 */
+
+    const { console: console_1 } = globals;
     const file$1 = "src\\pages\\Record.svelte";
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[20] = list[i];
+    	child_ctx[22] = list[i];
     	return child_ctx;
     }
 
-    // (190:6) {#each sections as section}
+    // (197:6) {#each sections as section}
     function create_each_block(ctx) {
     	let div;
 
     	const block = {
     		c: function create() {
     			div = element("div");
-    			attr_dev(div, "class", "nav-dot svelte-1shl68w");
-    			toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]] === /*section*/ ctx[20]);
-    			add_location(div, file$1, 190, 8, 5362);
+    			attr_dev(div, "class", "nav-dot svelte-fttla9");
+    			toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]] === /*section*/ ctx[22]);
+    			add_location(div, file$1, 197, 8, 5684);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
     		},
     		p: function update(ctx, dirty) {
     			if (dirty & /*sections, $stateIndex*/ 5) {
-    				toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]] === /*section*/ ctx[20]);
+    				toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]] === /*section*/ ctx[22]);
     			}
     		},
     		d: function destroy(detaching) {
@@ -28067,15 +28145,15 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(190:6) {#each sections as section}",
+    		source: "(197:6) {#each sections as section}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (206:61) 
-    function create_if_block_6(ctx) {
+    // (217:61) 
+    function create_if_block_8(ctx) {
     	let calibrateresults;
     	let current;
     	calibrateresults = new RecordCalibrateResults({ $$inline: true });
@@ -28105,17 +28183,17 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_6.name,
+    		id: create_if_block_8.name,
     		type: "if",
-    		source: "(206:61) ",
+    		source: "(217:61) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (204:58) 
-    function create_if_block_5(ctx) {
+    // (215:58) 
+    function create_if_block_7(ctx) {
     	let calibrateview;
     	let current;
     	calibrateview = new RecordView({ $$inline: true });
@@ -28145,17 +28223,17 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_5.name,
+    		id: create_if_block_7.name,
     		type: "if",
-    		source: "(204:58) ",
+    		source: "(215:58) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (202:72) 
-    function create_if_block_4(ctx) {
+    // (213:72) 
+    function create_if_block_6(ctx) {
     	let calibrateexercise;
     	let current;
     	calibrateexercise = new RecordCalibrateExercise({ $$inline: true });
@@ -28185,17 +28263,17 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_4.name,
+    		id: create_if_block_6.name,
     		type: "if",
-    		source: "(202:72) ",
+    		source: "(213:72) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (200:76) 
-    function create_if_block_3(ctx) {
+    // (211:76) 
+    function create_if_block_5(ctx) {
     	let calibrateinstructions;
     	let current;
     	calibrateinstructions = new RecordCalibrateInstructions({ $$inline: true });
@@ -28225,36 +28303,40 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_3.name,
+    		id: create_if_block_5.name,
     		type: "if",
-    		source: "(200:76) ",
+    		source: "(211:76) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (198:67) 
-    function create_if_block_2(ctx) {
+    // (207:67) 
+    function create_if_block_4(ctx) {
+    	let div;
     	let calibratevid;
     	let current;
 
     	calibratevid = new RecordCalibrateVid({
-    			props: { calibrated: /*calibrated*/ ctx[5] },
+    			props: { calibrated: /*calibrated*/ ctx[6] },
     			$$inline: true
     		});
 
     	const block = {
     		c: function create() {
+    			div = element("div");
     			create_component(calibratevid.$$.fragment);
+    			add_location(div, file$1, 207, 6, 6010);
     		},
     		m: function mount(target, anchor) {
-    			mount_component(calibratevid, target, anchor);
+    			insert_dev(target, div, anchor);
+    			mount_component(calibratevid, div, null);
     			current = true;
     		},
     		p: function update(ctx, dirty) {
     			const calibratevid_changes = {};
-    			if (dirty & /*calibrated*/ 32) calibratevid_changes.calibrated = /*calibrated*/ ctx[5];
+    			if (dirty & /*calibrated*/ 64) calibratevid_changes.calibrated = /*calibrated*/ ctx[6];
     			calibratevid.$set(calibratevid_changes);
     		},
     		i: function intro(local) {
@@ -28267,33 +28349,38 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			destroy_component(calibratevid, detaching);
+    			if (detaching) detach_dev(div);
+    			destroy_component(calibratevid);
     		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_2.name,
+    		id: create_if_block_4.name,
     		type: "if",
-    		source: "(198:67) ",
+    		source: "(207:67) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (196:4) {#if sections[$stateIndex].sectionName == 'overview'}
-    function create_if_block_1$1(ctx) {
+    // (203:4) {#if sections[$stateIndex].sectionName == 'overview'}
+    function create_if_block_3(ctx) {
+    	let div;
     	let overview;
     	let current;
     	overview = new RecordOverview({ $$inline: true });
 
     	const block = {
     		c: function create() {
+    			div = element("div");
     			create_component(overview.$$.fragment);
+    			add_location(div, file$1, 203, 6, 5892);
     		},
     		m: function mount(target, anchor) {
-    			mount_component(overview, target, anchor);
+    			insert_dev(target, div, anchor);
+    			mount_component(overview, div, null);
     			current = true;
     		},
     		p: noop$3,
@@ -28307,22 +28394,195 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			destroy_component(overview, detaching);
+    			if (detaching) detach_dev(div);
+    			destroy_component(overview);
     		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_1$1.name,
+    		id: create_if_block_3.name,
     		type: "if",
-    		source: "(196:4) {#if sections[$stateIndex].sectionName == 'overview'}",
+    		source: "(203:4) {#if sections[$stateIndex].sectionName == 'overview'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (239:6) {:else}
+    // (230:4) {:else}
+    function create_else_block_1(ctx) {
+    	let div;
+    	let t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnBackLabel + "";
+    	let t;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			t = text(t_value);
+    			attr_dev(div, "class", "btn-prev btn disabled svelte-fttla9");
+    			toggle_class(div, "accent", /*$calibrationPct*/ ctx[1] && /*$calibrationPct*/ ctx[1] < 70);
+    			toggle_class(div, "disabled", /*disableBack*/ ctx[3] == true);
+    			add_location(div, file$1, 230, 6, 6768);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			append_dev(div, t);
+
+    			if (!mounted) {
+    				dispose = listen_dev(div, "click", /*click_handler*/ ctx[14], false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*sections, $stateIndex*/ 5 && t_value !== (t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnBackLabel + "")) set_data_dev(t, t_value);
+
+    			if (dirty & /*$calibrationPct*/ 2) {
+    				toggle_class(div, "accent", /*$calibrationPct*/ ctx[1] && /*$calibrationPct*/ ctx[1] < 70);
+    			}
+
+    			if (dirty & /*disableBack*/ 8) {
+    				toggle_class(div, "disabled", /*disableBack*/ ctx[3] == true);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block_1.name,
+    		type: "else",
+    		source: "(230:4) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (222:4) {#if calibrated && $stateIndex !== sections.length - 1}
+    function create_if_block_2(ctx) {
+    	let div;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			div.textContent = "Re-Calibrate";
+    			attr_dev(div, "class", "btn re-cal clickable svelte-fttla9");
+    			toggle_class(div, "disabled", /*calibrated*/ ctx[6] == false);
+    			add_location(div, file$1, 222, 6, 6582);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+
+    			if (!mounted) {
+    				dispose = listen_dev(div, "click", /*recalibrate*/ ctx[9], false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*calibrated*/ 64) {
+    				toggle_class(div, "disabled", /*calibrated*/ ctx[6] == false);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_2.name,
+    		type: "if",
+    		source: "(222:4) {#if calibrated && $stateIndex !== sections.length - 1}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (247:4) {#if !hideNext}
+    function create_if_block$1(ctx) {
+    	let div;
+    	let mounted;
+    	let dispose;
+
+    	function select_block_type_2(ctx, dirty) {
+    		if (/*$loadingInd*/ ctx[8]) return create_if_block_1$1;
+    		return create_else_block;
+    	}
+
+    	let current_block_type = select_block_type_2(ctx);
+    	let if_block = current_block_type(ctx);
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			if_block.c();
+    			attr_dev(div, "class", "btn-next btn accent clickable svelte-fttla9");
+    			toggle_class(div, "disabled", /*$loadingInd*/ ctx[8] || /*disableNext*/ ctx[4]);
+    			toggle_class(div, "glow", /*$loadingInd*/ ctx[8]);
+    			add_location(div, file$1, 247, 6, 7267);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			if_block.m(div, null);
+
+    			if (!mounted) {
+    				dispose = listen_dev(div, "click", /*click_handler_1*/ ctx[15], false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (current_block_type === (current_block_type = select_block_type_2(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
+
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(div, null);
+    				}
+    			}
+
+    			if (dirty & /*$loadingInd, disableNext*/ 272) {
+    				toggle_class(div, "disabled", /*$loadingInd*/ ctx[8] || /*disableNext*/ ctx[4]);
+    			}
+
+    			if (dirty & /*$loadingInd*/ 256) {
+    				toggle_class(div, "glow", /*$loadingInd*/ ctx[8]);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			if_block.d();
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$1.name,
+    		type: "if",
+    		source: "(247:4) {#if !hideNext}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (260:8) {:else}
     function create_else_block(ctx) {
     	let t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnLabel + "";
     	let t;
@@ -28346,15 +28606,15 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(239:6) {:else}",
+    		source: "(260:8) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (237:6) {#if $loadingInd}
-    function create_if_block$1(ctx) {
+    // (258:8) {#if $loadingInd}
+    function create_if_block_1$1(ctx) {
     	let t;
 
     	const block = {
@@ -28372,9 +28632,9 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$1.name,
+    		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(237:6) {#if $loadingInd}",
+    		source: "(258:8) {#if $loadingInd}",
     		ctx
     	});
 
@@ -28387,10 +28647,10 @@ var app = (function () {
     	let div0;
     	let t0;
     	let span;
-    	let t1_value = /*$selectedImage*/ ctx[6].title + "";
+    	let t1_value = /*$selectedImage*/ ctx[7].title + "";
     	let t1;
     	let t2;
-    	let t3_value = /*$selectedImage*/ ctx[6].artist + "";
+    	let t3_value = /*$selectedImage*/ ctx[7].artist + "";
     	let t3;
     	let t4;
     	let div1;
@@ -28398,19 +28658,10 @@ var app = (function () {
     	let div3;
     	let current_block_type_index;
     	let if_block0;
-    	let div3_transition;
     	let t6;
-    	let div7;
     	let div4;
-    	let t8;
-    	let div5;
-    	let t9_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnBackLabel + "";
-    	let t9;
-    	let t10;
-    	let div6;
+    	let t7;
     	let current;
-    	let mounted;
-    	let dispose;
     	let each_value = /*sections*/ ctx[0];
     	validate_each_argument(each_value);
     	let each_blocks = [];
@@ -28420,12 +28671,12 @@ var app = (function () {
     	}
 
     	const if_block_creators = [
-    		create_if_block_1$1,
-    		create_if_block_2,
     		create_if_block_3,
     		create_if_block_4,
     		create_if_block_5,
-    		create_if_block_6
+    		create_if_block_6,
+    		create_if_block_7,
+    		create_if_block_8
     	];
 
     	const if_blocks = [];
@@ -28445,19 +28696,20 @@ var app = (function () {
     	}
 
     	function select_block_type_1(ctx, dirty) {
-    		if (/*$loadingInd*/ ctx[7]) return create_if_block$1;
-    		return create_else_block;
+    		if (/*calibrated*/ ctx[6] && /*$stateIndex*/ ctx[2] !== /*sections*/ ctx[0].length - 1) return create_if_block_2;
+    		return create_else_block_1;
     	}
 
     	let current_block_type = select_block_type_1(ctx);
     	let if_block1 = current_block_type(ctx);
+    	let if_block2 = !/*hideNext*/ ctx[5] && create_if_block$1(ctx);
 
     	const block = {
     		c: function create() {
     			section = element("section");
     			div2 = element("div");
     			div0 = element("div");
-    			t0 = text("Selected Work:");
+    			t0 = text("Gazing at:");
     			span = element("span");
     			t1 = text(t1_value);
     			t2 = text(" by ");
@@ -28473,40 +28725,24 @@ var app = (function () {
     			div3 = element("div");
     			if (if_block0) if_block0.c();
     			t6 = space();
-    			div7 = element("div");
     			div4 = element("div");
-    			div4.textContent = "Re-Calibrate";
-    			t8 = space();
-    			div5 = element("div");
-    			t9 = text(t9_value);
-    			t10 = space();
-    			div6 = element("div");
     			if_block1.c();
-    			attr_dev(span, "class", "selection-holder svelte-1shl68w");
-    			add_location(span, file$1, 184, 20, 5173);
+    			t7 = space();
+    			if (if_block2) if_block2.c();
+    			attr_dev(span, "class", "selection-holder svelte-fttla9");
+    			add_location(span, file$1, 191, 16, 5495);
     			attr_dev(div0, "class", "current-selection");
-    			add_location(div0, file$1, 183, 4, 5120);
-    			attr_dev(div1, "class", "nav-ind svelte-1shl68w");
-    			add_location(div1, file$1, 188, 4, 5296);
-    			attr_dev(div2, "class", "container-header svelte-1shl68w");
-    			add_location(div2, file$1, 182, 2, 5084);
-    			attr_dev(div3, "class", "container-body svelte-1shl68w");
-    			add_location(div3, file$1, 194, 2, 5475);
-    			attr_dev(div4, "class", "btn re-cal svelte-1shl68w");
-    			toggle_class(div4, "disabled", /*calibrated*/ ctx[5] == false);
-    			add_location(div4, file$1, 210, 4, 6155);
-    			attr_dev(div5, "class", "btn-prev btn disabled svelte-1shl68w");
-    			toggle_class(div5, "accent", /*$calibrationPct*/ ctx[1] && /*$calibrationPct*/ ctx[1] < 70);
-    			toggle_class(div5, "disabled", /*disableBack*/ ctx[3] == true);
-    			add_location(div5, file$1, 217, 4, 6304);
-    			attr_dev(div6, "class", "btn-next btn accent clickable svelte-1shl68w");
-    			toggle_class(div6, "disabled", /*disableNext*/ ctx[4] == true);
-    			toggle_class(div6, "glow", /*$loadingInd*/ ctx[7] == true);
-    			add_location(div6, file$1, 230, 4, 6690);
-    			attr_dev(div7, "class", "container-footer svelte-1shl68w");
-    			add_location(div7, file$1, 209, 2, 6119);
-    			attr_dev(section, "class", "experiment-container svelte-1shl68w");
-    			add_location(section, file$1, 181, 0, 5042);
+    			add_location(div0, file$1, 190, 4, 5446);
+    			attr_dev(div1, "class", "nav-ind svelte-fttla9");
+    			add_location(div1, file$1, 195, 4, 5618);
+    			attr_dev(div2, "class", "container-header svelte-fttla9");
+    			add_location(div2, file$1, 189, 2, 5410);
+    			attr_dev(div3, "class", "container-body svelte-fttla9");
+    			add_location(div3, file$1, 201, 2, 5797);
+    			attr_dev(div4, "class", "container-footer svelte-fttla9");
+    			add_location(div4, file$1, 220, 2, 6483);
+    			attr_dev(section, "class", "experiment-container svelte-fttla9");
+    			add_location(section, file$1, 188, 0, 5368);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -28535,29 +28771,15 @@ var app = (function () {
     			}
 
     			append_dev(section, t6);
-    			append_dev(section, div7);
-    			append_dev(div7, div4);
-    			append_dev(div7, t8);
-    			append_dev(div7, div5);
-    			append_dev(div5, t9);
-    			append_dev(div7, t10);
-    			append_dev(div7, div6);
-    			if_block1.m(div6, null);
+    			append_dev(section, div4);
+    			if_block1.m(div4, null);
+    			append_dev(div4, t7);
+    			if (if_block2) if_block2.m(div4, null);
     			current = true;
-
-    			if (!mounted) {
-    				dispose = [
-    					listen_dev(div4, "click", /*recalibrate*/ ctx[8], false, false, false),
-    					listen_dev(div5, "click", /*click_handler*/ ctx[12], false, false, false),
-    					listen_dev(div6, "click", /*click_handler_1*/ ctx[13], false, false, false)
-    				];
-
-    				mounted = true;
-    			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if ((!current || dirty & /*$selectedImage*/ 64) && t1_value !== (t1_value = /*$selectedImage*/ ctx[6].title + "")) set_data_dev(t1, t1_value);
-    			if ((!current || dirty & /*$selectedImage*/ 64) && t3_value !== (t3_value = /*$selectedImage*/ ctx[6].artist + "")) set_data_dev(t3, t3_value);
+    			if ((!current || dirty & /*$selectedImage*/ 128) && t1_value !== (t1_value = /*$selectedImage*/ ctx[7].title + "")) set_data_dev(t1, t1_value);
+    			if ((!current || dirty & /*$selectedImage*/ 128) && t3_value !== (t3_value = /*$selectedImage*/ ctx[7].artist + "")) set_data_dev(t3, t3_value);
 
     			if (dirty & /*sections, $stateIndex*/ 5) {
     				each_value = /*sections*/ ctx[0];
@@ -28618,20 +28840,6 @@ var app = (function () {
     				}
     			}
 
-    			if (dirty & /*calibrated*/ 32) {
-    				toggle_class(div4, "disabled", /*calibrated*/ ctx[5] == false);
-    			}
-
-    			if ((!current || dirty & /*sections, $stateIndex*/ 5) && t9_value !== (t9_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnBackLabel + "")) set_data_dev(t9, t9_value);
-
-    			if (dirty & /*$calibrationPct*/ 2) {
-    				toggle_class(div5, "accent", /*$calibrationPct*/ ctx[1] && /*$calibrationPct*/ ctx[1] < 70);
-    			}
-
-    			if (dirty & /*disableBack*/ 8) {
-    				toggle_class(div5, "disabled", /*disableBack*/ ctx[3] == true);
-    			}
-
     			if (current_block_type === (current_block_type = select_block_type_1(ctx)) && if_block1) {
     				if_block1.p(ctx, dirty);
     			} else {
@@ -28640,33 +28848,30 @@ var app = (function () {
 
     				if (if_block1) {
     					if_block1.c();
-    					if_block1.m(div6, null);
+    					if_block1.m(div4, t7);
     				}
     			}
 
-    			if (dirty & /*disableNext*/ 16) {
-    				toggle_class(div6, "disabled", /*disableNext*/ ctx[4] == true);
-    			}
-
-    			if (dirty & /*$loadingInd*/ 128) {
-    				toggle_class(div6, "glow", /*$loadingInd*/ ctx[7] == true);
+    			if (!/*hideNext*/ ctx[5]) {
+    				if (if_block2) {
+    					if_block2.p(ctx, dirty);
+    				} else {
+    					if_block2 = create_if_block$1(ctx);
+    					if_block2.c();
+    					if_block2.m(div4, null);
+    				}
+    			} else if (if_block2) {
+    				if_block2.d(1);
+    				if_block2 = null;
     			}
     		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(if_block0);
-
-    			add_render_callback(() => {
-    				if (!div3_transition) div3_transition = create_bidirectional_transition(div3, fade, {}, true);
-    				div3_transition.run(1);
-    			});
-
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(if_block0);
-    			if (!div3_transition) div3_transition = create_bidirectional_transition(div3, fade, {}, false);
-    			div3_transition.run(0);
     			current = false;
     		},
     		d: function destroy(detaching) {
@@ -28677,10 +28882,8 @@ var app = (function () {
     				if_blocks[current_block_type_index].d();
     			}
 
-    			if (detaching && div3_transition) div3_transition.end();
     			if_block1.d();
-    			mounted = false;
-    			run_all(dispose);
+    			if (if_block2) if_block2.d();
     		}
     	};
 
@@ -28699,29 +28902,31 @@ var app = (function () {
     	let $calibrationCutoff;
     	let $calibrationPct;
     	let $gazerInitVideoDone;
-    	let $stateIndex;
     	let $gazerInitDone;
+    	let $stateIndex;
     	let $sessionID;
     	let $selectedImage;
     	let $loadingInd;
     	validate_store(calibrationCutoff, 'calibrationCutoff');
-    	component_subscribe($$self, calibrationCutoff, $$value => $$invalidate(9, $calibrationCutoff = $$value));
+    	component_subscribe($$self, calibrationCutoff, $$value => $$invalidate(11, $calibrationCutoff = $$value));
     	validate_store(calibrationPct, 'calibrationPct');
     	component_subscribe($$self, calibrationPct, $$value => $$invalidate(1, $calibrationPct = $$value));
     	validate_store(gazerInitVideoDone, 'gazerInitVideoDone');
-    	component_subscribe($$self, gazerInitVideoDone, $$value => $$invalidate(10, $gazerInitVideoDone = $$value));
+    	component_subscribe($$self, gazerInitVideoDone, $$value => $$invalidate(12, $gazerInitVideoDone = $$value));
+    	validate_store(gazerInitDone, 'gazerInitDone');
+    	component_subscribe($$self, gazerInitDone, $$value => $$invalidate(13, $gazerInitDone = $$value));
     	validate_store(stateIndex, 'stateIndex');
     	component_subscribe($$self, stateIndex, $$value => $$invalidate(2, $stateIndex = $$value));
-    	validate_store(gazerInitDone, 'gazerInitDone');
-    	component_subscribe($$self, gazerInitDone, $$value => $$invalidate(11, $gazerInitDone = $$value));
     	validate_store(sessionID, 'sessionID');
-    	component_subscribe($$self, sessionID, $$value => $$invalidate(16, $sessionID = $$value));
+    	component_subscribe($$self, sessionID, $$value => $$invalidate(18, $sessionID = $$value));
     	validate_store(selectedImage, 'selectedImage');
-    	component_subscribe($$self, selectedImage, $$value => $$invalidate(6, $selectedImage = $$value));
+    	component_subscribe($$self, selectedImage, $$value => $$invalidate(7, $selectedImage = $$value));
     	validate_store(loadingInd, 'loadingInd');
-    	component_subscribe($$self, loadingInd, $$value => $$invalidate(7, $loadingInd = $$value));
+    	component_subscribe($$self, loadingInd, $$value => $$invalidate(8, $loadingInd = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Record', slots, []);
+    	let disableBack = false, disableNext = false, hideNext = false;
+    	let calibrated = false;
 
     	let sectionsNotCalibrated = [
     		{
@@ -28729,7 +28934,8 @@ var app = (function () {
     			videoShown: false,
     			btnLabel: 'Start!',
     			disableBack: true,
-    			showLoader: true
+    			showLoader: true,
+    			btnBackLabel: 'Back to Overview'
     		},
     		{
     			sectionName: 'calibrate-vid',
@@ -28761,7 +28967,7 @@ var app = (function () {
     			sectionName: 'view',
     			videoShown: false,
     			btnLabel: 'Proceed',
-    			disableNext: true,
+    			disableNext: false,
     			btnBackLabel: 'Back to Calibration',
     			showLoader: true
     		},
@@ -28769,8 +28975,9 @@ var app = (function () {
     			sectionName: 'results',
     			videoShown: false,
     			btnLabel: 'View Pattern',
-    			btnBackLabel: 'Back to Calibration',
-    			showLoader: true
+    			disableBack: true,
+    			hideNext: true,
+    			btnBackLabel: 'Back to Calibration'
     		}
     	];
 
@@ -28790,8 +28997,6 @@ var app = (function () {
     		sectionsNotCalibrated[5]
     	];
 
-    	let disableBack = false, disableNext = false;
-    	let calibrated = false;
     	let sections = sectionsNotCalibrated;
 
     	async function checkExistingCalibration() {
@@ -28799,24 +29004,27 @@ var app = (function () {
     		let calPct = await localforage.getItem('calibrationPct');
     		calibrationPct.set(calPct);
 
-    		if (gazerData.length > 20 && calPct > $calibrationCutoff) {
-    			$$invalidate(0, sections = sectionsCalibrated);
-    			$$invalidate(5, calibrated = true);
-    		} else {
-    			$$invalidate(0, sections = sectionsNotCalibrated);
+    		if (gazerData) {
+    			if (gazerData.length > 20 && calPct > $calibrationCutoff) {
+    				$$invalidate(0, sections = sectionsCalibrated);
+    				$$invalidate(6, calibrated = true);
+    			} else {
+    				$$invalidate(0, sections = sectionsNotCalibrated);
+    			}
     		}
     	} //should store the date of calibration. if more than a day then it don't count sry bb
 
     	function recalibrate() {
-    		$$invalidate(5, calibrated = false);
+    		$$invalidate(6, calibrated = false);
     		$$invalidate(0, sections = sectionsNotCalibrated);
     		calibrationPct.set(null);
-    	} //webgazer.clearData();
+    		webgazer.clearData();
+    	}
 
     	checkExistingCalibration(); //this should happen and return before anything else loads
 
-    	//set unique ID for session
     	onMount(() => {
+    		//set unique ID for session
     		if (!$sessionID) {
     			sessionID.set(new Date().getTime());
     		}
@@ -28826,24 +29034,29 @@ var app = (function () {
     		}
     	});
 
-    	//anytime page substate changes --- FIX THIS
-    	let gazeActive, gazeRecording;
+    	//move video, disable next and prev buttons on subpage change
+    	let gazeActive, gazeRecording, currSection;
 
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Record> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<Record> was created with unknown prop '${key}'`);
     	});
 
     	const click_handler = () => {
-    		if (sections[$stateIndex] == 'calibrate-exercise') {
+    		if (sections[$stateIndex].sectionName == 'calibrate-exercise') {
+    			console.log('yea that me');
     			gazerRestartCalibration();
     		}
 
     		set_store_value(stateIndex, $stateIndex--, $stateIndex);
     	};
 
-    	const click_handler_1 = () => set_store_value(stateIndex, $stateIndex++, $stateIndex);
+    	const click_handler_1 = () => {
+    		if ($stateIndex < sections.length - 2) {
+    			set_store_value(stateIndex, $stateIndex++, $stateIndex);
+    		}
+    	};
 
     	$$self.$capture_state = () => ({
     		pageState,
@@ -28871,35 +29084,39 @@ var app = (function () {
     		gazerRestartCalibration,
     		time_ranges_to_array,
     		localforage: localforage$1,
-    		sectionsNotCalibrated,
-    		sectionsCalibrated,
     		disableBack,
     		disableNext,
+    		hideNext,
     		calibrated,
+    		sectionsNotCalibrated,
+    		sectionsCalibrated,
     		sections,
     		checkExistingCalibration,
     		recalibrate,
     		gazeActive,
     		gazeRecording,
+    		currSection,
     		$calibrationCutoff,
     		$calibrationPct,
     		$gazerInitVideoDone,
-    		$stateIndex,
     		$gazerInitDone,
+    		$stateIndex,
     		$sessionID,
     		$selectedImage,
     		$loadingInd
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('sectionsNotCalibrated' in $$props) sectionsNotCalibrated = $$props.sectionsNotCalibrated;
-    		if ('sectionsCalibrated' in $$props) sectionsCalibrated = $$props.sectionsCalibrated;
     		if ('disableBack' in $$props) $$invalidate(3, disableBack = $$props.disableBack);
     		if ('disableNext' in $$props) $$invalidate(4, disableNext = $$props.disableNext);
-    		if ('calibrated' in $$props) $$invalidate(5, calibrated = $$props.calibrated);
+    		if ('hideNext' in $$props) $$invalidate(5, hideNext = $$props.hideNext);
+    		if ('calibrated' in $$props) $$invalidate(6, calibrated = $$props.calibrated);
+    		if ('sectionsNotCalibrated' in $$props) sectionsNotCalibrated = $$props.sectionsNotCalibrated;
+    		if ('sectionsCalibrated' in $$props) sectionsCalibrated = $$props.sectionsCalibrated;
     		if ('sections' in $$props) $$invalidate(0, sections = $$props.sections);
     		if ('gazeActive' in $$props) gazeActive = $$props.gazeActive;
     		if ('gazeRecording' in $$props) gazeRecording = $$props.gazeRecording;
+    		if ('currSection' in $$props) $$invalidate(10, currSection = $$props.currSection);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -28907,18 +29124,9 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*$gazerInitVideoDone, $gazerInitDone*/ 3072) {
-    			//reactively update loading indicator for sections
+    		if ($$self.$$.dirty & /*$gazerInitVideoDone, sections, $stateIndex, currSection*/ 5125) {
     			{
-    				sectionsNotCalibrated[0].loadingVar = $gazerInitDone;
-    				sectionsNotCalibrated[1].loadingVar = $gazerInitVideoDone;
-    				sectionsCalibrated[0].loadingVar = $gazerInitVideoDone;
-    			}
-    		}
-
-    		if ($$self.$$.dirty & /*$gazerInitVideoDone, sections, $stateIndex*/ 1029) {
-    			{
-    				let currSection = sections[$stateIndex];
+    				$$invalidate(10, currSection = sections[$stateIndex]);
 
     				if (currSection.videoShown == true && $gazerInitVideoDone == true) {
     					webgazer.showVideo(true);
@@ -28927,36 +29135,38 @@ var app = (function () {
     					webgazer.showVideo(false);
     				}
 
-    				if (currSection.disableBack) {
-    					$$invalidate(3, disableBack = true);
-    				} else {
-    					$$invalidate(3, disableBack = false);
-    				}
+    				currSection.disableBack
+    				? $$invalidate(3, disableBack = true)
+    				: $$invalidate(3, disableBack = false);
 
-    				if (currSection.showLoader == true && !currSection.loadingVar) {
-    					loadingInd.set(true);
-    				} else {
-    					loadingInd.set(false);
-    				}
+    				currSection.disableNext
+    				? $$invalidate(4, disableNext = true)
+    				: $$invalidate(4, disableNext = false);
 
-    				if (currSection.disableNext) {
-    					$$invalidate(4, disableNext = true);
-    				} else {
-    					$$invalidate(4, disableNext = false);
-    				}
+    				currSection.hideNext
+    				? $$invalidate(5, hideNext = true)
+    				: $$invalidate(5, hideNext = false);
     			}
     		}
 
-    		if ($$self.$$.dirty & /*$gazerInitVideoDone*/ 1024) {
-    			//detect if going back BAD BAD BAD code
+    		if ($$self.$$.dirty & /*$gazerInitVideoDone, $gazerInitDone, currSection*/ 13312) {
+    			//reactively update loading indicator for sections
     			{
-    				if ($gazerInitVideoDone) {
-    					$$invalidate(4, disableNext = false);
+    				sectionsNotCalibrated[0].loadingVar = $gazerInitDone;
+    				sectionsNotCalibrated[1].loadingVar = $gazerInitVideoDone;
+    				sectionsCalibrated[0].loadingVar = $gazerInitVideoDone;
+
+    				if (currSection) {
+    					if (currSection.showLoader == true && !currSection.loadingVar) {
+    						loadingInd.set(true);
+    					} else {
+    						loadingInd.set(false);
+    					}
     				}
     			}
     		}
 
-    		if ($$self.$$.dirty & /*$calibrationPct, $calibrationCutoff*/ 514) {
+    		if ($$self.$$.dirty & /*$calibrationPct, $calibrationCutoff*/ 2050) {
     			{
     				if ($calibrationPct > $calibrationCutoff) {
     					$$invalidate(4, disableNext = false);
@@ -28971,10 +29181,12 @@ var app = (function () {
     		$stateIndex,
     		disableBack,
     		disableNext,
+    		hideNext,
     		calibrated,
     		$selectedImage,
     		$loadingInd,
     		recalibrate,
+    		currSection,
     		$calibrationCutoff,
     		$gazerInitVideoDone,
     		$gazerInitDone,
@@ -29000,31 +29212,48 @@ var app = (function () {
     /* src\App.svelte generated by Svelte v3.44.0 */
     const file = "src\\App.svelte";
 
-    // (34:37) 
+    // (47:37) 
     function create_if_block_1(ctx) {
+    	let div;
     	let record;
+    	let div_transition;
     	let current;
     	record = new Record({ $$inline: true });
 
     	const block = {
     		c: function create() {
+    			div = element("div");
     			create_component(record.$$.fragment);
+    			set_style(div, "height", "auto");
+    			set_style(div, "width", "auto");
+    			add_location(div, file, 47, 4, 1111);
     		},
     		m: function mount(target, anchor) {
-    			mount_component(record, target, anchor);
+    			insert_dev(target, div, anchor);
+    			mount_component(record, div, null);
     			current = true;
     		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(record.$$.fragment, local);
+
+    			add_render_callback(() => {
+    				if (!div_transition) div_transition = create_bidirectional_transition(div, fade, {}, true);
+    				div_transition.run(1);
+    			});
+
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(record.$$.fragment, local);
+    			if (!div_transition) div_transition = create_bidirectional_transition(div, fade, {}, false);
+    			div_transition.run(0);
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			destroy_component(record, detaching);
+    			if (detaching) detach_dev(div);
+    			destroy_component(record);
+    			if (detaching && div_transition) div_transition.end();
     		}
     	};
 
@@ -29032,38 +29261,55 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(34:37) ",
+    		source: "(47:37) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (32:4) {#if $pageState == 'gallery'}
+    // (42:4) {#if $pageState == 'gallery'}
     function create_if_block(ctx) {
+    	let div;
     	let gallery;
+    	let div_transition;
     	let current;
     	gallery = new Gallery({ $$inline: true });
 
     	const block = {
     		c: function create() {
+    			div = element("div");
     			create_component(gallery.$$.fragment);
+    			set_style(div, "height", "auto");
+    			set_style(div, "width", "auto");
+    			add_location(div, file, 42, 4, 978);
     		},
     		m: function mount(target, anchor) {
-    			mount_component(gallery, target, anchor);
+    			insert_dev(target, div, anchor);
+    			mount_component(gallery, div, null);
     			current = true;
     		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(gallery.$$.fragment, local);
+
+    			add_render_callback(() => {
+    				if (!div_transition) div_transition = create_bidirectional_transition(div, fade, {}, true);
+    				div_transition.run(1);
+    			});
+
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(gallery.$$.fragment, local);
+    			if (!div_transition) div_transition = create_bidirectional_transition(div, fade, {}, false);
+    			div_transition.run(0);
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			destroy_component(gallery, detaching);
+    			if (detaching) detach_dev(div);
+    			destroy_component(gallery);
+    			if (detaching && div_transition) div_transition.end();
     		}
     	};
 
@@ -29071,7 +29317,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(32:4) {#if $pageState == 'gallery'}",
+    		source: "(42:4) {#if $pageState == 'gallery'}",
     		ctx
     	});
 
@@ -29114,11 +29360,11 @@ var app = (function () {
     			if (if_block) if_block.c();
     			t1 = space();
     			script = element("script");
-    			attr_dev(div, "class", "container svelte-1i8s65b");
-    			add_location(div, file, 30, 2, 694);
-    			add_location(main, file, 28, 0, 672);
+    			attr_dev(div, "class", "container svelte-1vw62bo");
+    			add_location(div, file, 40, 2, 916);
+    			add_location(main, file, 38, 0, 894);
     			if (!src_url_equal(script.src, script_src_value = "./assets/webgazer.min.js")) attr_dev(script, "src", script_src_value);
-    			add_location(script, file, 40, 2, 869);
+    			add_location(script, file, 55, 2, 1240);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -29221,6 +29467,8 @@ var app = (function () {
     		screenHeight.set(screenSize().windowH);
     	}
 
+    	const [send, receive] = crossfade({ duration: 1500, easing: quintOut });
+
     	onMount(() => {
     		updateScreenSize();
     	});
@@ -29229,6 +29477,8 @@ var app = (function () {
     		updateScreenSize();
     	};
 
+    	let key = 'dude';
+    	let key2 = 'dudeye';
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
@@ -29246,13 +29496,29 @@ var app = (function () {
     		gazerReady,
     		screenSize,
     		onMount,
+    		crossfade,
+    		fade,
+    		quintOut,
     		Gallery,
     		Header,
     		Patterns,
     		Record,
     		updateScreenSize,
+    		send,
+    		receive,
+    		key,
+    		key2,
     		$pageState
     	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('key' in $$props) key = $$props.key;
+    		if ('key2' in $$props) key2 = $$props.key2;
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
 
     	return [$pageState, load_handler];
     }

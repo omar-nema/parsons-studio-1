@@ -24,7 +24,7 @@
   individuals viewed it.
 </p> -->
 
-<div class="card-holder" transition:fade>
+<div class="card-holder">
   {#each works as img}
     <GalleryCard data={img} />
   {/each}

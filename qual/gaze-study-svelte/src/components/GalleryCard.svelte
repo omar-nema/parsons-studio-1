@@ -25,16 +25,16 @@
     width = maxW + 'px';
     styleSubstring = 'width: 100%';
   }
+
+  let currSessionKey, currSession;
+
   let sessions = data.sessionData;
   let sessionsArray = Object.keys(sessions);
-  let currSessionIndex = 0;
-  let currSessionKey, currSession;
+  let currSessionIndex = sessionsArray.length - 1;
+  currSessionKey = sessionsArray[currSessionIndex];
+
   $: {
-    currSessionKey = sessionsArray[currSessionIndex];
     currSession = sessions[currSessionKey];
-  }
-  function navigateKeys(chg) {
-    currSessionIndex = currSessionIndex + chg;
   }
 
   //on viewer change
@@ -61,14 +61,16 @@
           <span
             class:disabled={currSessionIndex == 0}
             on:click={() => {
-              navigateKeys(-1);
+              currSessionIndex--;
+              currSessionKey = sessionsArray[currSessionIndex];
             }}
             class="material-icons-round md-18 nav clickable">chevron_left</span
           >
           <span
             class:disabled={currSessionIndex == sessionsArray.length - 1}
             on:click={() => {
-              navigateKeys(1);
+              currSessionIndex++;
+              currSessionKey = sessionsArray[currSessionIndex];
             }}
             class="material-icons-round md-18 nav clickable">chevron_right</span
           >
@@ -190,7 +192,7 @@
     margin-right: 10px;
   }
   select {
-    background: none;
+    background: var(--bg-contrast-darkest);
     border: none;
     color: white;
     padding: 0;
@@ -199,6 +201,10 @@
     text-align: center;
     text-transform: capitalize;
   }
+  select option {
+    color: white;
+  }
+
   .filter {
     background: var(--bg-contrast-darker);
     padding: 0 10px;

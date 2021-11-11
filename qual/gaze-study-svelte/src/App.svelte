@@ -5,6 +5,8 @@
 
   //svelte
   import { onMount } from 'svelte';
+  import { crossfade , fade} from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
 
   //internal components
   import Gallery from './pages/Gallery.svelte';
@@ -17,6 +19,11 @@
     screenHeight.set(screenSize().windowH);
   }
 
+  const [send, receive] = crossfade({
+		duration:1500,
+		easing: quintOut
+	});
+
   onMount(() => {
     updateScreenSize();
   });
@@ -24,15 +31,23 @@
   window.onresize = function () {
     updateScreenSize();
   };
+
+  let key = 'dude';
+  let key2 = 'dudeye'
 </script>
 
 <main>
   <Header />
   <div class="container">
     {#if $pageState == 'gallery'}
+    <div transition:fade style="height: auto; width: auto">
       <Gallery />
+    </div>
+     
     {:else if $pageState == 'record'}
+    <div  transition:fade style="height: auto; width: auto">
       <Record />
+    </div>
     {/if}
   </div>
 </main>
@@ -72,7 +87,7 @@
     --header-ht: 50px;
     --color-pos: #5df4c7;
     --color-neg: #ff8f80;
-    --color-accent-sec: #20c6ec;
+    --color-accent-sec: lightgray;
   }
   :global(.clickable) {
     cursor: pointer;
@@ -103,7 +118,7 @@
     border-radius: 5px;
     transition: opacity 0.2s ease-in-out;
   }
-
+  
   :global(.disabled-part) {
     opacity: 0.2;
   }

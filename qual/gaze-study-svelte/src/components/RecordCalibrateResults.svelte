@@ -5,6 +5,8 @@
     artworkID,
     sessionID,
     loadingInd,
+    stateIndex,
+    pageState,
   } from '../stores/pageState';
   import {
     dbGet,
@@ -30,7 +32,7 @@
       await dbWrite('works/' + artworkId, artworkData);
     }
     return await dbWrite('works/' + artworkId + '/sessionData/' + sessionId, {
-      name: 'none',
+      name: 'Anonymous',
     });
   }
   async function storeSessionData() {
@@ -39,29 +41,34 @@
   }
   async function updateUserName() {
     nameInputted = true;
-    return await dbWrite(
+    await dbWrite(
       'works/' + artworkId + '/sessionData/' + sessionId + '/name',
       userName
     );
-  }
-  async function writeAllData() {
-    storeSessionData();
-    writeSessionToArtwork();
-
-    let vis = generateContour();
-    let svgBlob = await new Blob([vis], {
-      type: 'image/svg+xml;charset=utf-8',
-    });
-    await uploadBlob(
-      'svgContours/' + artworkId + '/contours/' + sessionId + '.svg',
-      svgBlob
-    );
-    console.log('made it ma');
-    loadingInd.set(false);
-    console.log($loadingInd);
+    pageState.set('gallery');
   }
 
-  writeAllData();
+  storeSessionData();
+  writeSessionToArtwork();
+
+  // async function writeAllData() {
+  //   storeSessionData();
+  //   writeSessionToArtwork();
+
+  //   let vis = generateContour();
+  //   let svgBlob = await new Blob([vis], {
+  //     type: 'image/svg+xml;charset=utf-8',
+  //   });
+  //   await uploadBlob(
+  //     'svgContours/' + artworkId + '/contours/' + sessionId + '.svg',
+  //     svgBlob
+  //   );
+  //   console.log('made it ma');
+  //   loadingInd.set(false);
+  //   console.log($loadingInd);
+  // }
+
+  // writeAllData();
 
   // async function updateSVGUrl() {
   //   return await dbWrite(
@@ -94,7 +101,7 @@
     class:disabled-part={nameInputted == true}
     on:click={updateUserName}
   >
-    Save
+    Save & View
   </div>
 </div>
 

@@ -1,5 +1,9 @@
 <script>
-  import { gazerRecordingTraining, calibrationPct } from '../stores/pageState';
+  import {
+    gazerRecordingTraining,
+    calibrationPct,
+    calibrationCutoff,
+  } from '../stores/pageState';
   import {
     gazerPauseTraining,
     gazerCalibrationRecording,
@@ -10,15 +14,15 @@
   gazerTrain();
 
   let calibrationPoints = [
-    { top: '4%', right: '4%', numClicks: 0 },
+    { top: '10%', right: '4%', numClicks: 0 },
     { top: '50%', right: '4%', numClicks: 0 },
-    { top: '96%', right: '4%', numClicks: 0 },
-    { top: '4%', right: 'calc(100% - 400px)', numClicks: 0 },
+    { top: '90%', right: '4%', numClicks: 0 },
+    { top: '10%', right: '96%', numClicks: 0 },
     { top: '50%', right: '96%', numClicks: 0 },
-    { top: '96%', right: '96%', numClicks: 0 },
-    { top: '4%', right: '50%', numClicks: 0 },
-    { top: '96%', right: '50%', numClicks: 0 },
-    // { top: '50%', right: '50%', numClicks: 0 },
+    { top: '90%', right: '96%', numClicks: 0 },
+    { top: '10%', right: '50%', numClicks: 0 },
+    { top: '50%', right: '50%', numClicks: 0 },
+    { top: '90%', right: '50%', numClicks: 0 },
   ];
 
   let maxClicks = 4;
@@ -52,11 +56,9 @@
     }
   }
 
-  //   gazerRecordingTraining.subscribe((value) => {
-  //     console.log(value);
-  //   });
-
-  //resume webgazer
+  $: {
+    $calibrationPct;
+  }
 </script>
 
 <h3>Calibrate: Exercise</h3>
@@ -87,7 +89,7 @@
   </div>
   <div class="center-dot" />
 {:else if calibrationMode == 'done'}
-  {#if $calibrationPct > 70}
+  {#if $calibrationPct > $calibrationCutoff}
     <p style="color: var(--color-pos)">
       Your calculated accuracy is <strong>{$calibrationPct}%</strong>!
     </p>
@@ -107,7 +109,8 @@
       Your calculated accuracy is <strong>{$calibrationPct}%</strong>.
     </p>
     <p>
-      :( Unfortunately we require an accuracy rate of 75% or higher to proceed
+      Unfortunately we require an accuracy rate of {$calibrationCutoff}% or
+      higher to proceed! Please re-do your calibration, or exit to gallery.
     </p>
   {/if}
 {/if}
@@ -146,12 +149,16 @@
     pointer-events: none;
   }
   .calibration-pt {
-    background: red;
+    background: #ea515a;
     border-radius: 100%;
+    border: 1px solid #4c4c4c;
     height: 20px;
     width: 20px;
     position: absolute;
     cursor: pointer;
+    box-shadow: 0 0px 1px 2px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.1s linear;
+    z-index: 1000;
   }
   p {
     width: 80%;

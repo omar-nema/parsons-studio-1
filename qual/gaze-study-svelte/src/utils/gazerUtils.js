@@ -71,10 +71,7 @@ async function gazerLoadCheck() {
     let vidContainer = document.querySelector('#webgazerVideoContainer');
     document.querySelector('.container-body').append(vidContainer);
     gazerInitDone.set(true);
-
-    setTimeout(() => {
-      console.log('removing load ind');
-    }, 1500);
+    console.log('gazer initialized');
   }
 }
 

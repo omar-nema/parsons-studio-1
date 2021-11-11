@@ -11,11 +11,11 @@
 
 <div class="explain">
   <div>
-    <p>Eyes on cursor at all times</p>
+    <p>#1: Eyes on cursor at all times</p>
     <img src="./assets/img/explain-eye.svg" />
   </div>
   <div>
-    <p>Move cursor to each red dot, and click on dot until it disappears</p>
+    <p>#2: Move cursor to each red dot, and click on dot until it disappears</p>
     <img src="./assets/img/explain-cursor.svg" />
   </div>
 </div>
@@ -39,24 +39,20 @@
     align-items: center;
     background: var(--bg-contrast-darker);
     border-radius: 10px;
-    padding: 0px 30px;
+    padding: 15px 50px;
     padding-bottom: 30px;
     flex-direction: column;
+    border: 1px dashed #ffffff40;
   }
   .explain p {
     margin-top: 0;
-
     height: 80px;
     color: white;
-    border-bottom: 1px solid gray;
     font-weight: 600;
     width: 100%;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  .explain img {
-    padding-left: 25%;
   }
 </style>

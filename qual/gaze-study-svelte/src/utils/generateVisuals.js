@@ -1,8 +1,7 @@
 import * as d3 from 'd3';
 
 //we need to update this to blur better
-export async function contourMapBlur(svgInput, data) {
-  console.log(data);
+export async function contourMapBlur(svgInput, data, url) {
   let bbox = d3.select('.img-holder').node().getBoundingClientRect();
   let width = bbox.width;
   let height = 0.705 * width;
@@ -67,6 +66,6 @@ export async function contourMapBlur(svgInput, data) {
     .attr('clip-path', (d, i) => `url(#path-${i})`)
     .attr('width', '100%')
     .attr('height', '100%')
-    .attr('xlink:href', './assets/img/mehretuCropped.png')
+    .attr('xlink:href', url)
     .style('filter', (d) => `blur(${blurScale(d.value)}px`);
 }

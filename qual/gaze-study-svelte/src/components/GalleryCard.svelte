@@ -48,7 +48,8 @@
   $: (async () => {
     let sessionData = await dbGet('sessionData/' + currSessionKey);
     if (sessionData) {
-      contourMapBlur(visSvg, sessionData);
+      console.log(sessionData);
+      contourMapBlur(visSvg, sessionData, data.url);
       document.querySelector('#slider').setAttribute('max', sessionData.length);
       sliderVal = 0;
     }
@@ -125,7 +126,7 @@
     </div>
   </div>
   <div class="img-holder" style="width: {width}; height: {ht}">
-    <svg bind:this={visSvg} style={styleSubstring} id="contour-overlay" />
+    <svg id={data.key} bind:this={visSvg} style={styleSubstring} />
     <!-- <img src={data.url} style={styleSubstring} /> -->
   </div>
 </div>

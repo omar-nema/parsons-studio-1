@@ -15,6 +15,7 @@
     appendData,
     uploadBlob,
   } from '../utils/firebaseUtils.js';
+  import { hideGazerForLater } from '../utils/gazerUtils';
 
   //get data from stores
   let sessionId = $sessionID;
@@ -45,7 +46,23 @@
       'works/' + artworkId + '/sessionData/' + sessionId + '/name',
       userName
     );
-    pageState.set('gallery');
+    //switch pages only after video container is moved to body
+    let observer = new MutationObserver((mutationRecords) => {
+      if (mutationRecords[0].removedNodes.length > 0) {
+        pageState.set('gallery');
+      }
+    });
+    // observe everything except attributes
+    observer.observe(document.querySelector('.container-body'), {
+      childList: true, // observe direct children
+      subtree: false, // lower descendants too
+      characterDataOldValue: true, // pass old data to callback
+    });
+
+    hideGazerForLater();
+  }
+
+  $: {
   }
 
   storeSessionData();

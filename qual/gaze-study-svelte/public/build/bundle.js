@@ -22502,7 +22502,7 @@ var app = (function () {
     			option.__value = option_value_value = /*session*/ ctx[20];
     			option.value = option.__value;
     			attr_dev(option, "class", "svelte-4p1f8k");
-    			add_location(option, file$b, 86, 14, 2520);
+    			add_location(option, file$b, 86, 14, 2531);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
@@ -22645,38 +22645,38 @@ var app = (function () {
     			div11 = element("div");
     			svg = svg_element("svg");
     			attr_dev(i, "class", "svelte-4p1f8k");
-    			add_location(i, file$b, 59, 21, 1438);
+    			add_location(i, file$b, 59, 21, 1449);
     			attr_dev(h2, "class", "svelte-4p1f8k");
-    			add_location(h2, file$b, 59, 2, 1419);
+    			add_location(h2, file$b, 59, 2, 1430);
     			attr_dev(span0, "class", "material-icons-round md-14 svelte-4p1f8k");
-    			add_location(span0, file$b, 63, 8, 1576);
-    			add_location(span1, file$b, 64, 8, 1640);
+    			add_location(span0, file$b, 63, 8, 1587);
+    			add_location(span1, file$b, 64, 8, 1651);
     			attr_dev(div0, "class", "label svelte-4p1f8k");
-    			add_location(div0, file$b, 62, 6, 1547);
+    			add_location(div0, file$b, 62, 6, 1558);
     			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-4p1f8k");
     			toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[9] == 0);
-    			add_location(span2, file$b, 68, 10, 1760);
+    			add_location(span2, file$b, 68, 10, 1771);
     			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-4p1f8k");
     			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[9] == /*sessionsArray*/ ctx[8].length - 1);
-    			add_location(span3, file$b, 76, 10, 2070);
+    			add_location(span3, file$b, 76, 10, 2081);
     			attr_dev(select, "class", "clickable svelte-4p1f8k");
     			if (/*currSessionKey*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[12].call(select));
-    			add_location(select, file$b, 84, 10, 2404);
+    			add_location(select, file$b, 84, 10, 2415);
     			attr_dev(div1, "class", "filter selected svelte-4p1f8k");
-    			add_location(div1, file$b, 67, 8, 1719);
+    			add_location(div1, file$b, 67, 8, 1730);
     			attr_dev(div2, "class", "filter clickable svelte-4p1f8k");
-    			add_location(div2, file$b, 90, 8, 2645);
+    			add_location(div2, file$b, 90, 8, 2656);
     			attr_dev(div3, "class", "filter-options svelte-4p1f8k");
-    			add_location(div3, file$b, 66, 6, 1681);
+    			add_location(div3, file$b, 66, 6, 1692);
     			attr_dev(div4, "class", "viewer-filter filter-group svelte-4p1f8k");
-    			add_location(div4, file$b, 61, 4, 1498);
+    			add_location(div4, file$b, 61, 4, 1509);
     			attr_dev(span4, "class", "material-icons-round md-14 svelte-4p1f8k");
-    			add_location(span4, file$b, 104, 8, 2962);
-    			add_location(span5, file$b, 105, 8, 3026);
+    			add_location(span4, file$b, 104, 8, 2973);
+    			add_location(span5, file$b, 105, 8, 3037);
     			attr_dev(div5, "class", "label svelte-4p1f8k");
-    			add_location(div5, file$b, 103, 6, 2933);
+    			add_location(div5, file$b, 103, 6, 2944);
     			attr_dev(span6, "class", "material-icons-round md-14 clickable svelte-4p1f8k");
-    			add_location(span6, file$b, 109, 10, 3151);
+    			add_location(span6, file$b, 109, 10, 3162);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "id", "slider");
     			attr_dev(input, "name", "slider");
@@ -22684,30 +22684,30 @@ var app = (function () {
     			attr_dev(input, "max", "150");
     			attr_dev(input, "step", "1");
     			attr_dev(input, "class", "svelte-4p1f8k");
-    			add_location(input, file$b, 112, 12, 3354);
+    			add_location(input, file$b, 112, 12, 3365);
     			attr_dev(span7, "id", "slider-holder");
     			attr_dev(span7, "class", "svelte-4p1f8k");
-    			add_location(span7, file$b, 111, 10, 3315);
+    			add_location(span7, file$b, 111, 10, 3326);
     			attr_dev(div6, "class", "filter selected time svelte-4p1f8k");
-    			add_location(div6, file$b, 108, 8, 3105);
+    			add_location(div6, file$b, 108, 8, 3116);
     			attr_dev(div7, "class", "filter clickable svelte-4p1f8k");
-    			add_location(div7, file$b, 123, 8, 3615);
+    			add_location(div7, file$b, 123, 8, 3626);
     			attr_dev(div8, "class", "filter-options svelte-4p1f8k");
-    			add_location(div8, file$b, 107, 6, 3067);
+    			add_location(div8, file$b, 107, 6, 3078);
     			attr_dev(div9, "class", "visual-filter filter-group svelte-4p1f8k");
-    			add_location(div9, file$b, 102, 4, 2885);
+    			add_location(div9, file$b, 102, 4, 2896);
     			attr_dev(div10, "class", "card-filters svelte-4p1f8k");
-    			add_location(div10, file$b, 60, 2, 1466);
+    			add_location(div10, file$b, 60, 2, 1477);
     			attr_dev(svg, "id", svg_id_value = /*data*/ ctx[0].key);
     			attr_dev(svg, "style", /*styleSubstring*/ ctx[7]);
     			attr_dev(svg, "class", "svelte-4p1f8k");
-    			add_location(svg, file$b, 128, 4, 3767);
+    			add_location(svg, file$b, 128, 4, 3778);
     			attr_dev(div11, "class", "img-holder svelte-4p1f8k");
     			set_style(div11, "width", /*width*/ ctx[5]);
     			set_style(div11, "height", /*ht*/ ctx[6]);
-    			add_location(div11, file$b, 127, 2, 3700);
+    			add_location(div11, file$b, 127, 2, 3711);
     			attr_dev(div12, "class", "card-outer svelte-4p1f8k");
-    			add_location(div12, file$b, 58, 0, 1391);
+    			add_location(div12, file$b, 58, 0, 1402);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -22922,7 +22922,7 @@ var app = (function () {
 
     	function input_change_input_handler() {
     		sliderVal = to_number(this.value);
-    		((($$invalidate(4, sliderVal), $$invalidate(2, currSessionKey)), $$invalidate(1, visSvg)), $$invalidate(0, data));
+    		(($$invalidate(4, sliderVal), $$invalidate(2, currSessionKey)), $$invalidate(1, visSvg));
     	}
 
     	function svg_binding($$value) {
@@ -22987,15 +22987,17 @@ var app = (function () {
     			}
     		}
 
-    		if ($$self.$$.dirty & /*currSessionKey, visSvg, data*/ 7) {
+    		if ($$self.$$.dirty & /*currSessionKey, visSvg*/ 6) {
     			//on viewer change
     			(async () => {
     				let sessionData = await dbGet('sessionData/' + currSessionKey);
 
     				if (sessionData) {
-    					console.log(sessionData);
-    					contourMapBlur(visSvg, sessionData, data.url);
+    					console.log(visSvg, sessionData);
+
+    					// contourMapBlur(visSvg, sessionData, data.url);
     					document.querySelector('#slider').setAttribute('max', sessionData.length);
+
     					$$invalidate(4, sliderVal = 0);
     				}
     			})();
@@ -23054,7 +23056,7 @@ var app = (function () {
     let artworkData = {
       mehretuUntitled: {
         artist: 'Julie Mehretu',
-        title: 'Untitled',
+        title: 'Local Calm',
         url: './assets/img/mehretuCropped.png',
         sessionData: {},
         key: 'mehretuUntitled',
@@ -26158,11 +26160,11 @@ var app = (function () {
       }
     }
 
-    function hideGazerForLater() {
-      webgazer.pause();
-      webgazer.showVideo(false);
-      let vidContainer = document.querySelector('#webgazerVideoContainer');
-      document.querySelector('body').append(vidContainer);
+    async function hideGazerForLater() {
+      let vidContainer = await document.querySelector('#webgazerVideoContainer');
+      await document.querySelector('body').append(vidContainer);
+      await webgazer.pause();
+      return await webgazer.showVideo(false);
     }
 
     async function gazerResume() {
@@ -26227,7 +26229,7 @@ var app = (function () {
         webgazer.clearGazeListener();
         console.log(get_store_value(gazerRecordingArt));
         stateIndex.set(get_store_value(stateIndex) + 1);
-      }, 20000);
+      }, 1000);
     }
 
     function gazerCalibrationRecording() {
@@ -27842,7 +27844,6 @@ var app = (function () {
     /* src\components\RecordCalibrateResults.svelte generated by Svelte v3.44.0 */
 
     const { console: console_1$1 } = globals;
-
     const file$3 = "src\\components\\RecordCalibrateResults.svelte";
 
     function create_fragment$3(ctx) {
@@ -27870,16 +27871,16 @@ var app = (function () {
     			t4 = space();
     			div0 = element("div");
     			div0.textContent = "Save & View";
-    			add_location(h3, file$3, 80, 0, 2051);
-    			add_location(p, file$3, 81, 0, 2080);
+    			add_location(h3, file$3, 97, 0, 2646);
+    			add_location(p, file$3, 98, 0, 2675);
     			attr_dev(input, "placeholder", "Enter name here");
     			attr_dev(input, "class", "svelte-bwlty8");
-    			add_location(input, file$3, 87, 2, 2318);
+    			add_location(input, file$3, 104, 2, 2913);
     			attr_dev(div0, "class", "btn accent clickable svelte-bwlty8");
     			toggle_class(div0, "disabled-part", /*nameInputted*/ ctx[0] == true);
-    			add_location(div0, file$3, 98, 2, 2542);
+    			add_location(div0, file$3, 115, 2, 3137);
     			attr_dev(div1, "class", "input-wrapper svelte-bwlty8");
-    			add_location(div1, file$3, 86, 0, 2287);
+    			add_location(div1, file$3, 103, 0, 2882);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -27978,7 +27979,23 @@ var app = (function () {
     	async function updateUserName() {
     		$$invalidate(0, nameInputted = true);
     		await dbWrite('works/' + artworkId + '/sessionData/' + sessionId + '/name', userName);
-    		pageState.set('gallery');
+
+    		//switch pages only after video container is moved to body
+    		let observer = new MutationObserver(mutationRecords => {
+    				if (mutationRecords[0].removedNodes.length > 0) {
+    					pageState.set('gallery');
+    				}
+    			});
+
+    		// observe everything except attributes
+    		observer.observe(document.querySelector('.container-body'), {
+    			childList: true, // observe direct children
+    			subtree: false, // lower descendants too
+    			characterDataOldValue: true, // pass old data to callback
+    			
+    		});
+
+    		hideGazerForLater();
     	}
 
     	storeSessionData();
@@ -28015,6 +28032,7 @@ var app = (function () {
     		postTest,
     		appendData,
     		uploadBlob,
+    		hideGazerForLater,
     		sessionId,
     		sessionData,
     		artworkId,
@@ -28197,7 +28215,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (197:6) {#each sections as section}
+    // (199:6) {#each sections as section}
     function create_each_block(ctx) {
     	let div;
 
@@ -28206,7 +28224,7 @@ var app = (function () {
     			div = element("div");
     			attr_dev(div, "class", "nav-dot svelte-fttla9");
     			toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]] === /*section*/ ctx[22]);
-    			add_location(div, file$1, 197, 8, 5684);
+    			add_location(div, file$1, 199, 8, 5738);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -28225,14 +28243,14 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(197:6) {#each sections as section}",
+    		source: "(199:6) {#each sections as section}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (217:61) 
+    // (219:61) 
     function create_if_block_8(ctx) {
     	let calibrateresults;
     	let current;
@@ -28265,14 +28283,14 @@ var app = (function () {
     		block,
     		id: create_if_block_8.name,
     		type: "if",
-    		source: "(217:61) ",
+    		source: "(219:61) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (215:58) 
+    // (217:58) 
     function create_if_block_7(ctx) {
     	let calibrateview;
     	let current;
@@ -28305,14 +28323,14 @@ var app = (function () {
     		block,
     		id: create_if_block_7.name,
     		type: "if",
-    		source: "(215:58) ",
+    		source: "(217:58) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (213:72) 
+    // (215:72) 
     function create_if_block_6(ctx) {
     	let calibrateexercise;
     	let current;
@@ -28345,14 +28363,14 @@ var app = (function () {
     		block,
     		id: create_if_block_6.name,
     		type: "if",
-    		source: "(213:72) ",
+    		source: "(215:72) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (211:76) 
+    // (213:76) 
     function create_if_block_5(ctx) {
     	let calibrateinstructions;
     	let current;
@@ -28385,14 +28403,14 @@ var app = (function () {
     		block,
     		id: create_if_block_5.name,
     		type: "if",
-    		source: "(211:76) ",
+    		source: "(213:76) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (207:67) 
+    // (209:67) 
     function create_if_block_4(ctx) {
     	let div;
     	let calibratevid;
@@ -28407,7 +28425,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			create_component(calibratevid.$$.fragment);
-    			add_location(div, file$1, 207, 6, 6010);
+    			add_location(div, file$1, 209, 6, 6064);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -28438,14 +28456,14 @@ var app = (function () {
     		block,
     		id: create_if_block_4.name,
     		type: "if",
-    		source: "(207:67) ",
+    		source: "(209:67) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (203:4) {#if sections[$stateIndex].sectionName == 'overview'}
+    // (205:4) {#if sections[$stateIndex].sectionName == 'overview'}
     function create_if_block_3(ctx) {
     	let div;
     	let overview;
@@ -28456,7 +28474,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			create_component(overview.$$.fragment);
-    			add_location(div, file$1, 203, 6, 5892);
+    			add_location(div, file$1, 205, 6, 5946);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -28483,14 +28501,14 @@ var app = (function () {
     		block,
     		id: create_if_block_3.name,
     		type: "if",
-    		source: "(203:4) {#if sections[$stateIndex].sectionName == 'overview'}",
+    		source: "(205:4) {#if sections[$stateIndex].sectionName == 'overview'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (230:4) {:else}
+    // (232:4) {:else}
     function create_else_block_1(ctx) {
     	let div;
     	let t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnBackLabel + "";
@@ -28505,7 +28523,7 @@ var app = (function () {
     			attr_dev(div, "class", "btn-prev btn disabled svelte-fttla9");
     			toggle_class(div, "accent", /*$calibrationPct*/ ctx[1] && /*$calibrationPct*/ ctx[1] < 70);
     			toggle_class(div, "disabled", /*disableBack*/ ctx[3] == true);
-    			add_location(div, file$1, 230, 6, 6768);
+    			add_location(div, file$1, 232, 6, 6822);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -28538,14 +28556,14 @@ var app = (function () {
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(230:4) {:else}",
+    		source: "(232:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (222:4) {#if calibrated && $stateIndex !== sections.length - 1}
+    // (224:4) {#if calibrated && $stateIndex !== sections.length - 1}
     function create_if_block_2(ctx) {
     	let div;
     	let mounted;
@@ -28557,7 +28575,7 @@ var app = (function () {
     			div.textContent = "Re-Calibrate";
     			attr_dev(div, "class", "btn re-cal clickable svelte-fttla9");
     			toggle_class(div, "disabled", /*calibrated*/ ctx[6] == false);
-    			add_location(div, file$1, 222, 6, 6582);
+    			add_location(div, file$1, 224, 6, 6636);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -28583,14 +28601,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(222:4) {#if calibrated && $stateIndex !== sections.length - 1}",
+    		source: "(224:4) {#if calibrated && $stateIndex !== sections.length - 1}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (247:4) {#if !hideNext}
+    // (249:4) {#if !hideNext}
     function create_if_block$1(ctx) {
     	let div;
     	let mounted;
@@ -28611,7 +28629,7 @@ var app = (function () {
     			attr_dev(div, "class", "btn-next btn accent clickable svelte-fttla9");
     			toggle_class(div, "disabled", /*$loadingInd*/ ctx[8] || /*disableNext*/ ctx[4]);
     			toggle_class(div, "glow", /*$loadingInd*/ ctx[8]);
-    			add_location(div, file$1, 247, 6, 7267);
+    			add_location(div, file$1, 249, 6, 7321);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -28655,14 +28673,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(247:4) {#if !hideNext}",
+    		source: "(249:4) {#if !hideNext}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (260:8) {:else}
+    // (262:8) {:else}
     function create_else_block(ctx) {
     	let t_value = /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]].btnLabel + "";
     	let t;
@@ -28686,14 +28704,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(260:8) {:else}",
+    		source: "(262:8) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (258:8) {#if $loadingInd}
+    // (260:8) {#if $loadingInd}
     function create_if_block_1$1(ctx) {
     	let t;
 
@@ -28714,7 +28732,7 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(258:8) {#if $loadingInd}",
+    		source: "(260:8) {#if $loadingInd}",
     		ctx
     	});
 
@@ -28810,19 +28828,19 @@ var app = (function () {
     			t7 = space();
     			if (if_block2) if_block2.c();
     			attr_dev(span, "class", "selection-holder svelte-fttla9");
-    			add_location(span, file$1, 191, 16, 5495);
+    			add_location(span, file$1, 193, 16, 5549);
     			attr_dev(div0, "class", "current-selection");
-    			add_location(div0, file$1, 190, 4, 5446);
+    			add_location(div0, file$1, 192, 4, 5500);
     			attr_dev(div1, "class", "nav-ind svelte-fttla9");
-    			add_location(div1, file$1, 195, 4, 5618);
+    			add_location(div1, file$1, 197, 4, 5672);
     			attr_dev(div2, "class", "container-header svelte-fttla9");
-    			add_location(div2, file$1, 189, 2, 5410);
+    			add_location(div2, file$1, 191, 2, 5464);
     			attr_dev(div3, "class", "container-body svelte-fttla9");
-    			add_location(div3, file$1, 201, 2, 5797);
+    			add_location(div3, file$1, 203, 2, 5851);
     			attr_dev(div4, "class", "container-footer svelte-fttla9");
-    			add_location(div4, file$1, 220, 2, 6483);
+    			add_location(div4, file$1, 222, 2, 6537);
     			attr_dev(section, "class", "experiment-container svelte-fttla9");
-    			add_location(section, file$1, 188, 0, 5368);
+    			add_location(section, file$1, 190, 0, 5422);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -29104,6 +29122,9 @@ var app = (function () {
     	checkExistingCalibration(); //this should happen and return before anything else loads
 
     	onMount(() => {
+    		console.log('mountain');
+    		stateIndex.set(0);
+
     		//set unique ID for session
     		if (!$sessionID) {
     			sessionID.set(new Date().getTime());

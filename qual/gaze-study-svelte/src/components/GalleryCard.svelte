@@ -48,8 +48,8 @@
   $: (async () => {
     let sessionData = await dbGet('sessionData/' + currSessionKey);
     if (sessionData) {
-      console.log(sessionData);
-      contourMapBlur(visSvg, sessionData, data.url);
+      console.log(visSvg, sessionData);
+      // contourMapBlur(visSvg, sessionData, data.url);
       document.querySelector('#slider').setAttribute('max', sessionData.length);
       sliderVal = 0;
     }

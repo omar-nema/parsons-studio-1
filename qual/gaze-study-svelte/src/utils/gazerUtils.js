@@ -2,6 +2,7 @@ import {
   gazerInitDone,
   gazerInitVideoDone,
   gazerRecordingTraining,
+  gazerHidden,
   calibrationPct,
   gazerRecordingArt,
   stateIndex,
@@ -31,11 +32,11 @@ export function gazerMoveVideo(pos) {
   }
 }
 
-export function hideGazerForLater() {
-  webgazer.pause();
-  webgazer.showVideo(false);
-  let vidContainer = document.querySelector('#webgazerVideoContainer');
-  document.querySelector('body').append(vidContainer);
+export async function hideGazerForLater() {
+  let vidContainer = await document.querySelector('#webgazerVideoContainer');
+  await document.querySelector('body').append(vidContainer);
+  await webgazer.pause();
+  return await webgazer.showVideo(false);
 }
 
 export async function gazerResume() {
@@ -114,7 +115,7 @@ export async function gazerArtRecording() {
     webgazer.clearGazeListener();
     console.log(get(gazerRecordingArt));
     stateIndex.set(get(stateIndex) + 1);
-  }, 20000);
+  }, 1000);
 }
 
 export function gazerCalibrationRecording() {

@@ -127,6 +127,8 @@
   checkExistingCalibration(); //this should happen and return before anything else loads
 
   onMount(() => {
+    console.log('mountain');
+    stateIndex.set(0);
     //set unique ID for session
     if (!$sessionID) {
       sessionID.set(new Date().getTime());

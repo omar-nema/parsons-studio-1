@@ -2,7 +2,7 @@ import { readable, writable } from 'svelte/store';
 let artworkData = {
   mehretuUntitled: {
     artist: 'Julie Mehretu',
-    title: 'Untitled',
+    title: 'Local Calm',
     url: './assets/img/mehretuCropped.png',
     sessionData: {},
     key: 'mehretuUntitled',

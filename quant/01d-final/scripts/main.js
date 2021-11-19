@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   let statImgWidthMoved = 31;
   plotBoxes(statImgWidthMoved);
 
-  //prepare data
-  let data = await prepareData();
   //plot
   let dataCombined = helperGetDataFromLabel('All Participants', data);
   contourMap(dataCombined, 'Contours');

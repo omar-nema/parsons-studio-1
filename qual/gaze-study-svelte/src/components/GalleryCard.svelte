@@ -14,8 +14,6 @@
   let maxW = 1000,
     maxH = $screenHeight * 0.85 - 200;
 
-  let sliderVal = 0;
-
   let width = 'auto',
     ht = 'auto',
     styleSubstring = '';
@@ -27,8 +25,8 @@
     styleSubstring = 'width: 100%';
   }
 
-  let currSessionKey, currSession;
-
+  let currSessionKey, currSession, sessionData;
+  let currFrame = 0;
   let sessions = [];
   if (data.sessionData) {
     sessions = data.sessionData;
@@ -42,18 +40,76 @@
 
   $: {
     currSession = sessions[currSessionKey];
+    getSessionData(currSessionKey);
+  }
+  async function getSessionData(key) {
+    sessionData = await dbGet('sessionData/' + key);
+    createClips();
+    //reset the slider
+    if (sessionData) {
+      document
+        .querySelector('#slider')
+        .setAttribute('max', sessionData.length - 1);
+      currFrame = 0;
+    }
   }
 
-  //on viewer change
-  $: (async () => {
-    let sessionData = await dbGet('sessionData/' + currSessionKey);
-    if (sessionData) {
-      console.log(visSvg, sessionData);
-      // contourMapBlur(visSvg, sessionData, data.url);
-      document.querySelector('#slider').setAttribute('max', sessionData.length);
-      sliderVal = 0;
+  //managing slices
+  let viewMode = 'slice'; //other mode = aggregate
+  let playStatus = 'pause';
+
+  //if it ends, we change
+  $: {
+    if (playStatus == 'play' && currFrame < sessionData.length - 1) {
+      setTimeout(() => {
+        currFrame++;
+      }, 50);
+    } else if (playStatus == 'play' && currFrame == sessionData.length - 1) {
+      playStatus = 'pause';
     }
-  })();
+  }
+  $: {
+    currFrame;
+    if (sessionData) {
+      moveClips(sessionData[currFrame].xPct, sessionData[currFrame].yPct);
+    }
+  }
+  let clips = [];
+  function createClips() {
+    clips = [];
+    let numClips = 10;
+    let clipMaxSize = 15;
+    let clipMinR = 5;
+    let clipInc = (clipMaxSize - clipMinR) / numClips;
+    let blurMax = 3;
+    let blurInc = blurMax / numClips;
+    let opacityInc = 1 / numClips;
+    for (let i = numClips; i > 0; i--) {
+      let r = clipInc * i + clipMinR;
+      let blur = blurInc * i;
+      let opacity = opacityInc * (numClips - i);
+      clips.push({
+        class: 'clip',
+        r: r,
+        ctrx: sessionData[0].xPct,
+        ctry: sessionData[0].yPct,
+        blur: blur,
+        opacity: opacity,
+        src: data.url,
+      });
+    }
+  }
+  function moveClips(centerx, centery) {
+    let clips = document.querySelectorAll('.clip');
+    clips.forEach((d) => {
+      let currClipPath = d.style['clip-path'];
+      let split = currClipPath.split('at ');
+      let prefix = split[0];
+      let newCtr = `at ${centerx}% ${centery}%)`;
+      d.style['clip-path'] = prefix + newCtr;
+    });
+  }
+  $: clips;
 </script>
 
 <div class="card-outer">
@@ -107,8 +163,22 @@
       </div>
       <div class="filter-options">
         <div class="filter selected time">
-          <span class="material-icons-round md-14 clickable">play_arrow</span>
-          <!-- <span class="material-icons-round md-14 clickable">pause</span> -->
+          {#if playStatus == 'pause'}
+            <span
+              on:click={() => {
+                playStatus = 'play';
+              }}
+              class="material-icons-round md-14 clickable">play_arrow</span
+            >
+          {:else}
+            <span
+              on:click={() => {
+                playStatus = 'pause';
+              }}
+              class="material-icons-round md-14 clickable">pause</span
+            >
+          {/if}
+
           <span id="slider-holder">
             <input
               type="range"
@@ -117,7 +187,7 @@
               min="0"
               max="150"
               step="1"
-              bind:value={sliderVal}
+              bind:value={currFrame}
             />
           </span>
         </div>
@@ -126,7 +196,19 @@
     </div>
   </div>
   <div class="img-holder" style="width: {width}; height: {ht}">
-    <svg id={data.key} bind:this={visSvg} style={styleSubstring} />
+    {#if viewMode == 'slice'}
+      <img src={data.url} style="filter: blur(3px); {styleSubstring}" />
+      {#each clips as clip}
+        <img
+          class="clip"
+          style="clip-path: circle({clip.r}% at {clip.ctrx}% {clip.ctry}%); filter: blur({clip.blur}px);opacity: ${clip.opacity}"
+          src={data.url}
+        />
+      {/each}
+    {:else}
+      <svg id={data.key} bind:this={visSvg} style={styleSubstring} />
+    {/if}
+
     <!-- <img src={data.url} style={styleSubstring} /> -->
   </div>
 </div>
@@ -177,6 +259,8 @@
     max-height: 100%;
     display: flex;
     justify-content: center;
+    overflow: hidden;
+    position: relative;
   }
 
   .filter-group {
@@ -299,5 +383,15 @@
   }
   input[type='range']:focus {
     outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  }
+
+  .clip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    margin: auto;
+    opacity: 1;
+    z-index: 10;
   }
 </style>

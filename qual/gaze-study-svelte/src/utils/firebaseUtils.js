@@ -1,7 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref as storageRef, uploadBytes } from 'firebase/storage';
+// import * as admin from 'firebase-admin';
 
-import { admin } from 'firebase/storage';
+//import { admin } from 'firebase/storage';
+// import { admin as fbAdmin } from 'firebase/firebase-admin';
+// const serviceAccount = './firebaseCred.json';
+// console.log(serviceAccount);
 
 import {
   getDatabase,
@@ -15,6 +19,7 @@ import {
 } from 'firebase/database';
 
 const firebaseConfig = {
+  // credential: admin.credential.cert(serviceAccount),
   apiKey: 'AIzaSyCFE8TqTBWCDSBee0CuT9HXLnNNRtSA4S8',
   authDomain: 'eye-tracking-8adeb.firebaseapp.com',
   databaseURL: 'https://eye-tracking-8adeb-default-rtdb.firebaseio.com',

@@ -1,0 +1,57 @@
+body {
+  color: red;
+}
+
+h1 {
+  color: red;
+  font-family: monospace;
+}
+
+.imgs {
+  width: 600px;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+}
+
+.clip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  margin: auto;
+  opacity: 1;
+  transition: clip-path 0.3s linear;
+}
+
+/* #overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  margin: auto;
+  clip-path: circle(10% at 70% 70%);
+  opacity: 1;
+  transition: clip-path 0.3s linear;
+} */
+/* 
+#overlay2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  margin: auto;
+  clip-path: circle(12% at 80% 80%);
+  opacity: 1;
+  transition: clip-path 0.3s linear;
+  filter: blur(1px);
+} */
+
+#underlay {
+  filter: blur(3px);
+  opacity: 0.8;
+}

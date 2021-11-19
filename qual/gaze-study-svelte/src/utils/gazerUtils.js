@@ -115,7 +115,7 @@ export async function gazerArtRecording() {
     webgazer.clearGazeListener();
     console.log(get(gazerRecordingArt));
     stateIndex.set(get(stateIndex) + 1);
-  }, 1000);
+  }, 20000);
 }
 
 export function gazerCalibrationRecording() {

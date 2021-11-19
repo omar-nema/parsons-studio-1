@@ -6,6 +6,7 @@ let artworkData = {
     url: './assets/img/mehretuCropped.png',
     sessionData: {},
     key: 'mehretuUntitled',
+    dimWidthToHt: 1.42,
   },
   rothko: {
     key: 'rothko',
@@ -13,6 +14,7 @@ let artworkData = {
     title: 'Record Number 24',
     url: './assets/img/rothko.png',
     sessionData: {},
+    dimWidthToHt: 0.65,
   },
 };
 

@@ -52,9 +52,11 @@
 
 <style>
   header {
-    background: black;
+    background: #000000bf;
     height: var(--header-ht);
     font-weight: 500;
+    backdrop-filter: blur(5px);
+    z-index: 10;
   }
   .header-content {
     max-width: var(--content-width-max);

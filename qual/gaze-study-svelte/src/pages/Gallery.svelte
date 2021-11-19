@@ -22,8 +22,6 @@
         dbWrite('works/' + key, objToAdd);
       }
     }
-
-    console.log(worksArray);
   }
 
   getAllWorks();

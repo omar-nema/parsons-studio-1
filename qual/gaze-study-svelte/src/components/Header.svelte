@@ -24,13 +24,13 @@
       {/if}
     </div>
     <div class="header-right">
-      <div
+      <!-- <div
         transition:fade
         class="btn clickable  btn-about"
         class:active={$pageState === 'gallery'}
       >
         About
-      </div>
+      </div> -->
       <div
         transition:slide={{ duration: 500 }}
         class="btn clickable"
@@ -52,9 +52,9 @@
 
 <style>
   header {
-    background: #000000bf;
+    background: #272729db;
     height: var(--header-ht);
-    font-weight: 500;
+    font-weight: 400;
     backdrop-filter: blur(5px);
     z-index: 10;
   }

@@ -11,8 +11,9 @@
 
   let visSvg;
   export let data;
-  let maxW = 1000,
-    maxH = $screenHeight - 300;
+
+  let maxW = Math.min($screenWidth - 500, 1000),
+    maxH = $screenHeight - 100;
 
   let width = 'auto',
     ht = 'auto',
@@ -109,8 +110,12 @@
   }
 
   let clipHolder, domClips;
+  $: {
+    if (clipHolder) {
+      domClips = clipHolder.childNodes;
+    }
+  }
   function moveClips(centerx, centery) {
-    // let clips = document.querySelectorAll('.clip');
     domClips.forEach((d) => {
       let currClipPath = d.style['clip-path'];
       let split = currClipPath.split('at ');
@@ -120,11 +125,6 @@
     });
   }
   $: clips;
-  $: {
-    if (clipHolder) {
-      domClips = clipHolder.childNodes;
-    }
-  }
 </script>
 
 <div class="card-outer">
@@ -270,14 +270,15 @@
   }
 
   .card-outer {
-    max-width: 1100px;
+    max-width: min(80vw, 1100px);
     width: 100%;
     background: var(--bg-contrast);
     padding: 30px 40px;
     margin: auto;
     margin-top: 70px;
     margin-bottom: 70px;
-    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    /* box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1); */
   }
   .img-holder {
     max-width: 100%;

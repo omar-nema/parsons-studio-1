@@ -67,7 +67,7 @@
     font-family: 'DM Sans';
   }
   :global(body) {
-    background: #423f3f;
+    background: #272729;
     margin: 0;
     padding: 0;
     color: #efefef;

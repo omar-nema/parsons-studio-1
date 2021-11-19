@@ -15,13 +15,15 @@
       worksKeys = Object.keys(worksObject);
     }
     //write any new artwork that is not yet in DB to DB
-    for (let key in $artworkMetadata) {
-      if (!worksKeys.includes(key)) {
-        let objToAdd = $artworkMetadata[key];
-        console.log(key, objToAdd);
-        dbWrite('works/' + key, objToAdd);
-      }
-    }
+    //issue is that this could remove sessionData if initial read was unsuccessful
+    //FIX LATERRRRR
+    // for (let key in $artworkMetadata) {
+    //   if (!worksKeys.includes(key)) {
+    //     let objToAdd = $artworkMetadata[key];
+    //     console.log(key, objToAdd);
+    //     dbWrite('works/' + key, objToAdd);
+    //   }
+    // }
   }
 
   getAllWorks();

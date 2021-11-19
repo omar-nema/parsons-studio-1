@@ -42,12 +42,14 @@
 
   $: {
     currSession = sessions[currSessionKey];
+    console.log(sessionsArray, sessions, currSessionKey, currSession, data);
     getSessionData(currSessionKey);
   }
 
   async function getSessionData(key) {
     sessionData = await dbGet('sessionData/' + key);
     console.log(data, sessionData);
+    let t = await dbGet('sessionData/');
     createClips();
     //reset the slider
     if (sessionData) {
@@ -278,7 +280,7 @@
     margin-top: 70px;
     margin-bottom: 70px;
     border-radius: 10px;
-    /* box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
   }
   .img-holder {
     max-width: 100%;

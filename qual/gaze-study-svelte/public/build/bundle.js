@@ -829,6 +829,9 @@ var app = (function () {
       };
     };
 
+    function cubicInOut$1(t) {
+        return t < 0.5 ? 4.0 * t * t * t : 0.5 * Math.pow(2.0 * t - 2.0, 3.0) + 1.0;
+    }
     function cubicOut(t) {
         const f = t - 1.0;
         return f * f * f + 1.0;
@@ -22495,7 +22498,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (162:12) {#each sessionsArray as session}
+    // (161:12) {#each sessionsArray as session}
     function create_each_block_1(ctx) {
     	let option;
     	let t_value = /*sessions*/ ctx[4][/*session*/ ctx[37]].name + "";
@@ -22508,17 +22511,16 @@ var app = (function () {
     			t = text(t_value);
     			option.__value = option_value_value = /*session*/ ctx[37];
     			option.value = option.__value;
-    			attr_dev(option, "class", "svelte-552trq");
-    			add_location(option, file$b, 162, 14, 4560);
+    			add_location(option, file$b, 161, 14, 4505);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
     			append_dev(option, t);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*sessions, sessionsArray*/ 48 && t_value !== (t_value = /*sessions*/ ctx[4][/*session*/ ctx[37]].name + "")) set_data_dev(t, t_value);
+    			if (dirty[0] & /*sessions, sessionsArray*/ 4112 && t_value !== (t_value = /*sessions*/ ctx[4][/*session*/ ctx[37]].name + "")) set_data_dev(t, t_value);
 
-    			if (dirty[0] & /*sessionsArray*/ 32 && option_value_value !== (option_value_value = /*session*/ ctx[37])) {
+    			if (dirty[0] & /*sessionsArray*/ 4096 && option_value_value !== (option_value_value = /*session*/ ctx[37])) {
     				prop_dev(option, "__value", option_value_value);
     				option.value = option.__value;
     			}
@@ -22532,14 +22534,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(162:12) {#each sessionsArray as session}",
+    		source: "(161:12) {#each sessionsArray as session}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (196:10) {:else}
+    // (195:10) {:else}
     function create_else_block_1$1(ctx) {
     	let span;
     	let mounted;
@@ -22549,14 +22551,14 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "pause";
-    			attr_dev(span, "class", "material-icons-round md-14 clickable svelte-552trq");
-    			add_location(span, file$b, 196, 12, 5564);
+    			attr_dev(span, "class", "material-icons-round md-14 clickable svelte-bn4ubt");
+    			add_location(span, file$b, 195, 12, 5509);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(span, "click", /*click_handler_4*/ ctx[22], false, false, false);
+    				dispose = listen_dev(span, "click", /*click_handler_4*/ ctx[21], false, false, false);
     				mounted = true;
     			}
     		},
@@ -22572,14 +22574,14 @@ var app = (function () {
     		block,
     		id: create_else_block_1$1.name,
     		type: "else",
-    		source: "(196:10) {:else}",
+    		source: "(195:10) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (186:10) {#if playStatus == 'pause'}
+    // (185:10) {#if playStatus == 'pause'}
     function create_if_block_1$4(ctx) {
     	let span;
     	let mounted;
@@ -22589,14 +22591,14 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "play_arrow";
-    			attr_dev(span, "class", "material-icons-round md-14 clickable svelte-552trq");
-    			add_location(span, file$b, 186, 12, 5232);
+    			attr_dev(span, "class", "material-icons-round md-14 clickable svelte-bn4ubt");
+    			add_location(span, file$b, 185, 12, 5177);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(span, "click", /*click_handler_3*/ ctx[21], false, false, false);
+    				dispose = listen_dev(span, "click", /*click_handler_3*/ ctx[20], false, false, false);
     				mounted = true;
     			}
     		},
@@ -22612,14 +22614,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$4.name,
     		type: "if",
-    		source: "(186:10) {#if playStatus == 'pause'}",
+    		source: "(185:10) {#if playStatus == 'pause'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (234:6) {:else}
+    // (233:6) {:else}
     function create_else_block$3(ctx) {
     	let svg;
     	let svg_id_value;
@@ -22628,26 +22630,26 @@ var app = (function () {
     		c: function create() {
     			svg = svg_element("svg");
     			attr_dev(svg, "id", svg_id_value = /*data*/ ctx[0].key);
-    			attr_dev(svg, "style", /*styleSubstring*/ ctx[12]);
-    			attr_dev(svg, "class", "svelte-552trq");
-    			add_location(svg, file$b, 234, 8, 6722);
+    			attr_dev(svg, "style", /*styleSubstring*/ ctx[11]);
+    			attr_dev(svg, "class", "svelte-bn4ubt");
+    			add_location(svg, file$b, 233, 8, 6667);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
-    			/*svg_binding*/ ctx[25](svg);
+    			/*svg_binding*/ ctx[24](svg);
     		},
     		p: function update(ctx, dirty) {
     			if (dirty[0] & /*data*/ 1 && svg_id_value !== (svg_id_value = /*data*/ ctx[0].key)) {
     				attr_dev(svg, "id", svg_id_value);
     			}
 
-    			if (dirty[0] & /*styleSubstring*/ 4096) {
-    				attr_dev(svg, "style", /*styleSubstring*/ ctx[12]);
+    			if (dirty[0] & /*styleSubstring*/ 2048) {
+    				attr_dev(svg, "style", /*styleSubstring*/ ctx[11]);
     			}
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(svg);
-    			/*svg_binding*/ ctx[25](null);
+    			/*svg_binding*/ ctx[24](null);
     		}
     	};
 
@@ -22655,21 +22657,21 @@ var app = (function () {
     		block,
     		id: create_else_block$3.name,
     		type: "else",
-    		source: "(234:6) {:else}",
+    		source: "(233:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (223:6) {#if viewMode == 'slice'}
+    // (222:6) {#if viewMode == 'slice'}
     function create_if_block$5(ctx) {
     	let img;
     	let img_src_value;
     	let img_style_value;
     	let t;
     	let div;
-    	let each_value = /*clips*/ ctx[7];
+    	let each_value = /*clips*/ ctx[6];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -22688,9 +22690,9 @@ var app = (function () {
     			}
 
     			if (!src_url_equal(img.src, img_src_value = /*data*/ ctx[0].url)) attr_dev(img, "src", img_src_value);
-    			attr_dev(img, "style", img_style_value = "filter: blur(6px); " + /*styleSubstring*/ ctx[12]);
-    			add_location(img, file$b, 223, 8, 6298);
-    			add_location(div, file$b, 224, 8, 6374);
+    			attr_dev(img, "style", img_style_value = "filter: blur(6px); " + /*styleSubstring*/ ctx[11]);
+    			add_location(img, file$b, 222, 8, 6243);
+    			add_location(div, file$b, 223, 8, 6319);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, img, anchor);
@@ -22701,19 +22703,19 @@ var app = (function () {
     				each_blocks[i].m(div, null);
     			}
 
-    			/*div_binding*/ ctx[24](div);
+    			/*div_binding*/ ctx[23](div);
     		},
     		p: function update(ctx, dirty) {
     			if (dirty[0] & /*data*/ 1 && !src_url_equal(img.src, img_src_value = /*data*/ ctx[0].url)) {
     				attr_dev(img, "src", img_src_value);
     			}
 
-    			if (dirty[0] & /*styleSubstring*/ 4096 && img_style_value !== (img_style_value = "filter: blur(6px); " + /*styleSubstring*/ ctx[12])) {
+    			if (dirty[0] & /*styleSubstring*/ 2048 && img_style_value !== (img_style_value = "filter: blur(6px); " + /*styleSubstring*/ ctx[11])) {
     				attr_dev(img, "style", img_style_value);
     			}
 
-    			if (dirty[0] & /*clips, data*/ 129) {
-    				each_value = /*clips*/ ctx[7];
+    			if (dirty[0] & /*clips, data*/ 65) {
+    				each_value = /*clips*/ ctx[6];
     				validate_each_argument(each_value);
     				let i;
 
@@ -22741,7 +22743,7 @@ var app = (function () {
     			if (detaching) detach_dev(t);
     			if (detaching) detach_dev(div);
     			destroy_each(each_blocks, detaching);
-    			/*div_binding*/ ctx[24](null);
+    			/*div_binding*/ ctx[23](null);
     		}
     	};
 
@@ -22749,14 +22751,14 @@ var app = (function () {
     		block,
     		id: create_if_block$5.name,
     		type: "if",
-    		source: "(223:6) {#if viewMode == 'slice'}",
+    		source: "(222:6) {#if viewMode == 'slice'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (226:10) {#each clips as clip}
+    // (225:10) {#each clips as clip}
     function create_each_block$3(ctx) {
     	let img;
     	let img_src_value;
@@ -22764,26 +22766,26 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			img = element("img");
-    			attr_dev(img, "class", "clip svelte-552trq");
+    			attr_dev(img, "class", "clip svelte-bn4ubt");
     			set_style(img, "clip-path", "circle(" + /*clip*/ ctx[34].r + "% at " + /*clip*/ ctx[34].ctrx + "% " + /*clip*/ ctx[34].ctry + "%)");
     			set_style(img, "filter", "blur(" + /*clip*/ ctx[34].blur + "px)");
     			set_style(img, "opacity", "$" + /*clip*/ ctx[34].opacity);
     			if (!src_url_equal(img.src, img_src_value = /*data*/ ctx[0].url)) attr_dev(img, "src", img_src_value);
-    			add_location(img, file$b, 226, 12, 6449);
+    			add_location(img, file$b, 225, 12, 6394);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, img, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*clips*/ 128) {
+    			if (dirty[0] & /*clips*/ 64) {
     				set_style(img, "clip-path", "circle(" + /*clip*/ ctx[34].r + "% at " + /*clip*/ ctx[34].ctrx + "% " + /*clip*/ ctx[34].ctry + "%)");
     			}
 
-    			if (dirty[0] & /*clips*/ 128) {
+    			if (dirty[0] & /*clips*/ 64) {
     				set_style(img, "filter", "blur(" + /*clip*/ ctx[34].blur + "px)");
     			}
 
-    			if (dirty[0] & /*clips*/ 128) {
+    			if (dirty[0] & /*clips*/ 64) {
     				set_style(img, "opacity", "$" + /*clip*/ ctx[34].opacity);
     			}
 
@@ -22800,7 +22802,7 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(226:10) {#each clips as clip}",
+    		source: "(225:10) {#each clips as clip}",
     		ctx
     	});
 
@@ -22853,9 +22855,10 @@ var app = (function () {
     	let t24;
     	let div14;
     	let div13;
+    	let div15_id_value;
     	let mounted;
     	let dispose;
-    	let each_value_1 = /*sessionsArray*/ ctx[5];
+    	let each_value_1 = /*sessionsArray*/ ctx[12];
     	validate_each_argument(each_value_1);
     	let each_blocks = [];
 
@@ -22864,7 +22867,7 @@ var app = (function () {
     	}
 
     	function select_block_type(ctx, dirty) {
-    		if (/*playStatus*/ ctx[6] == 'pause') return create_if_block_1$4;
+    		if (/*playStatus*/ ctx[5] == 'pause') return create_if_block_1$4;
     		return create_else_block_1$1;
     	}
 
@@ -22940,72 +22943,73 @@ var app = (function () {
     			div14 = element("div");
     			div13 = element("div");
     			if_block1.c();
-    			attr_dev(i, "class", "svelte-552trq");
-    			add_location(i, file$b, 133, 24, 3395);
-    			add_location(div0, file$b, 133, 4, 3375);
+    			attr_dev(i, "class", "svelte-bn4ubt");
+    			add_location(i, file$b, 132, 24, 3331);
+    			add_location(div0, file$b, 132, 4, 3311);
     			set_style(div1, "font-weight", "400");
-    			set_style(div1, "color", "#bdbdbd");
-    			add_location(div1, file$b, 134, 4, 3426);
+    			set_style(div1, "color", "rgb(126 123 123)");
+    			add_location(div1, file$b, 133, 4, 3362);
     			set_style(h2, "display", "flex");
     			set_style(h2, "justify-content", "space-between");
-    			attr_dev(h2, "class", "svelte-552trq");
-    			add_location(h2, file$b, 132, 2, 3311);
-    			attr_dev(span0, "class", "material-icons-round md-14 svelte-552trq");
-    			add_location(span0, file$b, 139, 8, 3616);
-    			add_location(span1, file$b, 140, 8, 3680);
-    			attr_dev(div2, "class", "label svelte-552trq");
-    			add_location(div2, file$b, 138, 6, 3587);
-    			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-552trq");
+    			attr_dev(h2, "class", "svelte-bn4ubt");
+    			add_location(h2, file$b, 131, 2, 3247);
+    			attr_dev(span0, "class", "material-icons-round md-14 svelte-bn4ubt");
+    			add_location(span0, file$b, 138, 8, 3561);
+    			add_location(span1, file$b, 139, 8, 3625);
+    			attr_dev(div2, "class", "label svelte-bn4ubt");
+    			add_location(div2, file$b, 137, 6, 3532);
+    			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-bn4ubt");
     			toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[13] == 0);
-    			add_location(span2, file$b, 144, 10, 3800);
-    			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-552trq");
-    			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[13] == /*sessionsArray*/ ctx[5].length - 1);
-    			add_location(span3, file$b, 152, 10, 4110);
-    			attr_dev(select, "class", "clickable svelte-552trq");
-    			if (/*currSessionKey*/ ctx[1] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[19].call(select));
-    			add_location(select, file$b, 160, 10, 4444);
-    			attr_dev(div3, "class", "filter selected svelte-552trq");
-    			add_location(div3, file$b, 143, 8, 3759);
-    			attr_dev(div4, "class", "filter clickable svelte-552trq");
-    			add_location(div4, file$b, 166, 8, 4685);
-    			attr_dev(div5, "class", "filter-options svelte-552trq");
-    			add_location(div5, file$b, 142, 6, 3721);
-    			attr_dev(div6, "class", "viewer-filter filter-group svelte-552trq");
-    			add_location(div6, file$b, 137, 4, 3538);
-    			attr_dev(span4, "class", "material-icons-round md-14 svelte-552trq");
-    			add_location(span4, file$b, 180, 8, 5002);
-    			add_location(span5, file$b, 181, 8, 5066);
-    			attr_dev(div7, "class", "label svelte-552trq");
-    			add_location(div7, file$b, 179, 6, 4973);
+    			add_location(span2, file$b, 143, 10, 3745);
+    			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-bn4ubt");
+    			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[13] == /*sessionsArray*/ ctx[12].length - 1);
+    			add_location(span3, file$b, 151, 10, 4055);
+    			attr_dev(select, "class", "clickable svelte-bn4ubt");
+    			if (/*currSessionKey*/ ctx[1] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[18].call(select));
+    			add_location(select, file$b, 159, 10, 4389);
+    			attr_dev(div3, "class", "filter selected svelte-bn4ubt");
+    			add_location(div3, file$b, 142, 8, 3704);
+    			attr_dev(div4, "class", "filter clickable svelte-bn4ubt");
+    			add_location(div4, file$b, 165, 8, 4630);
+    			attr_dev(div5, "class", "filter-options svelte-bn4ubt");
+    			add_location(div5, file$b, 141, 6, 3666);
+    			attr_dev(div6, "class", "viewer-filter filter-group svelte-bn4ubt");
+    			add_location(div6, file$b, 136, 4, 3483);
+    			attr_dev(span4, "class", "material-icons-round md-14 svelte-bn4ubt");
+    			add_location(span4, file$b, 179, 8, 4947);
+    			add_location(span5, file$b, 180, 8, 5011);
+    			attr_dev(div7, "class", "label svelte-bn4ubt");
+    			add_location(div7, file$b, 178, 6, 4918);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "id", "slider");
     			attr_dev(input, "name", "slider");
     			attr_dev(input, "min", "0");
     			attr_dev(input, "max", /*sliderMax*/ ctx[14]);
     			attr_dev(input, "step", "1");
-    			attr_dev(input, "class", "svelte-552trq");
-    			add_location(input, file$b, 205, 12, 5816);
+    			attr_dev(input, "class", "svelte-bn4ubt");
+    			add_location(input, file$b, 204, 12, 5761);
     			attr_dev(span6, "id", "slider-holder");
-    			attr_dev(span6, "class", "svelte-552trq");
-    			add_location(span6, file$b, 204, 10, 5777);
-    			attr_dev(div8, "class", "filter selected time svelte-552trq");
-    			add_location(div8, file$b, 184, 8, 5145);
-    			attr_dev(div9, "class", "filter clickable svelte-552trq");
-    			add_location(div9, file$b, 216, 8, 6083);
-    			attr_dev(div10, "class", "filter-options svelte-552trq");
-    			add_location(div10, file$b, 183, 6, 5107);
-    			attr_dev(div11, "class", "visual-filter filter-group svelte-552trq");
-    			add_location(div11, file$b, 178, 4, 4925);
-    			attr_dev(div12, "class", "card-filters svelte-552trq");
-    			add_location(div12, file$b, 136, 2, 3506);
-    			attr_dev(div13, "class", "img-holder svelte-552trq");
-    			set_style(div13, "width", /*width*/ ctx[10]);
-    			set_style(div13, "height", /*ht*/ ctx[11]);
-    			add_location(div13, file$b, 221, 4, 6194);
-    			attr_dev(div14, "class", "center svelte-552trq");
-    			add_location(div14, file$b, 220, 2, 6168);
-    			attr_dev(div15, "class", "card-outer svelte-552trq");
-    			add_location(div15, file$b, 131, 0, 3283);
+    			attr_dev(span6, "class", "svelte-bn4ubt");
+    			add_location(span6, file$b, 203, 10, 5722);
+    			attr_dev(div8, "class", "filter selected time svelte-bn4ubt");
+    			add_location(div8, file$b, 183, 8, 5090);
+    			attr_dev(div9, "class", "filter clickable svelte-bn4ubt");
+    			add_location(div9, file$b, 215, 8, 6028);
+    			attr_dev(div10, "class", "filter-options svelte-bn4ubt");
+    			add_location(div10, file$b, 182, 6, 5052);
+    			attr_dev(div11, "class", "visual-filter filter-group svelte-bn4ubt");
+    			add_location(div11, file$b, 177, 4, 4870);
+    			attr_dev(div12, "class", "card-filters svelte-bn4ubt");
+    			add_location(div12, file$b, 135, 2, 3451);
+    			attr_dev(div13, "class", "img-holder svelte-bn4ubt");
+    			set_style(div13, "width", /*width*/ ctx[9]);
+    			set_style(div13, "height", /*ht*/ ctx[10]);
+    			add_location(div13, file$b, 220, 4, 6139);
+    			attr_dev(div14, "class", "center svelte-bn4ubt");
+    			add_location(div14, file$b, 219, 2, 6113);
+    			attr_dev(div15, "class", "card-outer svelte-bn4ubt");
+    			attr_dev(div15, "id", div15_id_value = /*data*/ ctx[0].key);
+    			add_location(div15, file$b, 130, 0, 3205);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -23066,12 +23070,12 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(span2, "click", /*click_handler*/ ctx[17], false, false, false),
-    					listen_dev(span3, "click", /*click_handler_1*/ ctx[18], false, false, false),
-    					listen_dev(select, "change", /*select_change_handler*/ ctx[19]),
-    					listen_dev(div4, "click", /*click_handler_2*/ ctx[20], false, false, false),
-    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[23]),
-    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[23])
+    					listen_dev(span2, "click", /*click_handler*/ ctx[16], false, false, false),
+    					listen_dev(span3, "click", /*click_handler_1*/ ctx[17], false, false, false),
+    					listen_dev(select, "change", /*select_change_handler*/ ctx[18]),
+    					listen_dev(div4, "click", /*click_handler_2*/ ctx[19], false, false, false),
+    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[22]),
+    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[22])
     				];
 
     				mounted = true;
@@ -23085,12 +23089,12 @@ var app = (function () {
     				toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[13] == 0);
     			}
 
-    			if (dirty[0] & /*currSessionIndex, sessionsArray*/ 8224) {
-    				toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[13] == /*sessionsArray*/ ctx[5].length - 1);
+    			if (dirty[0] & /*currSessionIndex, sessionsArray*/ 12288) {
+    				toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[13] == /*sessionsArray*/ ctx[12].length - 1);
     			}
 
-    			if (dirty[0] & /*sessionsArray, sessions*/ 48) {
-    				each_value_1 = /*sessionsArray*/ ctx[5];
+    			if (dirty[0] & /*sessionsArray, sessions*/ 4112) {
+    				each_value_1 = /*sessionsArray*/ ctx[12];
     				validate_each_argument(each_value_1);
     				let i;
 
@@ -23113,7 +23117,7 @@ var app = (function () {
     				each_blocks.length = each_value_1.length;
     			}
 
-    			if (dirty[0] & /*currSessionKey, sessionsArray*/ 34) {
+    			if (dirty[0] & /*currSessionKey, sessionsArray*/ 4098) {
     				select_option(select, /*currSessionKey*/ ctx[1]);
     			}
 
@@ -23139,12 +23143,16 @@ var app = (function () {
 
     			if_block1.p(ctx, dirty);
 
-    			if (dirty[0] & /*width*/ 1024) {
-    				set_style(div13, "width", /*width*/ ctx[10]);
+    			if (dirty[0] & /*width*/ 512) {
+    				set_style(div13, "width", /*width*/ ctx[9]);
     			}
 
-    			if (dirty[0] & /*ht*/ 2048) {
-    				set_style(div13, "height", /*ht*/ ctx[11]);
+    			if (dirty[0] & /*ht*/ 1024) {
+    				set_style(div13, "height", /*ht*/ ctx[10]);
+    			}
+
+    			if (dirty[0] & /*data*/ 1 && div15_id_value !== (div15_id_value = /*data*/ ctx[0].key)) {
+    				attr_dev(div15, "id", div15_id_value);
     			}
     		},
     		i: noop$3,
@@ -23230,7 +23238,7 @@ var app = (function () {
     	let clips = [];
 
     	function createClips() {
-    		$$invalidate(7, clips = []);
+    		$$invalidate(6, clips = []);
     		let numClips = 10;
     		let clipMaxSize = 20;
     		let clipMinR = 10;
@@ -23287,7 +23295,7 @@ var app = (function () {
     	function select_change_handler() {
     		currSessionKey = select_value(this);
     		$$invalidate(1, currSessionKey);
-    		$$invalidate(5, sessionsArray);
+    		$$invalidate(12, sessionsArray);
     	}
 
     	const click_handler_2 = () => {
@@ -23300,29 +23308,29 @@ var app = (function () {
     			$$invalidate(3, currFrame = 0);
     		}
 
-    		$$invalidate(6, playStatus = 'play');
+    		$$invalidate(5, playStatus = 'play');
     	};
 
     	const click_handler_4 = () => {
-    		$$invalidate(6, playStatus = 'pause');
+    		$$invalidate(5, playStatus = 'pause');
     	};
 
     	function input_change_input_handler() {
     		currFrame = to_number(this.value);
-    		(($$invalidate(3, currFrame), $$invalidate(6, playStatus)), $$invalidate(2, sessionData));
+    		(($$invalidate(3, currFrame), $$invalidate(5, playStatus)), $$invalidate(2, sessionData));
     	}
 
     	function div_binding($$value) {
     		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
     			clipHolder = $$value;
-    			$$invalidate(8, clipHolder);
+    			$$invalidate(7, clipHolder);
     		});
     	}
 
     	function svg_binding($$value) {
     		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
     			visSvg = $$value;
-    			$$invalidate(9, visSvg);
+    			$$invalidate(8, visSvg);
     		});
     	}
 
@@ -23366,25 +23374,25 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('visSvg' in $$props) $$invalidate(9, visSvg = $$props.visSvg);
+    		if ('visSvg' in $$props) $$invalidate(8, visSvg = $$props.visSvg);
     		if ('data' in $$props) $$invalidate(0, data = $$props.data);
     		if ('maxW' in $$props) maxW = $$props.maxW;
     		if ('maxH' in $$props) maxH = $$props.maxH;
-    		if ('width' in $$props) $$invalidate(10, width = $$props.width);
-    		if ('ht' in $$props) $$invalidate(11, ht = $$props.ht);
-    		if ('styleSubstring' in $$props) $$invalidate(12, styleSubstring = $$props.styleSubstring);
+    		if ('width' in $$props) $$invalidate(9, width = $$props.width);
+    		if ('ht' in $$props) $$invalidate(10, ht = $$props.ht);
+    		if ('styleSubstring' in $$props) $$invalidate(11, styleSubstring = $$props.styleSubstring);
     		if ('currSessionKey' in $$props) $$invalidate(1, currSessionKey = $$props.currSessionKey);
-    		if ('currSession' in $$props) $$invalidate(16, currSession = $$props.currSession);
+    		if ('currSession' in $$props) currSession = $$props.currSession;
     		if ('sessionData' in $$props) $$invalidate(2, sessionData = $$props.sessionData);
     		if ('currFrame' in $$props) $$invalidate(3, currFrame = $$props.currFrame);
     		if ('sessions' in $$props) $$invalidate(4, sessions = $$props.sessions);
-    		if ('sessionsArray' in $$props) $$invalidate(5, sessionsArray = $$props.sessionsArray);
+    		if ('sessionsArray' in $$props) $$invalidate(12, sessionsArray = $$props.sessionsArray);
     		if ('currSessionIndex' in $$props) $$invalidate(13, currSessionIndex = $$props.currSessionIndex);
     		if ('sliderMax' in $$props) $$invalidate(14, sliderMax = $$props.sliderMax);
     		if ('viewMode' in $$props) $$invalidate(15, viewMode = $$props.viewMode);
-    		if ('playStatus' in $$props) $$invalidate(6, playStatus = $$props.playStatus);
-    		if ('clips' in $$props) $$invalidate(7, clips = $$props.clips);
-    		if ('clipHolder' in $$props) $$invalidate(8, clipHolder = $$props.clipHolder);
+    		if ('playStatus' in $$props) $$invalidate(5, playStatus = $$props.playStatus);
+    		if ('clips' in $$props) $$invalidate(6, clips = $$props.clips);
+    		if ('clipHolder' in $$props) $$invalidate(7, clipHolder = $$props.clipHolder);
     		if ('domClips' in $$props) domClips = $$props.domClips;
     	};
 
@@ -23393,10 +23401,9 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty[0] & /*sessions, currSessionKey, sessionsArray, currSession, data*/ 65587) {
+    		if ($$self.$$.dirty[0] & /*sessions, currSessionKey*/ 18) {
     			{
-    				$$invalidate(16, currSession = sessions[currSessionKey]);
-    				console.log(sessionsArray, sessions, currSessionKey, currSession, data);
+    				currSession = sessions[currSessionKey];
     				getSessionData(currSessionKey);
     			}
     		}
@@ -23409,7 +23416,7 @@ var app = (function () {
     			}
     		}
 
-    		if ($$self.$$.dirty[0] & /*playStatus, currFrame, sessionData*/ 76) {
+    		if ($$self.$$.dirty[0] & /*playStatus, currFrame, sessionData*/ 44) {
     			//if it ends, we change
     			{
     				if (playStatus == 'play' && currFrame < sessionData.length - 1) {
@@ -23421,7 +23428,7 @@ var app = (function () {
     						50
     					);
     				} else if (playStatus == 'play' && currFrame == sessionData.length - 1) {
-    					$$invalidate(6, playStatus = 'pause');
+    					$$invalidate(5, playStatus = 'pause');
     				}
     			}
     		}
@@ -23435,7 +23442,7 @@ var app = (function () {
     			}
     		}
 
-    		if ($$self.$$.dirty[0] & /*clipHolder*/ 256) {
+    		if ($$self.$$.dirty[0] & /*clipHolder*/ 128) {
     			{
     				if (clipHolder) {
     					domClips = clipHolder.childNodes;
@@ -23443,7 +23450,7 @@ var app = (function () {
     			}
     		}
 
-    		if ($$self.$$.dirty[0] & /*clips*/ 128) ;
+    		if ($$self.$$.dirty[0] & /*clips*/ 64) ;
     	};
 
     	return [
@@ -23452,7 +23459,6 @@ var app = (function () {
     		sessionData,
     		currFrame,
     		sessions,
-    		sessionsArray,
     		playStatus,
     		clips,
     		clipHolder,
@@ -23460,10 +23466,10 @@ var app = (function () {
     		width,
     		ht,
     		styleSubstring,
+    		sessionsArray,
     		currSessionIndex,
     		sliderMax,
     		viewMode,
-    		currSession,
     		click_handler,
     		click_handler_1,
     		select_change_handler,
@@ -26736,10 +26742,192 @@ var app = (function () {
       webgazer.removeMouseEventListeners();
     }
 
+    var _ = {
+      $(selector) {
+        if (typeof selector === "string") {
+          return document.querySelector(selector);
+        }
+        return selector;
+      },
+      extend(...args) {
+        return Object.assign(...args);
+      },
+      cumulativeOffset(element) {
+        let top = 0;
+        let left = 0;
+
+        do {
+          top += element.offsetTop || 0;
+          left += element.offsetLeft || 0;
+          element = element.offsetParent;
+        } while (element);
+
+        return {
+          top: top,
+          left: left
+        };
+      },
+      directScroll(element) {
+        return element && element !== document && element !== document.body;
+      },
+      scrollTop(element, value) {
+        let inSetter = value !== undefined;
+        if (this.directScroll(element)) {
+          return inSetter ? (element.scrollTop = value) : element.scrollTop;
+        } else {
+          return inSetter
+            ? (document.documentElement.scrollTop = document.body.scrollTop = value)
+            : window.pageYOffset ||
+                document.documentElement.scrollTop ||
+                document.body.scrollTop ||
+                0;
+        }
+      },
+      scrollLeft(element, value) {
+        let inSetter = value !== undefined;
+        if (this.directScroll(element)) {
+          return inSetter ? (element.scrollLeft = value) : element.scrollLeft;
+        } else {
+          return inSetter
+            ? (document.documentElement.scrollLeft = document.body.scrollLeft = value)
+            : window.pageXOffset ||
+                document.documentElement.scrollLeft ||
+                document.body.scrollLeft ||
+                0;
+        }
+      }
+    };
+
+    const defaultOptions = {
+      container: "body",
+      duration: 500,
+      delay: 0,
+      offset: 0,
+      easing: cubicInOut$1,
+      onStart: noop$3,
+      onDone: noop$3,
+      onAborting: noop$3,
+      scrollX: false,
+      scrollY: true
+    };
+
+    const _scrollTo = options => {
+      let {
+        offset,
+        duration,
+        delay,
+        easing,
+        x=0,
+        y=0,
+        scrollX,
+        scrollY,
+        onStart,
+        onDone,
+        container,
+        onAborting,
+        element
+      } = options;
+
+      if (typeof offset === "function") {
+        offset = offset();
+      }
+
+      var cumulativeOffsetContainer = _.cumulativeOffset(container);
+      var cumulativeOffsetTarget = element
+        ? _.cumulativeOffset(element)
+        : { top: y, left: x };
+
+      var initialX = _.scrollLeft(container);
+      var initialY = _.scrollTop(container);
+
+      var targetX =
+        cumulativeOffsetTarget.left - cumulativeOffsetContainer.left + offset;
+      var targetY =
+        cumulativeOffsetTarget.top - cumulativeOffsetContainer.top + offset;
+
+      var diffX = targetX - initialX;
+    	var diffY = targetY - initialY;
+
+      let scrolling = true;
+      let started = false;
+      let start_time = now$1() + delay;
+      let end_time = start_time + duration;
+
+      function scrollToTopLeft(element, top, left) {
+        if (scrollX) _.scrollLeft(element, left);
+        if (scrollY) _.scrollTop(element, top);
+      }
+
+      function start(delayStart) {
+        if (!delayStart) {
+          started = true;
+          onStart(element, {x, y});
+        }
+      }
+
+      function tick(progress) {
+        scrollToTopLeft(
+          container,
+          initialY + diffY * progress,
+          initialX + diffX * progress
+        );
+      }
+
+      function stop() {
+        scrolling = false;
+      }
+
+      loop(now => {
+        if (!started && now >= start_time) {
+          start(false);
+        }
+
+        if (started && now >= end_time) {
+          tick(1);
+          stop();
+          onDone(element, {x, y});
+        }
+
+        if (!scrolling) {
+          onAborting(element, {x, y});
+          return false;
+        }
+        if (started) {
+          const p = now - start_time;
+          const t = 0 + 1 * easing(p / duration);
+          tick(t);
+        }
+
+        return true;
+      });
+
+      start(delay);
+
+      tick(0);
+
+      return stop;
+    };
+
+    const proceedOptions = options => {
+    	let opts = _.extend({}, defaultOptions, options);
+      opts.container = _.$(opts.container);
+      opts.element = _.$(opts.element);
+      return opts;
+    };
+
+    const scrollTo = options => {
+      return _scrollTo(proceedOptions(options));
+    };
+
+    var jump = (section) => {
+      let el = document.querySelector('#' + section);
+      scrollTo({ element: el });
+    };
+
     /* src\components\Header.svelte generated by Svelte v3.44.0 */
     const file$9 = "src\\components\\Header.svelte";
 
-    // (20:6) {:else}
+    // (25:6) {:else}
     function create_else_block$2(ctx) {
     	let span;
 
@@ -26747,9 +26935,9 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "Gaze";
-    			attr_dev(span, "class", "header-sub accent svelte-b9x3pw");
+    			attr_dev(span, "class", "header-sub accent svelte-1vh4qt7");
     			toggle_class(span, "active", /*$pageState*/ ctx[0] === 'record');
-    			add_location(span, file$9, 20, 8, 562);
+    			add_location(span, file$9, 25, 8, 644);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -26768,14 +26956,14 @@ var app = (function () {
     		block,
     		id: create_else_block$2.name,
     		type: "else",
-    		source: "(20:6) {:else}",
+    		source: "(25:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (16:6) {#if $pageState == 'gallery'}
+    // (21:6) {#if $pageState == 'gallery'}
     function create_if_block$4(ctx) {
     	let span;
 
@@ -26783,9 +26971,9 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "Gallery";
-    			attr_dev(span, "class", "header-sub accent svelte-b9x3pw");
+    			attr_dev(span, "class", "header-sub accent svelte-1vh4qt7");
     			toggle_class(span, "active", /*$pageState*/ ctx[0] === 'gallery');
-    			add_location(span, file$9, 16, 8, 429);
+    			add_location(span, file$9, 21, 8, 511);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -26804,7 +26992,7 @@ var app = (function () {
     		block,
     		id: create_if_block$4.name,
     		type: "if",
-    		source: "(16:6) {#if $pageState == 'gallery'}",
+    		source: "(21:6) {#if $pageState == 'gallery'}",
     		ctx
     	});
 
@@ -26813,19 +27001,32 @@ var app = (function () {
 
     function create_fragment$9(ctx) {
     	let header;
-    	let div3;
+    	let div7;
     	let div0;
     	let span0;
     	let t1;
     	let span1;
     	let t3;
     	let t4;
-    	let div2;
+    	let div6;
+    	let nav;
     	let div1;
     	let span2;
     	let t6;
+    	let div2;
     	let span3;
-    	let div1_transition;
+    	let t8;
+    	let div3;
+    	let span4;
+    	let t10;
+    	let div4;
+    	let div4_transition;
+    	let t12;
+    	let div5;
+    	let span5;
+    	let t14;
+    	let span6;
+    	let div5_transition;
     	let current;
     	let mounted;
     	let dispose;
@@ -26841,63 +27042,108 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			header = element("header");
-    			div3 = element("div");
+    			div7 = element("div");
     			div0 = element("div");
     			span0 = element("span");
     			span0.textContent = "How We Gaze";
     			t1 = space();
     			span1 = element("span");
-    			span1.textContent = "•";
+    			span1.textContent = "-";
     			t3 = space();
     			if_block.c();
     			t4 = space();
-    			div2 = element("div");
+    			div6 = element("div");
+    			nav = element("nav");
     			div1 = element("div");
     			span2 = element("span");
-    			span2.textContent = "arrow_back";
+    			span2.textContent = "navigate_before";
     			t6 = space();
+    			div2 = element("div");
     			span3 = element("span");
-    			span3.textContent = "Back to Gallery";
-    			add_location(span0, file$9, 13, 6, 320);
-    			attr_dev(span1, "class", "divider svelte-b9x3pw");
-    			add_location(span1, file$9, 14, 6, 352);
-    			attr_dev(div0, "class", "header-left");
-    			add_location(div0, file$9, 12, 4, 287);
-    			attr_dev(span2, "class", "material-icons-round svelte-b9x3pw");
-    			add_location(span2, file$9, 44, 8, 1233);
-    			add_location(span3, file$9, 46, 8, 1299);
-    			attr_dev(div1, "class", "btn clickable svelte-b9x3pw");
-    			toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'record');
-    			add_location(div1, file$9, 33, 6, 906);
-    			attr_dev(div2, "class", "header-right svelte-b9x3pw");
-    			add_location(div2, file$9, 25, 4, 697);
-    			attr_dev(div3, "class", "header-content svelte-b9x3pw");
-    			add_location(div3, file$9, 11, 2, 253);
-    			attr_dev(header, "class", "svelte-b9x3pw");
-    			add_location(header, file$9, 10, 0, 241);
+    			span3.textContent = "navigate_next";
+    			t8 = space();
+    			div3 = element("div");
+    			span4 = element("span");
+    			span4.textContent = "view_module";
+    			t10 = space();
+    			div4 = element("div");
+    			div4.textContent = "About";
+    			t12 = space();
+    			div5 = element("div");
+    			span5 = element("span");
+    			span5.textContent = "arrow_back";
+    			t14 = space();
+    			span6 = element("span");
+    			span6.textContent = "Back to Gallery";
+    			add_location(span0, file$9, 18, 6, 402);
+    			attr_dev(span1, "class", "divider svelte-1vh4qt7");
+    			add_location(span1, file$9, 19, 6, 434);
+    			attr_dev(div0, "class", "header-left svelte-1vh4qt7");
+    			add_location(div0, file$9, 17, 4, 369);
+    			attr_dev(span2, "class", "material-icons-round svelte-1vh4qt7");
+    			add_location(span2, file$9, 32, 13, 833);
+    			attr_dev(div1, "class", "svelte-1vh4qt7");
+    			add_location(div1, file$9, 32, 8, 828);
+    			attr_dev(span3, "class", "material-icons-round svelte-1vh4qt7");
+    			add_location(span3, file$9, 33, 13, 913);
+    			attr_dev(div2, "class", "svelte-1vh4qt7");
+    			add_location(div2, file$9, 33, 8, 908);
+    			attr_dev(span4, "class", "material-icons-round svelte-1vh4qt7");
+    			add_location(span4, file$9, 34, 13, 991);
+    			attr_dev(div3, "class", "svelte-1vh4qt7");
+    			add_location(div3, file$9, 34, 8, 986);
+    			attr_dev(nav, "class", "svelte-1vh4qt7");
+    			add_location(nav, file$9, 31, 6, 813);
+    			attr_dev(div4, "class", "btn clickable btn-about svelte-1vh4qt7");
+    			toggle_class(div4, "active", /*$pageState*/ ctx[0] === 'gallery');
+    			add_location(div4, file$9, 36, 6, 1074);
+    			attr_dev(span5, "class", "material-icons-round svelte-1vh4qt7");
+    			add_location(span5, file$9, 54, 8, 1567);
+    			add_location(span6, file$9, 56, 8, 1633);
+    			attr_dev(div5, "class", "btn clickable svelte-1vh4qt7");
+    			toggle_class(div5, "active", /*$pageState*/ ctx[0] === 'record');
+    			add_location(div5, file$9, 43, 6, 1240);
+    			attr_dev(div6, "class", "header-right svelte-1vh4qt7");
+    			add_location(div6, file$9, 30, 4, 779);
+    			attr_dev(div7, "class", "header-content svelte-1vh4qt7");
+    			add_location(div7, file$9, 16, 2, 335);
+    			attr_dev(header, "class", "svelte-1vh4qt7");
+    			add_location(header, file$9, 15, 0, 323);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, header, anchor);
-    			append_dev(header, div3);
-    			append_dev(div3, div0);
+    			append_dev(header, div7);
+    			append_dev(div7, div0);
     			append_dev(div0, span0);
     			append_dev(div0, t1);
     			append_dev(div0, span1);
     			append_dev(div0, t3);
     			if_block.m(div0, null);
-    			append_dev(div3, t4);
-    			append_dev(div3, div2);
-    			append_dev(div2, div1);
+    			append_dev(div7, t4);
+    			append_dev(div7, div6);
+    			append_dev(div6, nav);
+    			append_dev(nav, div1);
     			append_dev(div1, span2);
-    			append_dev(div1, t6);
-    			append_dev(div1, span3);
+    			append_dev(nav, t6);
+    			append_dev(nav, div2);
+    			append_dev(div2, span3);
+    			append_dev(nav, t8);
+    			append_dev(nav, div3);
+    			append_dev(div3, span4);
+    			append_dev(div6, t10);
+    			append_dev(div6, div4);
+    			append_dev(div6, t12);
+    			append_dev(div6, div5);
+    			append_dev(div5, span5);
+    			append_dev(div5, t14);
+    			append_dev(div5, span6);
     			current = true;
 
     			if (!mounted) {
-    				dispose = listen_dev(div1, "click", /*click_handler*/ ctx[3], false, false, false);
+    				dispose = listen_dev(div5, "click", /*click_handler*/ ctx[3], false, false, false);
     				mounted = true;
     			}
     		},
@@ -26915,28 +27161,40 @@ var app = (function () {
     			}
 
     			if (dirty & /*$pageState*/ 1) {
-    				toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'record');
+    				toggle_class(div4, "active", /*$pageState*/ ctx[0] === 'gallery');
+    			}
+
+    			if (dirty & /*$pageState*/ 1) {
+    				toggle_class(div5, "active", /*$pageState*/ ctx[0] === 'record');
     			}
     		},
     		i: function intro(local) {
     			if (current) return;
 
     			add_render_callback(() => {
-    				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, slide, { duration: 500 }, true);
-    				div1_transition.run(1);
+    				if (!div4_transition) div4_transition = create_bidirectional_transition(div4, fade, {}, true);
+    				div4_transition.run(1);
+    			});
+
+    			add_render_callback(() => {
+    				if (!div5_transition) div5_transition = create_bidirectional_transition(div5, slide, { duration: 500 }, true);
+    				div5_transition.run(1);
     			});
 
     			current = true;
     		},
     		o: function outro(local) {
-    			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, slide, { duration: 500 }, false);
-    			div1_transition.run(0);
+    			if (!div4_transition) div4_transition = create_bidirectional_transition(div4, fade, {}, false);
+    			div4_transition.run(0);
+    			if (!div5_transition) div5_transition = create_bidirectional_transition(div5, slide, { duration: 500 }, false);
+    			div5_transition.run(0);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(header);
     			if_block.d();
-    			if (detaching && div1_transition) div1_transition.end();
+    			if (detaching && div4_transition) div4_transition.end();
+    			if (detaching && div5_transition) div5_transition.end();
     			mounted = false;
     			dispose();
     		}
@@ -26986,6 +27244,7 @@ var app = (function () {
     		hideGazerForLater,
     		slide,
     		fade,
+    		jump,
     		$pageState,
     		$gazerInitDone,
     		$gazerInitVideoDone
@@ -29886,7 +30145,7 @@ var app = (function () {
     			if (if_block) if_block.c();
     			t1 = space();
     			script = element("script");
-    			attr_dev(div, "class", "container svelte-61gxr1");
+    			attr_dev(div, "class", "container svelte-cpqkqm");
     			add_location(div, file, 40, 2, 916);
     			add_location(main, file, 38, 0, 894);
     			if (!src_url_equal(script.src, script_src_value = "./assets/webgazer.min.js")) attr_dev(script, "src", script_src_value);

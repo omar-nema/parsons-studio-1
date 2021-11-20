@@ -42,7 +42,6 @@
 
   $: {
     currSession = sessions[currSessionKey];
-    console.log(sessionsArray, sessions, currSessionKey, currSession, data);
     getSessionData(currSessionKey);
   }
 
@@ -129,10 +128,10 @@
   $: clips;
 </script>
 
-<div class="card-outer">
+<div class="card-outer" id={data.key}>
   <h2 style="display: flex; justify-content: space-between">
     <div>{data.artist}, <i>{data.title}</i></div>
-    <div style="font-weight: 400; color: #bdbdbd">Gaze Collection</div>
+    <div style="font-weight: 400; color: rgb(126 123 123)">Gaze Collection</div>
   </h2>
   <div class="card-filters">
     <div class="viewer-filter  filter-group">
@@ -315,26 +314,28 @@
     margin-right: 10px;
   }
   select {
-    background: var(--bg-contrast-darkest);
+    background: none;
     border: none;
-    color: white;
     padding: 0;
     margin: 0;
     width: 130px;
     text-align: center;
     text-transform: capitalize;
   }
-  select option {
+  /* select option {
     color: white;
-  }
+  } */
 
   .filter {
     background: var(--bg-contrast-darker);
     padding: 0 10px;
     height: 100%;
+    border: 0.5px dashed transparent;
+    transition: all 0.15s linear;
   }
   .filter.selected {
     background: var(--bg-contrast-darkest);
+    border: 0.5px solid #0000004f;
   }
   .filter,
   .label {
@@ -403,14 +404,14 @@
     height: 15px;
     width: 15px;
     cursor: pointer !important;
-    transition: opacity 0.1s linear;
+    transition: all 0.15s ease-in-out;
   }
   input[type='range']::-moz-range-thumb:hover {
-    opacity: 0.9;
+    box-shadow: var(--box-shadow-med);
   }
 
   input[type='range']::-webkit-slider-thumb:hover {
-    opacity: 0.9;
+    box-shadow: var(--box-shadow-med);
   }
   input[type='range']:focus {
     outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */

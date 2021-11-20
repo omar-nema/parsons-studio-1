@@ -67,19 +67,30 @@
     font-family: 'DM Sans';
   }
   :global(body) {
-    background: #272729;
+    /* background: #272729; */
+    /* background: #e1e1e1; */
     margin: 0;
     padding: 0;
-    color: #efefef;
+    /* color: #efefef; */
+    color: black;
     font-weight: 400;
     height: auto;
+    background: linear-gradient(
+180deg, rgba(0,212,255,0.1) 0%, rgba(240,240,240,1) 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
   :global(:root) {
-    --color-accent: #cfd494;
+    /* --color-accent: #cfd494; */
+    --color-accent: #2196f3;
+    --color-accent-faded: #2196f385;
     --color-gray-faded: #a0a0a0;
-    --bg-contrast: #585656;
-    --bg-contrast-darker: #4b4747;
-    --bg-contrast-darkest: #232020;
+    /* --bg-contrast: #585656; */
+    --bg-contrast: #ffffffab;
+    /* --bg-contrast-darker: #4b4747; */
+    --bg-contrast-darker: #e2e1e1;
+    /* --bg-contrast-darkest: #232020; */
+    --bg-contrast-darkest: #c3cbcc;
     --content-width-pct: 92%;
     --content-width-max: 1300px;
     --font-size-md: 22px;
@@ -87,7 +98,9 @@
     --header-ht: 50px;
     --color-pos: #5df4c7;
     --color-neg: #ff8f80;
-    --color-accent-sec: lightgray;
+    /* --color-accent-sec: lightgray; */
+    --color-accent-sec: #7c7777;
+    --box-shadow-med:  0 0 2px 2px rgba(0, 0, 0, 0.1);
   }
   :global(.clickable) {
     cursor: pointer;
@@ -100,6 +113,9 @@
     font-size: 32px;
     font-weight: 400;
     color: var(--color-accent);
+  }
+  :global(h2){
+    font-weight: 500;
   }
   :global(h3) {
     font-weight: 400;

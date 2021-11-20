@@ -14,6 +14,8 @@
       worksArray = Object.values(worksObject);
       worksKeys = Object.keys(worksObject);
     }
+
+    document.querySelector('body').className = '';
     //write any new artwork that is not yet in DB to DB
     //issue is that this could remove sessionData if initial read was unsuccessful
     //FIX LATERRRRR

@@ -133,7 +133,6 @@
   }
   input {
     background: var(--bg-contrast-darker);
-    color: white;
     min-width: 50%;
     padding: 0 20px;
   }

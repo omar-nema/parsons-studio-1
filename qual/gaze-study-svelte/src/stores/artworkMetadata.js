@@ -16,6 +16,16 @@ let artworkData = {
     sessionData: {},
     dimWidthToHt: 0.65,
   },
+  nevelson: {
+    key: 'nevelson',
+    artist: 'Louise Nevelson',
+    title: 'Untitled (Self-Portrait)',
+    url: './assets/img/nevelson.jpg',
+    sessionData: {},
+    dimWidthToHt: 0.756,
+    origLink:
+      'https://www.si.edu/object/untitled-self-portrait:npg_NPG.2002.307',
+  },
 };
 
 export let artworkMetadata = writable(artworkData);

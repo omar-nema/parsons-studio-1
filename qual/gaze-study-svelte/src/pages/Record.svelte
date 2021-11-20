@@ -135,6 +135,7 @@
     if (!$gazerInitDone) {
       gazerInitialize();
     }
+    document.querySelector('body').className = 'gaze';
   });
 
   //move video, disable next and prev buttons on subpage change
@@ -278,6 +279,8 @@
     width: 100%;
     margin-top: 80px;
     height: auto;
+    box-shadow: var(--box-shadow-light);
+    overflow: hidden;
   }
   .container-header,
   .container-footer,
@@ -294,8 +297,15 @@
   .container-footer {
     width: 100%;
     height: var(--header-ht);
-    background: var(--bg-contrast-darker);
+    /* background: var(--bg-contrast-darker); */
   }
+  .container-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .container-footer {
+    box-shadow: var(--box-shadow-light-inverse);
+  }
+
   .nav-ind {
     display: flex;
   }
@@ -318,7 +328,7 @@
     width: 15px;
     height: 15px;
     border-radius: 100%;
-    background: var(--bg-contrast);
+    background: #dbd7d7;
     margin-right: 8px;
     transition: all 0.3s ease-in-out;
   }

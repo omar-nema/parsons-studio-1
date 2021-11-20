@@ -335,7 +335,7 @@
   }
   .filter.selected {
     background: var(--bg-contrast-darkest);
-    border: 0.5px solid #0000004f;
+    /* border: 0.5px solid #0000004f; */
   }
   .filter,
   .label {

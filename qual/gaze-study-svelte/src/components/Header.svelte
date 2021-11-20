@@ -67,7 +67,7 @@
     height: var(--header-ht);
     font-weight: 400;
     backdrop-filter: blur(5px);
-    z-index: 10;
+    z-index: 1;
     background-color: none;
   }
   .header-content {

@@ -75,10 +75,13 @@
     color: black;
     font-weight: 400;
     height: auto;
-    background: linear-gradient(
-180deg, rgba(0,212,255,0.1) 0%, rgba(240,240,240,1) 100%);
+    background:linear-gradient( 180deg, rgb(240, 240, 240) 0%, rgba(0,212,255,0.1) 100%);
     background-repeat: no-repeat;
     background-attachment: fixed;
+    transition: background 1s ease-in-out;
+  }
+  :global(body.gaze){
+    background: #efeded;
   }
   :global(:root) {
     /* --color-accent: #cfd494; */
@@ -96,11 +99,14 @@
     --font-size-md: 22px;
     --font-size-lg: 26px;
     --header-ht: 50px;
-    --color-pos: #5df4c7;
-    --color-neg: #ff8f80;
+    --color-pos: #02bf86;
+    --color-neg: #e9412b;
     /* --color-accent-sec: lightgray; */
     --color-accent-sec: #7c7777;
     --box-shadow-med:  0 0 2px 2px rgba(0, 0, 0, 0.1);
+    --box-shadow-light:  0 0 1px 1px rgba(0, 0, 0, 0.07); 
+  
+    --box-shadow-light-inverse:  0 -1px 3px 0px rgb(0 0 0 / 10%);        
   }
   :global(.clickable) {
     cursor: pointer;
@@ -118,9 +124,8 @@
     font-weight: 500;
   }
   :global(h3) {
-    font-weight: 400;
+    font-weight: 500;
     text-decoration: underline;
-    color: white;
     text-decoration-color: var(--color-accent);
   }
   :global(.font-lg) {

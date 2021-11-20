@@ -47,7 +47,6 @@
   .explain p {
     margin-top: 0;
     height: 80px;
-    color: white;
     font-weight: 600;
     width: 100%;
     text-align: center;

@@ -72,7 +72,7 @@
     if (playStatus == 'play' && currFrame < sessionData.length - 1) {
       setTimeout(() => {
         currFrame++;
-        console.log(currFrame, sessionData.length);
+        //console.log(currFrame, sessionData.length);
       }, 50);
     } else if (playStatus == 'play' && currFrame == sessionData.length - 1) {
       playStatus = 'pause';
@@ -218,7 +218,10 @@
     </div>
   </div>
   <div class="center">
-    <div class="img-holder" style="width: {width}; height: {ht}">
+    <div
+      class="img-holder"
+      style="width: {width}; height: {ht}; max-width: {data.width}px; max-height: {data.height}px"
+    >
       {#if viewMode == 'slice'}
         <img src={data.url} style="filter: blur(6px); {styleSubstring}" />
         <div bind:this={clipHolder}>

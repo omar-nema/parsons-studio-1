@@ -7,6 +7,8 @@ let artworkData = {
     sessionData: {},
     key: 'mehretuUntitled',
     dimWidthToHt: 1.42,
+    width: 1745,
+    height: 1228,
   },
   rothko: {
     key: 'rothko',
@@ -15,6 +17,8 @@ let artworkData = {
     url: './assets/img/rothko.png',
     sessionData: {},
     dimWidthToHt: 0.65,
+    width: 1021,
+    height: 1571,
   },
   nevelson: {
     key: 'nevelson',
@@ -23,6 +27,8 @@ let artworkData = {
     url: './assets/img/nevelson.jpg',
     sessionData: {},
     dimWidthToHt: 0.756,
+    width: 378,
+    height: 500,
     origLink:
       'https://www.si.edu/object/untitled-self-portrait:npg_NPG.2002.307',
   },

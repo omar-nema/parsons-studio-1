@@ -36,6 +36,7 @@
   let key2 = 'dudeye'
 </script>
 
+
 <main>
   <Header />
   <div class="container">
@@ -53,6 +54,8 @@
 </main>
 
 <svelte:head>
+  <title>How We Gaze</title>
+	<html lang="en" />  
   <script on:load={() => {gazerReady.set(true)} }  src="./assets/webgazer.min.js" ></script>
 </svelte:head>
 

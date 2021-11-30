@@ -89,7 +89,7 @@
     /* background: #272729db; */
     /* background: #e1e1e1b5; */
     height: var(--header-ht);
-    font-weight: 400;
+    font-weight: 600;
     backdrop-filter: blur(5px);
     z-index: 1;
     background-color: none;
@@ -125,14 +125,10 @@
     justify-content: center;
     align-items: center;
   }
-  .header-left {
-    font-weight: 500;
-  }
 
   .btn-about {
     border-radius: 0;
     padding: 5px 10px;
-    font-weight: 400;
   }
   .btn.active {
     color: var(--color-accent);

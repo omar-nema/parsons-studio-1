@@ -59,6 +59,7 @@
 <style>
   .container {
     padding-top: 5%;
+    width: 80%;
   }
   .modal {
     width: 100%;
@@ -96,6 +97,7 @@
   .artwork-container {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
   .artwork-holder {
     display: flex;

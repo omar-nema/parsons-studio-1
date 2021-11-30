@@ -9,7 +9,8 @@
   } from '../stores/artworkMetadata';
   import { initScroll } from '../utils/scrollListener';
   import { onMount } from 'svelte';
-  import { cardInView } from '../stores/pageState';
+  import { cardInView, jumpCard } from '../stores/pageState';
+  import jump from '../utils/jumpSection';
 
   //load the works in real time
 
@@ -35,6 +36,11 @@
     //     dbWrite('works/' + key, objToAdd);
     //   }
     // }
+  }
+
+  $: {
+    $jumpCard;
+    jump($jumpCard);
   }
 
   async function init() {

@@ -27,19 +27,20 @@
   .explain {
     display: flex;
     flex-direction: row;
-    width: 80%;
+    width: 100%;
     margin: auto;
     justify-content: space-between;
-    padding-top: 100px;
+    padding-top: 25px;
+    max-width: 850px;
   }
   .explain div {
-    flex-basis: 45%;
+    flex-basis: 47%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: var(--bg-contrast-darker);
     border-radius: 10px;
-    padding: 15px 50px;
+    padding: 10px 30px;
     padding-bottom: 30px;
     flex-direction: column;
     border: 1px dashed #ffffff40;
@@ -47,7 +48,7 @@
   .explain p {
     margin-top: 0;
     height: 80px;
-    font-weight: 600;
+    font-weight: 500;
     width: 100%;
     text-align: center;
     display: flex;

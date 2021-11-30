@@ -6,20 +6,7 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
   let width = bbox.width;
   let height = 0.705 * width;
 
-  // let svg = d3
-  //   .select(containerAll)
-  //   .append('svg')
-  //   // .attr('viewBox', [0, 0, width, height])
-  //   .attr('preserveAspectRatio', 'xMinYMin meet')
-  //   .style('position', 'absolute')
-  //   .style('top', 0)
-  //   .style('left', 0)
-  //   .style('width', '100%')
-  //   .style('height', '100%')
-  //   .style('z-index', 10);
-
   let svg = d3.select(containerSvg);
-
   let margin = 30;
 
   let xPos = d3
@@ -45,16 +32,12 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
   let blurScale = d3
     .scaleLinear()
     .domain([maxCoords, maxCoords * 0.75, , maxCoords / 2, minCoords])
-    .range([0, 1, 2, 5]);
-  let fillScale = d3
+    .range([0, 0.5, 1, 2]);
+
+  let opacityScale = d3
     .scaleLinear()
-    .domain([minCoords, maxCoords])
-    .range(['#504d4d', '#67d0f1']);
-
-  console.log(contours.length);
-
-  //, function (d) {
-  // return d.coordinates[0].length;
+    .domain([maxCoords, minCoords])
+    .range([1, 0.8]);
 
   let clipPathG = svg
     .selectAll('.clipPathGroup')
@@ -68,7 +51,7 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
     .attr('id', (d, i) => 'path-' + i)
     .append('path')
     .attr('stroke-linejoin', 'round')
-    .attr('fill', (d) => fillScale(d.value))
+    // .attr('fill', (d) => fillScale(d.value))
     .attr('d', d3.geoPath());
 
   svg
@@ -79,5 +62,10 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
     .attr('width', '100%')
     .attr('height', '100%')
     .attr('xlink:href', url)
-    .style('filter', (d) => `blur(${blurScale(d.value)}px`);
+    //.style('filter', (d) => `opacity(${opacityScale(d.value)}`);
+    .style(
+      'filter',
+      (d) => `opacity(${opacityScale(d.value)}) blur(${blurScale(d.value)}px)`
+    );
+  //.style('filter', (d) => `blur(${blurScale(d.value)}px`);
 }

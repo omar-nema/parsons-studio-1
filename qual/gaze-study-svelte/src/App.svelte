@@ -63,13 +63,16 @@
 
 <style>
   /* @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap'); */
-
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500&display=swap'); */
+  /* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+   */
+  
   @import url('https://fonts.googleapis.com/icon?family=Material+Icons+Round');
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&display=swap');
 
   :global(*) {
     box-sizing: border-box;
-    font-family: 'DM Sans';
+    font-family: 'Lora';
   }
   :global(body) {
     /* background: #272729; */
@@ -96,7 +99,7 @@
     /* --bg-contrast: #585656; */
     --bg-contrast: #fbfbfb;
     /* --bg-contrast-darker: #4b4747; */
-    --bg-contrast-darker: #e2e1e1;
+    --bg-contrast-darker: #f5f5f5;
     /* --bg-contrast-darkest: #232020; */
     --bg-contrast-darkest: #c3cbcc;
     --content-width-pct: 92%;
@@ -129,7 +132,7 @@
     font-weight: 500;
   }
   :global(h3) {
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: underline;
     text-decoration-color: var(--color-accent);
   }

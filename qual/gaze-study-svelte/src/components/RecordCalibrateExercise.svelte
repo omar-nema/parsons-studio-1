@@ -14,12 +14,12 @@
   gazerTrain();
 
   let calibrationPoints = [
-    { top: '10%', right: '4%', numClicks: 0 },
-    { top: '50%', right: '4%', numClicks: 0 },
-    { top: '90%', right: '4%', numClicks: 0 },
-    { top: '10%', right: '96%', numClicks: 0 },
-    { top: '50%', right: '96%', numClicks: 0 },
-    { top: '90%', right: '96%', numClicks: 0 },
+    { top: '10%', right: '7%', numClicks: 0 },
+    { top: '50%', right: '7%', numClicks: 0 },
+    { top: '90%', right: '7%', numClicks: 0 },
+    { top: '10%', right: '93%', numClicks: 0 },
+    { top: '50%', right: '93%', numClicks: 0 },
+    { top: '90%', right: '93%', numClicks: 0 },
     { top: '10%', right: '50%', numClicks: 0 },
     { top: '50%', right: '50%', numClicks: 0 },
     { top: '90%', right: '50%', numClicks: 0 },
@@ -156,9 +156,10 @@
     width: 20px;
     position: absolute;
     cursor: pointer;
-    box-shadow: 0 0px 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px 0px rgb(0 0 0 / 20%);
     transition: opacity 0.1s linear;
     z-index: 1000;
+    border: 2px solid #98272e;
   }
   p {
     width: 80%;

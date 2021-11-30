@@ -19,11 +19,12 @@ export let calibrationPct = writable(null);
 export let calibrationCutoff = readable(10);
 export let stateIndex = writable(0);
 export let loadingInd = writable(true);
-
-// export let artworkID = writable(null); //is this used?
 export let sessionID = writable(null);
 
+//to get the right size of images
 export let screenWidth = writable(null);
 export let screenHeight = writable(null);
 
+//for scrolling and naviating between cards
 export let cardInView = writable(null);
+export let jumpCard = writable(null);

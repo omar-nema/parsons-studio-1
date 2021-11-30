@@ -7,6 +7,7 @@
     stateIndex,
     pageState,
     selectedImage,
+    jumpCard,
   } from '../stores/pageState';
   import {
     dbGet,
@@ -49,6 +50,8 @@
     //switch pages only after video container is moved to body
     let observer = new MutationObserver((mutationRecords) => {
       if (mutationRecords[0].removedNodes.length > 0) {
+        console.log(selectedImage.key);
+        jumpCard.set(selectedImage.key);
         pageState.set('gallery');
       }
     });

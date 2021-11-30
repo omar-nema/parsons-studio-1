@@ -13,7 +13,7 @@
   //CUSTOM WIDTH AND HEIGHT CALC
   export let data;
   let maxW = Math.min($screenWidth - 500, 1000),
-    maxH = $screenHeight - 100;
+    maxH = $screenHeight - 300;
   let width = 'auto',
     ht = 'auto',
     styleSubstring = '';
@@ -57,6 +57,14 @@
   $: {
     if (sessionData) {
       sliderMax = sessionData.length;
+    }
+    if (viewMode == 'aggregate') {
+      contourMapBlur(
+        sessionData,
+        `#${data.key} .img-holder`,
+        `#${data.key}-contour`,
+        data.url
+      );
     }
   }
 
@@ -236,7 +244,10 @@
       class="img-holder"
       style="width: {width}; height: {ht}; max-width: {data.width}px; max-height: {data.height}px"
     >
-      <img src={data.url} style="filter: blur(6px); {styleSubstring}" />
+      <img
+        src={data.url}
+        style="filter: opacity(0.9) blur(3px); {styleSubstring}"
+      />
       <svg
         class="contour"
         class:active={viewMode == 'aggregate'}

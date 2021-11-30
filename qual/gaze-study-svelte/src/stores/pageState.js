@@ -1,6 +1,8 @@
 import { readable, writable } from 'svelte/store';
 
 export let pageState = writable('gallery');
+export let modalState = writable(null);
+
 export let selectedImage = writable(null);
 export let calibrationState = writable(null);
 export let gazerRecordingTraining = writable([]);
@@ -23,3 +25,5 @@ export let sessionID = writable(null);
 
 export let screenWidth = writable(null);
 export let screenHeight = writable(null);
+
+export let cardInView = writable(null);

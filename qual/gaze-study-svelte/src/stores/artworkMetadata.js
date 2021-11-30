@@ -35,3 +35,5 @@ let artworkData = {
 };
 
 export let artworkMetadata = writable(artworkData);
+export let loadedWorksKeys = writable(null);
+export let loadedWorksArray = writable(null);

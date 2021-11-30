@@ -4,21 +4,19 @@
     selectedImage,
     screenWidth,
     screenHeight,
+    cardInView,
   } from '../stores/pageState';
   import { dbGet } from '../utils/firebaseUtils.js';
   import { onMount } from 'svelte';
   import { contourMapBlur } from '../utils/generateVisuals';
 
-  let visSvg;
+  //CUSTOM WIDTH AND HEIGHT CALC
   export let data;
-
   let maxW = Math.min($screenWidth - 500, 1000),
     maxH = $screenHeight - 100;
-
   let width = 'auto',
     ht = 'auto',
     styleSubstring = '';
-
   if (data.dimWidthToHt < 1) {
     ht = maxH + 'px';
     styleSubstring = 'height: 100%';
@@ -27,6 +25,7 @@
     styleSubstring = 'width: 100%';
   }
 
+  //GET CURRENT SESSION DATA
   let currSessionKey, currSession, sessionData;
   let currFrame = 0;
   let sessions = [];
@@ -39,23 +38,21 @@
   }
   let currSessionIndex = sessionsArray.length - 1;
   currSessionKey = sessionsArray[currSessionIndex];
-
+  //SWITCH SESSIONS
   $: {
     currSession = sessions[currSessionKey];
     getSessionData(currSessionKey);
   }
-
   async function getSessionData(key) {
     sessionData = await dbGet('sessionData/' + key);
     console.log(data, sessionData);
-    let t = await dbGet('sessionData/');
     createClips();
     //reset the slider
     if (sessionData) {
       currFrame = 0;
     }
   }
-
+  //RE-CALCULATE SLIDER STEPS ON SESSION SWITCH
   let sliderMax = 100;
   $: {
     if (sessionData) {
@@ -67,12 +64,11 @@
   let viewMode = 'slice'; //other mode = aggregate
   let playStatus = 'pause';
 
-  //if it ends, we change
+  //SLICE VISUAL - PROB BEST TO MOVE OUT
   $: {
     if (playStatus == 'play' && currFrame < sessionData.length - 1) {
       setTimeout(() => {
         currFrame++;
-        //console.log(currFrame, sessionData.length);
       }, 50);
     } else if (playStatus == 'play' && currFrame == sessionData.length - 1) {
       playStatus = 'pause';
@@ -109,7 +105,6 @@
       });
     }
   }
-
   let clipHolder, domClips;
   $: {
     if (clipHolder) {
@@ -128,7 +123,7 @@
   $: clips;
 </script>
 
-<div class="card-outer" id={data.key}>
+<div class="card-outer" id={data.key} class:active={data.key == $cardInView}>
   <h2 style="display: flex; justify-content: space-between">
     <div>{data.artist}, <i>{data.title}</i></div>
     <div style="font-weight: 400; color: rgb(126 123 123)">Gaze Collection</div>
@@ -181,10 +176,11 @@
         <span>Visual</span>
       </div>
       <div class="filter-options">
-        <div class="filter selected time">
+        <div class="filter time" class:selected={viewMode == 'slice'}>
           {#if playStatus == 'pause'}
             <span
               on:click={() => {
+                viewMode = 'slice';
                 if (currFrame == sessionData.length - 1) {
                   currFrame = 0;
                 }
@@ -209,11 +205,29 @@
               min="0"
               max={sliderMax}
               step="1"
+              on:input={() => {
+                viewMode = 'slice';
+              }}
               bind:value={currFrame}
             />
           </span>
         </div>
-        <div class="filter clickable">Aggregate</div>
+        <div
+          class="filter clickable"
+          class:selected={viewMode == 'aggregate'}
+          on:click={() => {
+            playStatus = 'pause';
+            viewMode = 'aggregate';
+            contourMapBlur(
+              sessionData,
+              `#${data.key} .img-holder`,
+              `#${data.key}-contour`,
+              data.url
+            );
+          }}
+        >
+          Aggregate
+        </div>
       </div>
     </div>
   </div>
@@ -222,8 +236,14 @@
       class="img-holder"
       style="width: {width}; height: {ht}; max-width: {data.width}px; max-height: {data.height}px"
     >
+      <img src={data.url} style="filter: blur(6px); {styleSubstring}" />
+      <svg
+        class="contour"
+        class:active={viewMode == 'aggregate'}
+        id="{data.key}-contour"
+        style="width: 100%; height: 100%; position: absolute; top:0; left:0; z-index:10"
+      />
       {#if viewMode == 'slice'}
-        <img src={data.url} style="filter: blur(6px); {styleSubstring}" />
         <div bind:this={clipHolder}>
           {#each clips as clip}
             <img
@@ -233,8 +253,6 @@
             />
           {/each}
         </div>
-      {:else}
-        <svg id={data.key} bind:this={visSvg} style={styleSubstring} />
       {/if}
 
       <!-- <img src={data.url} style={styleSubstring} /> -->
@@ -243,6 +261,14 @@
 </div>
 
 <style>
+  .card-outer {
+    opacity: 0.2;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .card-outer.active {
+    opacity: 1;
+  }
+
   #contour-overlay {
     background: black;
   }
@@ -432,5 +458,14 @@
   .center {
     display: flex;
     justify-content: center;
+  }
+
+  .contour {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease-in-out;
+  }
+  .contour.active {
+    opacity: 1;
   }
 </style>

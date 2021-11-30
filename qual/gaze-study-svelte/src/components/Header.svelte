@@ -3,14 +3,18 @@
     gazerInitDone,
     gazerInitVideoDone,
     pageState,
+    modalState,
+    cardInView,
   } from '../stores/pageState';
+  import { loadedWorksKeys } from '../stores/artworkMetadata';
   import { hideGazerForLater } from '../utils/gazerUtils';
   import { slide, fade } from 'svelte/transition';
-
   import jump from '../utils/jumpSection';
 
-  //currSection
-  //nextSection
+  function jumpSection(diff) {
+    let newSectionIndex = $loadedWorksKeys.indexOf($cardInView) + diff;
+    jump(`${$loadedWorksKeys[newSectionIndex]}`);
+  }
 </script>
 
 <header>
@@ -30,9 +34,33 @@
     </div>
     <div class="header-right">
       <nav>
-        <div><span class="material-icons-round"> navigate_before </span></div>
-        <div><span class="material-icons-round"> navigate_next </span></div>
-        <div><span class="material-icons-round"> view_module </span></div>
+        <div>
+          <span
+            class="material-icons-round"
+            on:click={() => {
+              jumpSection(-1);
+            }}
+          >
+            navigate_before
+          </span>
+        </div>
+        <div>
+          <span
+            class="material-icons-round"
+            on:click={() => {
+              jumpSection(1);
+            }}
+          >
+            navigate_next
+          </span>
+        </div>
+        <div
+          on:click={() => {
+            modalState.set('nav');
+          }}
+        >
+          <span class="material-icons-round"> view_module </span>
+        </div>
       </nav>
       <div
         transition:fade

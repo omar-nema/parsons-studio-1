@@ -1,25 +1,29 @@
-import * as d3 from 'd3';
+import { prepareData } from './data.js';
 
-export async function contourMapBlur(data, containerAll, containerSvg, url) {
+document.addEventListener('DOMContentLoaded', async () => {
+  let data = await prepareData();
+  let dataSample = data[0].data;
+
+  contourMapBlur(dataSample, '.img-holder', '#contour-overlay');
+  //contour-overlay-container
+  //contour-overlay, imgContour inside
+});
+
+export async function contourMapBlur(data, containerAll, containerSvg) {
   console.log(data);
-  let bbox = d3.select(containerAll).node().getBoundingClientRect();
+  let bbox = d3
+    // .select('.contour-overlay-container')
+    .select(containerAll)
+    .node()
+    .getBoundingClientRect();
   let width = bbox.width;
   let height = 0.705 * width;
 
-  // let svg = d3
-  //   .select(containerAll)
-  //   .append('svg')
-  //   // .attr('viewBox', [0, 0, width, height])
-  //   .attr('preserveAspectRatio', 'xMinYMin meet')
-  //   .style('position', 'absolute')
-  //   .style('top', 0)
-  //   .style('left', 0)
-  //   .style('width', '100%')
-  //   .style('height', '100%')
-  //   .style('z-index', 10);
-
-  let svg = d3.select(containerSvg);
-
+  let svg = d3
+    //.select('#contour-overlay')
+    .select(containerSvg)
+    .attr('viewBox', [0, 0, width, height])
+    .attr('preserveAspectRatio', 'xMinYMin meet');
   let margin = 30;
 
   let xPos = d3
@@ -78,6 +82,6 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
     .attr('clip-path', (d, i) => `url(#path-${i})`)
     .attr('width', '100%')
     .attr('height', '100%')
-    .attr('xlink:href', url)
+    .attr('xlink:href', './assets/img/mehretuCropped.png')
     .style('filter', (d) => `blur(${blurScale(d.value)}px`);
 }

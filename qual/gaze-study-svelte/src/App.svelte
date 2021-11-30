@@ -1,11 +1,11 @@
 <script>
   //stores
-  import { pageState, screenWidth, screenHeight, gazerReady } from './stores/pageState';
+  import { pageState, screenWidth, screenHeight, gazerReady, modalState } from './stores/pageState';
   import screenSize from './utils/screenSize';
 
   //svelte
   import { onMount } from 'svelte';
-  import { crossfade , fade} from 'svelte/transition';
+  import { crossfade , fade } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
 
   //internal components
@@ -13,6 +13,7 @@
   import Header from './components/Header.svelte';
   import Patterns from './pages/Patterns.svelte';
   import Record from './pages/Record.svelte';
+  import ModalNav from './components/ModalNav.svelte'
 
   function updateScreenSize() {
     screenWidth.set(screenSize().windowW);
@@ -32,19 +33,20 @@
     updateScreenSize();
   };
 
-  let key = 'dude';
-  let key2 = 'dudeye'
+
 </script>
 
 
 <main>
   <Header />
   <div class="container">
+    {#if $modalState == 'nav'}
+      <ModalNav></ModalNav>
+    {/if}
     {#if $pageState == 'gallery'}
     <div transition:fade style="height: auto; width: auto">
       <Gallery />
     </div>
-     
     {:else if $pageState == 'record'}
     <div  transition:fade style="height: auto; width: auto">
       <Record />
@@ -119,9 +121,9 @@
     opacity: 0.85;
   }
   :global(h1) {
-    font-size: 32px;
+    font-size: 44px;
     font-weight: 400;
-    color: var(--color-accent);
+
   }
   :global(h2){
     font-weight: 500;
@@ -169,9 +171,10 @@
     max-width: 100%;
   }
 
-  .container {
+  :global(.container) {
     max-width: var(--content-width-max);
     width: var(--content-width-pct);
     margin: auto;
+    position: relative;
   }
 </style>

@@ -58,7 +58,7 @@
 
 <style>
   .container {
-    padding-top: 2%;
+    padding-top: 20px;
     width: 80%;
   }
   .modal {
@@ -79,7 +79,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
   }
   .btn {
     /* background: #ffffff75; */
@@ -100,6 +100,8 @@
     justify-content: space-between;
     flex-wrap: wrap;
     padding-bottom: 150px;
+    overflow: auto;
+    height: calc(100vh - 160px);
   }
   .artwork-holder {
     display: flex;

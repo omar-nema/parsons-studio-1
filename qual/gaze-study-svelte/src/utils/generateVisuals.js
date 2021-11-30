@@ -31,13 +31,20 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
 
   let blurScale = d3
     .scaleLinear()
-    .domain([maxCoords, maxCoords * 0.75, , maxCoords / 2, minCoords])
-    .range([0, 0.5, 2, 8]);
+    .domain([
+      maxCoords,
+      maxCoords * 0.75,
+      ,
+      maxCoords / 2,
+      maxCoords / 3,
+      minCoords,
+    ])
+    .range([0, 0.5, 1, 2, 8]);
 
   let opacityScale = d3
     .scaleLinear()
     .domain([maxCoords, minCoords])
-    .range([1, 0.85]);
+    .range([1, 1]);
 
   let clipPathG = svg
     .selectAll('.clipPathGroup')

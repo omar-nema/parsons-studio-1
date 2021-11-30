@@ -176,6 +176,18 @@
     max-width: 100%;
   }
 
+  :global(::-webkit-scrollbar) {
+  background: var(--bg-gradient);
+ 
+}
+
+:global(::-webkit-scrollbar-thumb) 
+  {
+  background: #88888870
+}
+
+
+
   :global(.container) {
     max-width: var(--content-width-max);
     width: var(--content-width-pct);

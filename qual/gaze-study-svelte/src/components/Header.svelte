@@ -162,7 +162,7 @@
 
   nav div,
   .btn-about {
-    background: #ffffff59;
+    background: #ffffff8f;
     border-radius: 5px;
     transition: background 0.15s ease-in-out;
   }

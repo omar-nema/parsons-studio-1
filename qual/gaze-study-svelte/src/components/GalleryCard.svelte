@@ -250,8 +250,10 @@
       style="width: {width}; height: {ht}; max-width: {data.width}px; max-height: {data.height}px"
     >
       <img
+        class:slice={viewMode == 'slice'}
+        class:agg={viewMode == 'aggregate'}
         src={data.url}
-        style="filter: opacity(0.9) blur(8px); {styleSubstring}"
+        style={styleSubstring}
       />
       <svg
         class="contour"
@@ -340,6 +342,12 @@
     display: inline-block;
     margin: auto;
     border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  img.agg {
+    filter: blur(8px);
+  }
+  img.slice {
+    filter: blur(6px);
   }
 
   .filter-group {
@@ -474,6 +482,7 @@
     max-width: 100%;
     margin: auto;
     opacity: 1;
+    transition: all 0.07s linear;
   }
 
   .center {

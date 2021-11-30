@@ -22450,11 +22450,11 @@ var app = (function () {
 
       let blurScale = linear()
         .domain([maxCoords, maxCoords * 0.75, , maxCoords / 2, minCoords])
-        .range([0, 0.5, 1, 2]);
+        .range([0, 0.5, 2, 8]);
 
       let opacityScale = linear()
         .domain([maxCoords, minCoords])
-        .range([1, 0.8]);
+        .range([1, 0.85]);
 
       svg
         .selectAll('.clipPathGroup')
@@ -22504,7 +22504,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (164:12) {#each sessionsArray as session}
+    // (169:12) {#each sessionsArray as session}
     function create_each_block_1(ctx) {
     	let option;
     	let t_value = /*sessions*/ ctx[4][/*session*/ ctx[38]].name + "";
@@ -22517,7 +22517,7 @@ var app = (function () {
     			t = text(t_value);
     			option.__value = option_value_value = /*session*/ ctx[38];
     			option.value = option.__value;
-    			add_location(option, file$c, 164, 14, 4772);
+    			add_location(option, file$c, 169, 14, 4918);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
@@ -22540,14 +22540,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(164:12) {#each sessionsArray as session}",
+    		source: "(169:12) {#each sessionsArray as session}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (199:10) {:else}
+    // (204:10) {:else}
     function create_else_block$3(ctx) {
     	let span;
     	let mounted;
@@ -22557,8 +22557,8 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "pause";
-    			attr_dev(span, "class", "material-icons-round md-14 clickable svelte-2xjcna");
-    			add_location(span, file$c, 199, 12, 5841);
+    			attr_dev(span, "class", "material-icons-round md-14 clickable svelte-nrt9z7");
+    			add_location(span, file$c, 204, 12, 5987);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -22580,14 +22580,14 @@ var app = (function () {
     		block,
     		id: create_else_block$3.name,
     		type: "else",
-    		source: "(199:10) {:else}",
+    		source: "(204:10) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (188:10) {#if playStatus == 'pause'}
+    // (193:10) {#if playStatus == 'pause'}
     function create_if_block_1$5(ctx) {
     	let span;
     	let mounted;
@@ -22597,8 +22597,8 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "play_arrow";
-    			attr_dev(span, "class", "material-icons-round md-14 clickable svelte-2xjcna");
-    			add_location(span, file$c, 188, 12, 5472);
+    			attr_dev(span, "class", "material-icons-round md-14 clickable svelte-nrt9z7");
+    			add_location(span, file$c, 193, 12, 5618);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -22620,14 +22620,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$5.name,
     		type: "if",
-    		source: "(188:10) {#if playStatus == 'pause'}",
+    		source: "(193:10) {#if playStatus == 'pause'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (257:6) {#if viewMode == 'slice'}
+    // (262:6) {#if viewMode == 'slice'}
     function create_if_block$5(ctx) {
     	let div;
     	let each_value = /*clips*/ ctx[7];
@@ -22646,7 +22646,7 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			add_location(div, file$c, 257, 8, 7458);
+    			add_location(div, file$c, 262, 8, 7604);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -22693,14 +22693,14 @@ var app = (function () {
     		block,
     		id: create_if_block$5.name,
     		type: "if",
-    		source: "(257:6) {#if viewMode == 'slice'}",
+    		source: "(262:6) {#if viewMode == 'slice'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (259:10) {#each clips as clip}
+    // (264:10) {#each clips as clip}
     function create_each_block$4(ctx) {
     	let img;
     	let img_src_value;
@@ -22708,12 +22708,12 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			img = element("img");
-    			attr_dev(img, "class", "clip svelte-2xjcna");
+    			attr_dev(img, "class", "clip svelte-nrt9z7");
     			set_style(img, "clip-path", "circle(" + /*clip*/ ctx[35].r + "% at " + /*clip*/ ctx[35].ctrx + "% " + /*clip*/ ctx[35].ctry + "%)");
     			set_style(img, "filter", "blur(" + /*clip*/ ctx[35].blur + "px)");
     			set_style(img, "opacity", "$" + /*clip*/ ctx[35].opacity);
     			if (!src_url_equal(img.src, img_src_value = /*data*/ ctx[0].url)) attr_dev(img, "src", img_src_value);
-    			add_location(img, file$c, 259, 12, 7533);
+    			add_location(img, file$c, 264, 12, 7679);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, img, anchor);
@@ -22744,7 +22744,7 @@ var app = (function () {
     		block,
     		id: create_each_block$4.name,
     		type: "each",
-    		source: "(259:10) {#each clips as clip}",
+    		source: "(264:10) {#each clips as clip}",
     		ctx
     	});
 
@@ -22755,14 +22755,14 @@ var app = (function () {
     	let div15;
     	let h2;
     	let div0;
-    	let t0_value = /*data*/ ctx[0].artist + "";
-    	let t0;
     	let t1;
-    	let i;
-    	let t2_value = /*data*/ ctx[0].title + "";
+    	let div1;
+    	let t2_value = /*data*/ ctx[0].artist + "";
     	let t2;
     	let t3;
-    	let div1;
+    	let i;
+    	let t4_value = /*data*/ ctx[0].title + "";
+    	let t4;
     	let t5;
     	let div12;
     	let div6;
@@ -22829,13 +22829,13 @@ var app = (function () {
     			div15 = element("div");
     			h2 = element("h2");
     			div0 = element("div");
-    			t0 = text(t0_value);
-    			t1 = text(", ");
-    			i = element("i");
-    			t2 = text(t2_value);
-    			t3 = space();
+    			div0.textContent = "Gaze Collection";
+    			t1 = space();
     			div1 = element("div");
-    			div1.textContent = "Gaze Collection";
+    			t2 = text(t2_value);
+    			t3 = text(", ");
+    			i = element("i");
+    			t4 = text(t4_value);
     			t5 = space();
     			div12 = element("div");
     			div6 = element("div");
@@ -22889,70 +22889,71 @@ var app = (function () {
     			svg = svg_element("svg");
     			t26 = space();
     			if (if_block1) if_block1.c();
-    			attr_dev(i, "class", "svelte-2xjcna");
-    			add_location(i, file$c, 135, 24, 3598);
-    			add_location(div0, file$c, 135, 4, 3578);
-    			set_style(div1, "font-weight", "400");
-    			set_style(div1, "color", "rgb(126 123 123)");
-    			add_location(div1, file$c, 136, 4, 3629);
+    			set_style(div0, "font-weight", "400");
+    			set_style(div0, "color", "rgb(126 123 123)");
+    			set_style(div0, "margin-right", "15px");
+    			add_location(div0, file$c, 135, 4, 3583);
+    			attr_dev(i, "class", "svelte-nrt9z7");
+    			add_location(i, file$c, 138, 24, 3719);
+    			add_location(div1, file$c, 138, 4, 3699);
     			set_style(h2, "display", "flex");
-    			set_style(h2, "justify-content", "space-between");
-    			attr_dev(h2, "class", "svelte-2xjcna");
-    			add_location(h2, file$c, 134, 2, 3514);
-    			attr_dev(span0, "class", "material-icons-round md-14 svelte-2xjcna");
-    			add_location(span0, file$c, 141, 8, 3828);
-    			add_location(span1, file$c, 142, 8, 3892);
-    			attr_dev(div2, "class", "label svelte-2xjcna");
-    			add_location(div2, file$c, 140, 6, 3799);
-    			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-2xjcna");
+    			set_style(h2, "align-items", "center");
+    			attr_dev(h2, "class", "svelte-nrt9z7");
+    			add_location(h2, file$c, 134, 2, 3529);
+    			attr_dev(span0, "class", "material-icons-round md-14 svelte-nrt9z7");
+    			add_location(span0, file$c, 146, 8, 3974);
+    			add_location(span1, file$c, 147, 8, 4038);
+    			attr_dev(div2, "class", "label svelte-nrt9z7");
+    			add_location(div2, file$c, 145, 6, 3945);
+    			attr_dev(span2, "class", "material-icons-round md-18 nav clickable svelte-nrt9z7");
     			toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[13] == 0);
-    			add_location(span2, file$c, 146, 10, 4012);
-    			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-2xjcna");
+    			add_location(span2, file$c, 151, 10, 4158);
+    			attr_dev(span3, "class", "material-icons-round md-18 nav clickable svelte-nrt9z7");
     			toggle_class(span3, "disabled", /*currSessionIndex*/ ctx[13] == /*sessionsArray*/ ctx[12].length - 1);
-    			add_location(span3, file$c, 154, 10, 4322);
-    			attr_dev(select, "class", "clickable svelte-2xjcna");
+    			add_location(span3, file$c, 159, 10, 4468);
+    			attr_dev(select, "class", "clickable svelte-nrt9z7");
     			if (/*currSessionKey*/ ctx[1] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[18].call(select));
-    			add_location(select, file$c, 162, 10, 4656);
-    			attr_dev(div3, "class", "filter selected svelte-2xjcna");
-    			add_location(div3, file$c, 145, 8, 3971);
-    			attr_dev(div4, "class", "filter clickable svelte-2xjcna");
-    			add_location(div4, file$c, 168, 8, 4897);
-    			attr_dev(div5, "class", "filter-options svelte-2xjcna");
-    			add_location(div5, file$c, 144, 6, 3933);
-    			attr_dev(div6, "class", "viewer-filter filter-group svelte-2xjcna");
-    			add_location(div6, file$c, 139, 4, 3750);
-    			attr_dev(span4, "class", "material-icons-round md-14 svelte-2xjcna");
-    			add_location(span4, file$c, 182, 8, 5214);
-    			add_location(span5, file$c, 183, 8, 5278);
-    			attr_dev(div7, "class", "label svelte-2xjcna");
-    			add_location(div7, file$c, 181, 6, 5185);
+    			add_location(select, file$c, 167, 10, 4802);
+    			attr_dev(div3, "class", "filter selected svelte-nrt9z7");
+    			add_location(div3, file$c, 150, 8, 4117);
+    			attr_dev(div4, "class", "filter clickable svelte-nrt9z7");
+    			add_location(div4, file$c, 173, 8, 5043);
+    			attr_dev(div5, "class", "filter-options svelte-nrt9z7");
+    			add_location(div5, file$c, 149, 6, 4079);
+    			attr_dev(div6, "class", "viewer-filter filter-group svelte-nrt9z7");
+    			add_location(div6, file$c, 144, 4, 3896);
+    			attr_dev(span4, "class", "material-icons-round md-14 svelte-nrt9z7");
+    			add_location(span4, file$c, 187, 8, 5360);
+    			add_location(span5, file$c, 188, 8, 5424);
+    			attr_dev(div7, "class", "label svelte-nrt9z7");
+    			add_location(div7, file$c, 186, 6, 5331);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "id", "slider");
     			attr_dev(input, "name", "slider");
     			attr_dev(input, "min", "0");
     			attr_dev(input, "max", /*sliderMax*/ ctx[14]);
     			attr_dev(input, "step", "1");
-    			attr_dev(input, "class", "svelte-2xjcna");
-    			add_location(input, file$c, 208, 12, 6093);
+    			attr_dev(input, "class", "svelte-nrt9z7");
+    			add_location(input, file$c, 213, 12, 6239);
     			attr_dev(span6, "id", "slider-holder");
-    			attr_dev(span6, "class", "svelte-2xjcna");
-    			add_location(span6, file$c, 207, 10, 6054);
-    			attr_dev(div8, "class", "filter time svelte-2xjcna");
+    			attr_dev(span6, "class", "svelte-nrt9z7");
+    			add_location(span6, file$c, 212, 10, 6200);
+    			attr_dev(div8, "class", "filter time svelte-nrt9z7");
     			toggle_class(div8, "selected", /*viewMode*/ ctx[5] == 'slice');
-    			add_location(div8, file$c, 186, 8, 5357);
-    			attr_dev(div9, "class", "filter clickable svelte-2xjcna");
+    			add_location(div8, file$c, 191, 8, 5503);
+    			attr_dev(div9, "class", "filter clickable svelte-nrt9z7");
     			toggle_class(div9, "selected", /*viewMode*/ ctx[5] == 'aggregate');
-    			add_location(div9, file$c, 222, 8, 6448);
-    			attr_dev(div10, "class", "filter-options svelte-2xjcna");
-    			add_location(div10, file$c, 185, 6, 5319);
-    			attr_dev(div11, "class", "visual-filter filter-group svelte-2xjcna");
-    			add_location(div11, file$c, 180, 4, 5137);
-    			attr_dev(div12, "class", "card-filters svelte-2xjcna");
-    			add_location(div12, file$c, 138, 2, 3718);
+    			add_location(div9, file$c, 227, 8, 6594);
+    			attr_dev(div10, "class", "filter-options svelte-nrt9z7");
+    			add_location(div10, file$c, 190, 6, 5465);
+    			attr_dev(div11, "class", "visual-filter filter-group svelte-nrt9z7");
+    			add_location(div11, file$c, 185, 4, 5283);
+    			attr_dev(div12, "class", "card-filters svelte-nrt9z7");
+    			add_location(div12, file$c, 143, 2, 3864);
     			if (!src_url_equal(img.src, img_src_value = /*data*/ ctx[0].url)) attr_dev(img, "src", img_src_value);
-    			attr_dev(img, "style", img_style_value = "filter: opacity(0.9) blur(3px); " + /*styleSubstring*/ ctx[11]);
-    			add_location(img, file$c, 246, 6, 7093);
-    			attr_dev(svg, "class", "contour svelte-2xjcna");
+    			attr_dev(img, "style", img_style_value = "filter: opacity(0.9) blur(8px); " + /*styleSubstring*/ ctx[11]);
+    			add_location(img, file$c, 251, 6, 7239);
+    			attr_dev(svg, "class", "contour svelte-nrt9z7");
     			attr_dev(svg, "id", svg_id_value = "" + (/*data*/ ctx[0].key + "-contour"));
     			set_style(svg, "width", "100%");
     			set_style(svg, "height", "100%");
@@ -22961,19 +22962,19 @@ var app = (function () {
     			set_style(svg, "left", "0");
     			set_style(svg, "z-index", "10");
     			toggle_class(svg, "active", /*viewMode*/ ctx[5] == 'aggregate');
-    			add_location(svg, file$c, 250, 6, 7205);
-    			attr_dev(div13, "class", "img-holder svelte-2xjcna");
+    			add_location(svg, file$c, 255, 6, 7351);
+    			attr_dev(div13, "class", "img-holder svelte-nrt9z7");
     			set_style(div13, "width", /*width*/ ctx[9]);
     			set_style(div13, "height", /*ht*/ ctx[10]);
     			set_style(div13, "max-width", /*data*/ ctx[0].width + "px");
     			set_style(div13, "max-height", /*data*/ ctx[0].height + "px");
-    			add_location(div13, file$c, 242, 4, 6948);
-    			attr_dev(div14, "class", "center svelte-2xjcna");
-    			add_location(div14, file$c, 241, 2, 6922);
-    			attr_dev(div15, "class", "card-outer svelte-2xjcna");
+    			add_location(div13, file$c, 247, 4, 7094);
+    			attr_dev(div14, "class", "center svelte-nrt9z7");
+    			add_location(div14, file$c, 246, 2, 7068);
+    			attr_dev(div15, "class", "card-outer svelte-nrt9z7");
     			attr_dev(div15, "id", div15_id_value = /*data*/ ctx[0].key);
     			toggle_class(div15, "active", /*data*/ ctx[0].key == /*$cardInView*/ ctx[15]);
-    			add_location(div15, file$c, 133, 0, 3433);
+    			add_location(div15, file$c, 133, 0, 3448);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -22982,12 +22983,12 @@ var app = (function () {
     			insert_dev(target, div15, anchor);
     			append_dev(div15, h2);
     			append_dev(h2, div0);
-    			append_dev(div0, t0);
-    			append_dev(div0, t1);
-    			append_dev(div0, i);
-    			append_dev(i, t2);
-    			append_dev(h2, t3);
+    			append_dev(h2, t1);
     			append_dev(h2, div1);
+    			append_dev(div1, t2);
+    			append_dev(div1, t3);
+    			append_dev(div1, i);
+    			append_dev(i, t4);
     			append_dev(div15, t5);
     			append_dev(div15, div12);
     			append_dev(div12, div6);
@@ -23052,8 +23053,8 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*data*/ 1 && t0_value !== (t0_value = /*data*/ ctx[0].artist + "")) set_data_dev(t0, t0_value);
-    			if (dirty[0] & /*data*/ 1 && t2_value !== (t2_value = /*data*/ ctx[0].title + "")) set_data_dev(t2, t2_value);
+    			if (dirty[0] & /*data*/ 1 && t2_value !== (t2_value = /*data*/ ctx[0].artist + "")) set_data_dev(t2, t2_value);
+    			if (dirty[0] & /*data*/ 1 && t4_value !== (t4_value = /*data*/ ctx[0].title + "")) set_data_dev(t4, t4_value);
 
     			if (dirty[0] & /*currSessionIndex*/ 8192) {
     				toggle_class(span2, "disabled", /*currSessionIndex*/ ctx[13] == 0);
@@ -23123,7 +23124,7 @@ var app = (function () {
     				attr_dev(img, "src", img_src_value);
     			}
 
-    			if (dirty[0] & /*styleSubstring*/ 2048 && img_style_value !== (img_style_value = "filter: opacity(0.9) blur(3px); " + /*styleSubstring*/ ctx[11])) {
+    			if (dirty[0] & /*styleSubstring*/ 2048 && img_style_value !== (img_style_value = "filter: opacity(0.9) blur(8px); " + /*styleSubstring*/ ctx[11])) {
     				attr_dev(img, "style", img_style_value);
     			}
 
@@ -23208,7 +23209,10 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('GalleryCard', slots, []);
     	let { data } = $$props;
-    	let maxW = Math.min($screenWidth - 500, 1000), maxH = $screenHeight - 300;
+
+    	let maxW = Math.min($screenWidth - 500, 1000),
+    		maxH = Math.max($screenHeight - 300, 500);
+
     	let width = 'auto', ht = 'auto', styleSubstring = '';
 
     	if (data.dimWidthToHt < 1) {
@@ -23770,9 +23774,17 @@ var app = (function () {
       return opts;
     };
 
+    const setGlobalOptions = options => {
+    	_.extend(defaultOptions, options || {});
+    };
+
     const scrollTo = options => {
       return _scrollTo(proceedOptions(options));
     };
+
+    setGlobalOptions({
+      offset: -80,
+    });
 
     var jump = (section) => {
       let el = document.querySelector('#' + section);
@@ -27029,7 +27041,7 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "Gaze";
-    			attr_dev(span, "class", "header-sub accent svelte-e8lsfj");
+    			attr_dev(span, "class", "header-sub accent svelte-10qah7s");
     			toggle_class(span, "active", /*$pageState*/ ctx[0] === 'record');
     			add_location(span, file$a, 29, 8, 867);
     		},
@@ -27065,7 +27077,7 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "Gallery";
-    			attr_dev(span, "class", "header-sub accent svelte-e8lsfj");
+    			attr_dev(span, "class", "header-sub accent svelte-10qah7s");
     			toggle_class(span, "active", /*$pageState*/ ctx[0] === 'gallery');
     			add_location(span, file$a, 25, 8, 734);
     		},
@@ -27128,21 +27140,21 @@ var app = (function () {
     			t5 = space();
     			div3 = element("div");
     			div3.textContent = "About";
-    			attr_dev(span0, "class", "material-icons-round svelte-e8lsfj");
+    			attr_dev(span0, "class", "material-icons-round svelte-10qah7s");
     			add_location(span0, file$a, 38, 12, 1111);
-    			attr_dev(div0, "class", "svelte-e8lsfj");
+    			attr_dev(div0, "class", "svelte-10qah7s");
     			add_location(div0, file$a, 37, 10, 1092);
-    			attr_dev(span1, "class", "material-icons-round svelte-e8lsfj");
+    			attr_dev(span1, "class", "material-icons-round svelte-10qah7s");
     			add_location(span1, file$a, 48, 12, 1361);
-    			attr_dev(div1, "class", "svelte-e8lsfj");
+    			attr_dev(div1, "class", "svelte-10qah7s");
     			add_location(div1, file$a, 47, 10, 1342);
-    			attr_dev(span2, "class", "material-icons-round svelte-e8lsfj");
+    			attr_dev(span2, "class", "material-icons-round svelte-10qah7s");
     			add_location(span2, file$a, 62, 12, 1705);
-    			attr_dev(div2, "class", "svelte-e8lsfj");
+    			attr_dev(div2, "class", "svelte-10qah7s");
     			add_location(div2, file$a, 57, 10, 1589);
-    			attr_dev(nav, "class", "svelte-e8lsfj");
+    			attr_dev(nav, "class", "svelte-10qah7s");
     			add_location(nav, file$a, 36, 8, 1075);
-    			attr_dev(div3, "class", "btn clickable active btn-about svelte-e8lsfj");
+    			attr_dev(div3, "class", "btn clickable active btn-about svelte-10qah7s");
     			add_location(div3, file$a, 65, 8, 1804);
     		},
     		m: function mount(target, anchor) {
@@ -27258,21 +27270,21 @@ var app = (function () {
     			span3 = element("span");
     			span3.textContent = "Back to Gallery";
     			add_location(span0, file$a, 22, 6, 625);
-    			attr_dev(span1, "class", "divider svelte-e8lsfj");
+    			attr_dev(span1, "class", "divider svelte-10qah7s");
     			add_location(span1, file$a, 23, 6, 657);
     			attr_dev(div0, "class", "header-left");
     			add_location(div0, file$a, 21, 4, 592);
-    			attr_dev(span2, "class", "material-icons-round svelte-e8lsfj");
+    			attr_dev(span2, "class", "material-icons-round svelte-10qah7s");
     			add_location(span2, file$a, 78, 8, 2223);
     			add_location(span3, file$a, 80, 8, 2289);
-    			attr_dev(div1, "class", "btn clickable svelte-e8lsfj");
+    			attr_dev(div1, "class", "btn clickable svelte-10qah7s");
     			toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'record');
     			add_location(div1, file$a, 67, 6, 1896);
-    			attr_dev(div2, "class", "header-right svelte-e8lsfj");
+    			attr_dev(div2, "class", "header-right svelte-10qah7s");
     			add_location(div2, file$a, 34, 4, 1002);
-    			attr_dev(div3, "class", "header-content svelte-e8lsfj");
+    			attr_dev(div3, "class", "header-content svelte-10qah7s");
     			add_location(div3, file$a, 20, 2, 558);
-    			attr_dev(header, "class", "svelte-e8lsfj");
+    			attr_dev(header, "class", "svelte-10qah7s");
     			add_location(header, file$a, 19, 0, 546);
     		},
     		l: function claim(nodes) {
@@ -30255,18 +30267,18 @@ var app = (function () {
     			t3 = text(t3_value);
     			t4 = space();
     			if (!src_url_equal(img.src, img_src_value = /*artwork*/ ctx[5].url)) attr_dev(img, "src", img_src_value);
-    			attr_dev(img, "class", "svelte-11mbes6");
+    			attr_dev(img, "class", "svelte-14ukuxm");
     			add_location(img, file$1, 46, 12, 1210);
-    			attr_dev(div0, "class", "img-holder svelte-11mbes6");
+    			attr_dev(div0, "class", "img-holder svelte-14ukuxm");
     			add_location(div0, file$1, 45, 10, 1172);
     			add_location(strong, file$1, 49, 15, 1306);
-    			attr_dev(p0, "class", "svelte-11mbes6");
+    			attr_dev(p0, "class", "svelte-14ukuxm");
     			add_location(p0, file$1, 49, 12, 1303);
-    			attr_dev(p1, "class", "svelte-11mbes6");
+    			attr_dev(p1, "class", "svelte-14ukuxm");
     			add_location(p1, file$1, 50, 12, 1356);
-    			attr_dev(div1, "class", "txt-holder svelte-11mbes6");
+    			attr_dev(div1, "class", "txt-holder svelte-14ukuxm");
     			add_location(div1, file$1, 48, 10, 1265);
-    			attr_dev(div2, "class", "artwork-holder clickable svelte-11mbes6");
+    			attr_dev(div2, "class", "artwork-holder clickable svelte-14ukuxm");
     			add_location(div2, file$1, 39, 8, 1023);
     		},
     		m: function mount(target, anchor) {
@@ -30357,17 +30369,17 @@ var app = (function () {
     			}
 
     			add_location(h1, file$1, 26, 6, 695);
-    			attr_dev(span, "class", "material-icons-round svelte-11mbes6");
+    			attr_dev(span, "class", "material-icons-round svelte-14ukuxm");
     			add_location(span, file$1, 33, 8, 855);
-    			attr_dev(div0, "class", "btn clickable svelte-11mbes6");
+    			attr_dev(div0, "class", "btn clickable svelte-14ukuxm");
     			add_location(div0, file$1, 27, 6, 729);
-    			attr_dev(div1, "class", "cont-header svelte-11mbes6");
+    			attr_dev(div1, "class", "cont-header svelte-14ukuxm");
     			add_location(div1, file$1, 25, 4, 662);
-    			attr_dev(div2, "class", "artwork-container svelte-11mbes6");
+    			attr_dev(div2, "class", "artwork-container svelte-14ukuxm");
     			add_location(div2, file$1, 37, 4, 938);
-    			attr_dev(div3, "class", "container svelte-11mbes6");
+    			attr_dev(div3, "class", "container svelte-14ukuxm");
     			add_location(div3, file$1, 24, 2, 633);
-    			attr_dev(div4, "class", "modal svelte-11mbes6");
+    			attr_dev(div4, "class", "modal svelte-14ukuxm");
     			add_location(div4, file$1, 23, 0, 569);
     		},
     		l: function claim(nodes) {
@@ -30522,9 +30534,11 @@ var app = (function () {
     }
 
     /* src\App.svelte generated by Svelte v3.44.0 */
+
+    const { document: document_1 } = globals;
     const file = "src\\App.svelte";
 
-    // (43:4) {#if $modalState == 'nav'}
+    // (51:4) {#if $modalState == 'nav'}
     function create_if_block_2(ctx) {
     	let modalnav;
     	let current;
@@ -30556,14 +30570,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(43:4) {#if $modalState == 'nav'}",
+    		source: "(51:4) {#if $modalState == 'nav'}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (50:37) 
+    // (58:37) 
     function create_if_block_1(ctx) {
     	let div;
     	let record;
@@ -30577,7 +30591,7 @@ var app = (function () {
     			create_component(record.$$.fragment);
     			set_style(div, "height", "auto");
     			set_style(div, "width", "auto");
-    			add_location(div, file, 50, 4, 1201);
+    			add_location(div, file, 58, 4, 1385);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -30612,14 +30626,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(50:37) ",
+    		source: "(58:37) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (46:4) {#if $pageState == 'gallery'}
+    // (54:4) {#if $pageState == 'gallery'}
     function create_if_block(ctx) {
     	let div;
     	let gallery;
@@ -30633,7 +30647,7 @@ var app = (function () {
     			create_component(gallery.$$.fragment);
     			set_style(div, "height", "auto");
     			set_style(div, "width", "auto");
-    			add_location(div, file, 46, 4, 1074);
+    			add_location(div, file, 54, 4, 1258);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -30668,7 +30682,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(46:4) {#if $pageState == 'gallery'}",
+    		source: "(54:4) {#if $pageState == 'gallery'}",
     		ctx
     	});
 
@@ -30718,13 +30732,13 @@ var app = (function () {
     			html = element("html");
     			script = element("script");
     			attr_dev(div, "class", "container");
-    			add_location(div, file, 41, 2, 943);
-    			add_location(main, file, 39, 0, 921);
-    			document.title = "How We Gaze";
+    			add_location(div, file, 49, 2, 1127);
+    			add_location(main, file, 47, 0, 1105);
+    			document_1.title = "How We Gaze";
     			attr_dev(html, "lang", "en");
-    			add_location(html, file, 59, 1, 1358);
+    			add_location(html, file, 67, 1, 1542);
     			if (!src_url_equal(script.src, script_src_value = "./assets/webgazer.min.js")) attr_dev(script, "src", script_src_value);
-    			add_location(script, file, 60, 2, 1381);
+    			add_location(script, file, 68, 2, 1565);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -30742,8 +30756,8 @@ var app = (function () {
     			}
 
     			insert_dev(target, t2, anchor);
-    			append_dev(document.head, html);
-    			append_dev(document.head, script);
+    			append_dev(document_1.head, html);
+    			append_dev(document_1.head, script);
     			current = true;
 
     			if (!mounted) {
@@ -30900,6 +30914,18 @@ var app = (function () {
     		$modalState,
     		$pageState
     	});
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*$modalState*/ 1) {
+    			{
+    				if ($modalState) {
+    					document.querySelector('body').style.overflow = 'hidden';
+    				} else {
+    					document.querySelector('body').style.overflow = 'auto';
+    				}
+    			}
+    		}
+    	};
 
     	return [$modalState, $pageState, load_handler];
     }

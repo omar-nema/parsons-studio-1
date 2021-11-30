@@ -33,6 +33,14 @@
     updateScreenSize();
   };
 
+  $: {
+    if ($modalState){
+      document.querySelector('body').style.overflow = 'hidden';
+    } else {
+      document.querySelector('body').style.overflow = 'auto';     
+    }
+  }
+
 
 </script>
 
@@ -74,33 +82,17 @@
     box-sizing: border-box;
     font-family: 'Lora';
   }
-  :global(body) {
-    /* background: #272729; */
-    /* background: #e1e1e1; */
-    margin: 0;
-    padding: 0;
-    /* color: #efefef; */
-    color: black;
-    font-weight: 400;
-    height: auto;
-    background:linear-gradient( 180deg, rgb(240, 240, 240) 0%, rgba(0,212,255,0.1) 100%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    transition: background 1s ease-in-out;
-  }
+ 
   :global(body.gaze){
     background: linear-gradient( 180deg, rgb(240, 240, 240) 0%, rgba(0, 212, 255, 0.03) 100%);
   }
   :global(:root) {
-    /* --color-accent: #cfd494; */
+    --bg-gradient: linear-gradient( 180deg, rgb(240, 240, 240) 0%, rgba(0,212,255,0.1) 100%);
     --color-accent: #2196f3;
     --color-accent-faded: #2196f385;
     --color-gray-faded: #a0a0a0;
-    /* --bg-contrast: #585656; */
     --bg-contrast: #fbfbfb;
-    /* --bg-contrast-darker: #4b4747; */
     --bg-contrast-darker: #f5f5f5;
-    /* --bg-contrast-darkest: #232020; */
     --bg-contrast-darkest: #c3cbcc;
     --content-width-pct: 92%;
     --content-width-max: 1300px;
@@ -109,12 +101,21 @@
     --header-ht: 50px;
     --color-pos: #02bf86;
     --color-neg: #e9412b;
-    /* --color-accent-sec: lightgray; */
     --color-accent-sec: #7c7777;
     --box-shadow-med:  0 0 2px 2px rgba(0, 0, 0, 0.1);
     --box-shadow-light:  0 0 1px 1px rgba(0, 0, 0, 0.07); 
-  
     --box-shadow-light-inverse:  0 -1px 3px 0px rgb(0 0 0 / 10%);        
+  }
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-weight: 400;
+    height: auto;
+    background: var(--bg-gradient);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background 1s ease-in-out;
   }
   :global(.clickable) {
     cursor: pointer;
@@ -124,7 +125,7 @@
     opacity: 0.85;
   }
   :global(h1) {
-    font-size: 44px;
+    font-size: 40px;
     font-weight: 400;
 
   }

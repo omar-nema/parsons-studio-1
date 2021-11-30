@@ -13,7 +13,7 @@
   //CUSTOM WIDTH AND HEIGHT CALC
   export let data;
   let maxW = Math.min($screenWidth - 500, 1000),
-    maxH = $screenHeight - 300;
+    maxH = Math.max($screenHeight - 300, 500);
   let width = 'auto',
     ht = 'auto',
     styleSubstring = '';
@@ -132,9 +132,14 @@
 </script>
 
 <div class="card-outer" id={data.key} class:active={data.key == $cardInView}>
-  <h2 style="display: flex; justify-content: space-between">
+  <h2 style="display: flex; align-items: center;">
+    <div style="font-weight: 400; color: rgb(126 123 123);margin-right: 15px;">
+      Gaze Collection
+    </div>
     <div>{data.artist}, <i>{data.title}</i></div>
-    <div style="font-weight: 400; color: rgb(126 123 123)">Gaze Collection</div>
+    <!-- <span style="margin: 0 15px; font-size: 18px;color: rgb(126 123 123)"
+      >-</span
+    > -->
   </h2>
   <div class="card-filters">
     <div class="viewer-filter  filter-group">
@@ -246,7 +251,7 @@
     >
       <img
         src={data.url}
-        style="filter: opacity(0.9) blur(3px); {styleSubstring}"
+        style="filter: opacity(0.9) blur(8px); {styleSubstring}"
       />
       <svg
         class="contour"
@@ -286,6 +291,10 @@
   .card-filters {
     display: flex;
     align-items: center;
+    font-weight: 500;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-bottom: 30px;
   }
 
   p {
@@ -311,7 +320,7 @@
   }
 
   .card-outer {
-    max-width: min(80vw, 1100px);
+    max-width: min(75vw, 1100px);
     width: 100%;
     background: var(--bg-contrast);
     padding: 30px 40px;
@@ -334,9 +343,7 @@
   }
 
   .filter-group {
-    min-width: 300px;
-    width: 50%;
-    margin-bottom: 30px;
+    min-width: 350px;
     font-size: 14px;
     padding: 10px 0;
   }
@@ -350,17 +357,17 @@
     border-radius: 5px;
     overflow: hidden;
   }
-  .label {
-    margin-right: 10px;
-  }
+
   select {
     background: none;
     border: none;
     padding: 0;
     margin: 0;
-    width: 130px;
+    width: 100%;
     text-align: center;
     text-transform: capitalize;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
   }
   /* select option {
     color: white;
@@ -398,6 +405,9 @@
   .disabled {
     opacity: 0.2;
     pointer-events: none;
+  }
+  .viewer-filter {
+    margin-right: 15px;
   }
 
   input {

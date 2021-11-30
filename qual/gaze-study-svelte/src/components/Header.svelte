@@ -86,10 +86,8 @@
 
 <style>
   header {
-    /* background: #272729db; */
-    /* background: #e1e1e1b5; */
     height: var(--header-ht);
-    font-weight: 600;
+    font-weight: 500;
     backdrop-filter: blur(5px);
     z-index: 1;
     background-color: none;

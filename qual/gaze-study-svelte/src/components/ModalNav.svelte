@@ -58,7 +58,7 @@
 
 <style>
   .container {
-    padding-top: 5%;
+    padding-top: 2%;
     width: 80%;
   }
   .modal {
@@ -68,9 +68,9 @@
     /* top: var(--header-ht); */
     top: 0;
     left: 0;
-    background: #ecf4f6ed;
+    background: var(--bg-gradient);
     z-index: 100;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(15px);
     overflow: auto;
   }
 
@@ -82,22 +82,24 @@
     margin-bottom: 50px;
   }
   .btn {
-    background: #ffffff75;
+    /* background: #ffffff75; */
     border-radius: 5px;
     transition: background 0.15s ease-in-out;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 4px 8px;
   }
   .material-icons-round {
     font-size: 40px;
-    color: var(--color-accent);
+    color: black;
   }
 
   .artwork-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    padding-bottom: 150px;
   }
   .artwork-holder {
     display: flex;

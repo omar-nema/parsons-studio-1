@@ -66,6 +66,67 @@ let artworkData = {
     dimWidthToHt: 1691 / 1704,
     origLink: 'https://www.si.edu/object/ordinary-picture:hmsg_66.2472',
   },
+
+  hockney: {
+    key: 'hockney',
+    artist: 'David Hockney',
+    title: 'Ordinary Picture',
+    url: './assets/img/hockney.png',
+    sessionData: {},
+    width: 1691,
+    height: 1704,
+    dimWidthToHt: 1691 / 1704,
+    origLink: 'https://www.si.edu/object/ordinary-picture:hmsg_66.2472',
+  },
+
+  ayeti: {
+    key: 'ayeti',
+    artist: 'Fetih Ayeti',
+    title: 'untitled',
+    url: './assets/img/ayeti.jpg',
+    sessionData: {},
+    width: 734,
+    height: 1024,
+    dimWidthToHt: 734 / 1024,
+    origLink: 'https://collection.cooperhewitt.org/objects/18394565/',
+  },
+
+  ayeti: {
+    key: 'ayeti',
+    artist: 'Fetih Ayeti',
+    title: 'untitled',
+    url: './assets/img/ayeti.jpg',
+    sessionData: {},
+    width: 734,
+    height: 1024,
+    dimWidthToHt: 734 / 1024,
+    origLink: 'https://collection.cooperhewitt.org/objects/18394565/',
+  },
+
+  riley: {
+    key: 'riley',
+    artist: 'Bridget Riley',
+    title: 'Untitled',
+    url: './assets/img/riley.png',
+    sessionData: {},
+    width: 1080,
+    height: 1315,
+    dimWidthToHt: 1080 / 1315,
+    origLink: 'https://www.si.edu/object/bridget-riley:chndm_1976-25-5',
+  },
+
+  lewitt: {
+    key: 'lewitt',
+    artist: 'Sol Lewitt',
+    title: 'Lines from Points to Points',
+    url: './assets/img/lewitt.png',
+    sessionData: {},
+    width: 1722,
+    height: 1704,
+    dimWidthToHt: 1722 / 1704,
+    origLink:
+      'https://www.si.edu/object/lines-points-points-portfolio-location-lines:saam_1990.60.2',
+  },
 };
 
 export let artworkMetadata = writable(artworkData);

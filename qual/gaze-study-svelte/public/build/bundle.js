@@ -23630,6 +23630,67 @@ var app = (function () {
         dimWidthToHt: 1691 / 1704,
         origLink: 'https://www.si.edu/object/ordinary-picture:hmsg_66.2472',
       },
+
+      hockney: {
+        key: 'hockney',
+        artist: 'David Hockney',
+        title: 'Ordinary Picture',
+        url: './assets/img/hockney.png',
+        sessionData: {},
+        width: 1691,
+        height: 1704,
+        dimWidthToHt: 1691 / 1704,
+        origLink: 'https://www.si.edu/object/ordinary-picture:hmsg_66.2472',
+      },
+
+      ayeti: {
+        key: 'ayeti',
+        artist: 'Fetih Ayeti',
+        title: 'untitled',
+        url: './assets/img/ayeti.jpg',
+        sessionData: {},
+        width: 734,
+        height: 1024,
+        dimWidthToHt: 734 / 1024,
+        origLink: 'https://collection.cooperhewitt.org/objects/18394565/',
+      },
+
+      ayeti: {
+        key: 'ayeti',
+        artist: 'Fetih Ayeti',
+        title: 'untitled',
+        url: './assets/img/ayeti.jpg',
+        sessionData: {},
+        width: 734,
+        height: 1024,
+        dimWidthToHt: 734 / 1024,
+        origLink: 'https://collection.cooperhewitt.org/objects/18394565/',
+      },
+
+      riley: {
+        key: 'riley',
+        artist: 'Bridget Riley',
+        title: 'Untitled',
+        url: './assets/img/riley.png',
+        sessionData: {},
+        width: 1080,
+        height: 1315,
+        dimWidthToHt: 1080 / 1315,
+        origLink: 'https://www.si.edu/object/bridget-riley:chndm_1976-25-5',
+      },
+
+      lewitt: {
+        key: 'lewitt',
+        artist: 'Sol Lewitt',
+        title: 'Lines from Points to Points',
+        url: './assets/img/lewitt.png',
+        sessionData: {},
+        width: 1722,
+        height: 1704,
+        dimWidthToHt: 1722 / 1704,
+        origLink:
+          'https://www.si.edu/object/lines-points-points-portfolio-location-lines:saam_1990.60.2',
+      },
     };
 
     let artworkMetadata = writable(artworkData);
@@ -30318,18 +30379,18 @@ var app = (function () {
     			t3 = text(t3_value);
     			t4 = space();
     			if (!src_url_equal(img.src, img_src_value = /*artwork*/ ctx[5].url)) attr_dev(img, "src", img_src_value);
-    			attr_dev(img, "class", "svelte-1s76hs4");
+    			attr_dev(img, "class", "svelte-jo2too");
     			add_location(img, file$1, 46, 12, 1210);
-    			attr_dev(div0, "class", "img-holder svelte-1s76hs4");
+    			attr_dev(div0, "class", "img-holder svelte-jo2too");
     			add_location(div0, file$1, 45, 10, 1172);
     			add_location(strong, file$1, 49, 15, 1306);
-    			attr_dev(p0, "class", "svelte-1s76hs4");
+    			attr_dev(p0, "class", "svelte-jo2too");
     			add_location(p0, file$1, 49, 12, 1303);
-    			attr_dev(p1, "class", "svelte-1s76hs4");
+    			attr_dev(p1, "class", "svelte-jo2too");
     			add_location(p1, file$1, 50, 12, 1356);
-    			attr_dev(div1, "class", "txt-holder svelte-1s76hs4");
+    			attr_dev(div1, "class", "txt-holder svelte-jo2too");
     			add_location(div1, file$1, 48, 10, 1265);
-    			attr_dev(div2, "class", "artwork-holder clickable svelte-1s76hs4");
+    			attr_dev(div2, "class", "artwork-holder clickable svelte-jo2too");
     			add_location(div2, file$1, 39, 8, 1023);
     		},
     		m: function mount(target, anchor) {
@@ -30420,17 +30481,17 @@ var app = (function () {
     			}
 
     			add_location(h1, file$1, 26, 6, 695);
-    			attr_dev(span, "class", "material-icons-round svelte-1s76hs4");
+    			attr_dev(span, "class", "material-icons-round svelte-jo2too");
     			add_location(span, file$1, 33, 8, 855);
-    			attr_dev(div0, "class", "btn clickable svelte-1s76hs4");
+    			attr_dev(div0, "class", "btn clickable svelte-jo2too");
     			add_location(div0, file$1, 27, 6, 729);
-    			attr_dev(div1, "class", "cont-header svelte-1s76hs4");
+    			attr_dev(div1, "class", "cont-header svelte-jo2too");
     			add_location(div1, file$1, 25, 4, 662);
-    			attr_dev(div2, "class", "artwork-container svelte-1s76hs4");
+    			attr_dev(div2, "class", "artwork-container svelte-jo2too");
     			add_location(div2, file$1, 37, 4, 938);
-    			attr_dev(div3, "class", "container svelte-1s76hs4");
+    			attr_dev(div3, "class", "container svelte-jo2too");
     			add_location(div3, file$1, 24, 2, 633);
-    			attr_dev(div4, "class", "modal svelte-1s76hs4");
+    			attr_dev(div4, "class", "modal svelte-jo2too");
     			add_location(div4, file$1, 23, 0, 569);
     		},
     		l: function claim(nodes) {

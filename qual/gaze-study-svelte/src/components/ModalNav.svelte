@@ -104,7 +104,7 @@
   .artwork-holder {
     display: flex;
     flex-direction: column;
-    margin-bottom: 50px;
+    margin: 50px;
   }
   .img-holder {
     width: 315px;

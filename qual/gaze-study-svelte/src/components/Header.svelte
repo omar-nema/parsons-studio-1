@@ -33,42 +33,38 @@
       {/if}
     </div>
     <div class="header-right">
-      <nav>
-        <div>
-          <span
-            class="material-icons-round"
+      {#if $pageState == 'gallery'}
+        <nav>
+          <div>
+            <span
+              class="material-icons-round"
+              on:click={() => {
+                jumpSection(-1);
+              }}
+            >
+              navigate_before
+            </span>
+          </div>
+          <div>
+            <span
+              class="material-icons-round"
+              on:click={() => {
+                jumpSection(1);
+              }}
+            >
+              navigate_next
+            </span>
+          </div>
+          <div
             on:click={() => {
-              jumpSection(-1);
+              modalState.set('nav');
             }}
           >
-            navigate_before
-          </span>
-        </div>
-        <div>
-          <span
-            class="material-icons-round"
-            on:click={() => {
-              jumpSection(1);
-            }}
-          >
-            navigate_next
-          </span>
-        </div>
-        <div
-          on:click={() => {
-            modalState.set('nav');
-          }}
-        >
-          <span class="material-icons-round"> view_module </span>
-        </div>
-      </nav>
-      <div
-        transition:fade
-        class="btn clickable  btn-about"
-        class:active={$pageState === 'gallery'}
-      >
-        About
-      </div>
+            <span class="material-icons-round"> view_module </span>
+          </div>
+        </nav>
+        <div transition:fade class="btn clickable active btn-about">About</div>
+      {/if}
       <div
         transition:slide={{ duration: 500 }}
         class="btn clickable"

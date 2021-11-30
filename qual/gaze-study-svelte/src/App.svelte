@@ -86,7 +86,7 @@
     transition: background 1s ease-in-out;
   }
   :global(body.gaze){
-    background: #efeded;
+    background: linear-gradient( 180deg, rgb(240, 240, 240) 0%, rgba(0, 212, 255, 0.03) 100%);
   }
   :global(:root) {
     /* --color-accent: #cfd494; */
@@ -94,7 +94,7 @@
     --color-accent-faded: #2196f385;
     --color-gray-faded: #a0a0a0;
     /* --bg-contrast: #585656; */
-    --bg-contrast: #ffffffab;
+    --bg-contrast: #fbfbfb;
     /* --bg-contrast-darker: #4b4747; */
     --bg-contrast-darker: #e2e1e1;
     /* --bg-contrast-darkest: #232020; */
@@ -150,8 +150,9 @@
   }
 
   :global(.btn.accent) {
-    background: #eef2b4;
-    color: black;
+    background: var(--color-accent);
+    color: white;
+    box-shadow: var(--box-shadow-light);
   }
   :global(header) {
     width: 100%;

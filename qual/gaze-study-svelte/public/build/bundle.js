@@ -22599,7 +22599,7 @@ var app = (function () {
     }
 
     // (180:10) {#if playStatus == 'pause'}
-    function create_if_block_1$4(ctx) {
+    function create_if_block_1$5(ctx) {
     	let span;
     	let mounted;
     	let dispose;
@@ -22629,7 +22629,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_1$4.name,
+    		id: create_if_block_1$5.name,
     		type: "if",
     		source: "(180:10) {#if playStatus == 'pause'}",
     		ctx
@@ -22827,7 +22827,7 @@ var app = (function () {
     	}
 
     	function select_block_type(ctx, dirty) {
-    		if (/*playStatus*/ ctx[5] == 'pause') return create_if_block_1$4;
+    		if (/*playStatus*/ ctx[5] == 'pause') return create_if_block_1$5;
     		return create_else_block$3;
     	}
 
@@ -27051,7 +27051,7 @@ var app = (function () {
     }
 
     // (25:6) {#if $pageState == 'gallery'}
-    function create_if_block$4(ctx) {
+    function create_if_block_1$4(ctx) {
     	let span;
 
     	const block = {
@@ -27077,7 +27077,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$4.name,
+    		id: create_if_block_1$4.name,
     		type: "if",
     		source: "(25:6) {#if $pageState == 'gallery'}",
     		ctx
@@ -27086,50 +27086,152 @@ var app = (function () {
     	return block;
     }
 
+    // (36:6) {#if $pageState == 'gallery'}
+    function create_if_block$4(ctx) {
+    	let nav;
+    	let div0;
+    	let span0;
+    	let t1;
+    	let div1;
+    	let span1;
+    	let t3;
+    	let div2;
+    	let span2;
+    	let t5;
+    	let div3;
+    	let div3_transition;
+    	let current;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			nav = element("nav");
+    			div0 = element("div");
+    			span0 = element("span");
+    			span0.textContent = "navigate_before";
+    			t1 = space();
+    			div1 = element("div");
+    			span1 = element("span");
+    			span1.textContent = "navigate_next";
+    			t3 = space();
+    			div2 = element("div");
+    			span2 = element("span");
+    			span2.textContent = "view_module";
+    			t5 = space();
+    			div3 = element("div");
+    			div3.textContent = "About";
+    			attr_dev(span0, "class", "material-icons-round svelte-1lnywyx");
+    			add_location(span0, file$a, 38, 12, 1111);
+    			attr_dev(div0, "class", "svelte-1lnywyx");
+    			add_location(div0, file$a, 37, 10, 1092);
+    			attr_dev(span1, "class", "material-icons-round svelte-1lnywyx");
+    			add_location(span1, file$a, 48, 12, 1361);
+    			attr_dev(div1, "class", "svelte-1lnywyx");
+    			add_location(div1, file$a, 47, 10, 1342);
+    			attr_dev(span2, "class", "material-icons-round svelte-1lnywyx");
+    			add_location(span2, file$a, 62, 12, 1705);
+    			attr_dev(div2, "class", "svelte-1lnywyx");
+    			add_location(div2, file$a, 57, 10, 1589);
+    			attr_dev(nav, "class", "svelte-1lnywyx");
+    			add_location(nav, file$a, 36, 8, 1075);
+    			attr_dev(div3, "class", "btn clickable active btn-about svelte-1lnywyx");
+    			add_location(div3, file$a, 65, 8, 1804);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, nav, anchor);
+    			append_dev(nav, div0);
+    			append_dev(div0, span0);
+    			append_dev(nav, t1);
+    			append_dev(nav, div1);
+    			append_dev(div1, span1);
+    			append_dev(nav, t3);
+    			append_dev(nav, div2);
+    			append_dev(div2, span2);
+    			insert_dev(target, t5, anchor);
+    			insert_dev(target, div3, anchor);
+    			current = true;
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(span0, "click", /*click_handler*/ ctx[4], false, false, false),
+    					listen_dev(span1, "click", /*click_handler_1*/ ctx[5], false, false, false),
+    					listen_dev(div2, "click", /*click_handler_2*/ ctx[6], false, false, false)
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: noop$3,
+    		i: function intro(local) {
+    			if (current) return;
+
+    			add_render_callback(() => {
+    				if (!div3_transition) div3_transition = create_bidirectional_transition(div3, fade, {}, true);
+    				div3_transition.run(1);
+    			});
+
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			if (!div3_transition) div3_transition = create_bidirectional_transition(div3, fade, {}, false);
+    			div3_transition.run(0);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(nav);
+    			if (detaching) detach_dev(t5);
+    			if (detaching) detach_dev(div3);
+    			if (detaching && div3_transition) div3_transition.end();
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$4.name,
+    		type: "if",
+    		source: "(36:6) {#if $pageState == 'gallery'}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
     function create_fragment$a(ctx) {
     	let header;
-    	let div7;
+    	let div3;
     	let div0;
     	let span0;
     	let t1;
     	let span1;
     	let t3;
     	let t4;
-    	let div6;
-    	let nav;
+    	let div2;
+    	let t5;
     	let div1;
     	let span2;
-    	let t6;
-    	let div2;
+    	let t7;
     	let span3;
-    	let t8;
-    	let div3;
-    	let span4;
-    	let t10;
-    	let div4;
-    	let div4_transition;
-    	let t12;
-    	let div5;
-    	let span5;
-    	let t14;
-    	let span6;
-    	let div5_transition;
+    	let div1_transition;
     	let current;
     	let mounted;
     	let dispose;
 
     	function select_block_type(ctx, dirty) {
-    		if (/*$pageState*/ ctx[0] == 'gallery') return create_if_block$4;
+    		if (/*$pageState*/ ctx[0] == 'gallery') return create_if_block_1$4;
     		return create_else_block$2;
     	}
 
     	let current_block_type = select_block_type(ctx);
-    	let if_block = current_block_type(ctx);
+    	let if_block0 = current_block_type(ctx);
+    	let if_block1 = /*$pageState*/ ctx[0] == 'gallery' && create_if_block$4(ctx);
 
     	const block = {
     		c: function create() {
     			header = element("header");
-    			div7 = element("div");
+    			div3 = element("div");
     			div0 = element("div");
     			span0 = element("span");
     			span0.textContent = "How We Gaze";
@@ -27137,63 +27239,32 @@ var app = (function () {
     			span1 = element("span");
     			span1.textContent = "-";
     			t3 = space();
-    			if_block.c();
+    			if_block0.c();
     			t4 = space();
-    			div6 = element("div");
-    			nav = element("nav");
+    			div2 = element("div");
+    			if (if_block1) if_block1.c();
+    			t5 = space();
     			div1 = element("div");
     			span2 = element("span");
-    			span2.textContent = "navigate_before";
-    			t6 = space();
-    			div2 = element("div");
+    			span2.textContent = "arrow_back";
+    			t7 = space();
     			span3 = element("span");
-    			span3.textContent = "navigate_next";
-    			t8 = space();
-    			div3 = element("div");
-    			span4 = element("span");
-    			span4.textContent = "view_module";
-    			t10 = space();
-    			div4 = element("div");
-    			div4.textContent = "About";
-    			t12 = space();
-    			div5 = element("div");
-    			span5 = element("span");
-    			span5.textContent = "arrow_back";
-    			t14 = space();
-    			span6 = element("span");
-    			span6.textContent = "Back to Gallery";
+    			span3.textContent = "Back to Gallery";
     			add_location(span0, file$a, 22, 6, 625);
     			attr_dev(span1, "class", "divider svelte-1lnywyx");
     			add_location(span1, file$a, 23, 6, 657);
     			attr_dev(div0, "class", "header-left svelte-1lnywyx");
     			add_location(div0, file$a, 21, 4, 592);
     			attr_dev(span2, "class", "material-icons-round svelte-1lnywyx");
-    			add_location(span2, file$a, 37, 10, 1068);
-    			attr_dev(div1, "class", "svelte-1lnywyx");
-    			add_location(div1, file$a, 36, 8, 1051);
-    			attr_dev(span3, "class", "material-icons-round svelte-1lnywyx");
-    			add_location(span3, file$a, 47, 10, 1298);
-    			attr_dev(div2, "class", "svelte-1lnywyx");
-    			add_location(div2, file$a, 46, 8, 1281);
-    			attr_dev(span4, "class", "material-icons-round svelte-1lnywyx");
-    			add_location(span4, file$a, 61, 10, 1614);
-    			attr_dev(div3, "class", "svelte-1lnywyx");
-    			add_location(div3, file$a, 56, 8, 1508);
-    			attr_dev(nav, "class", "svelte-1lnywyx");
-    			add_location(nav, file$a, 35, 6, 1036);
-    			attr_dev(div4, "class", "btn clickable btn-about svelte-1lnywyx");
-    			toggle_class(div4, "active", /*$pageState*/ ctx[0] === 'gallery');
-    			add_location(div4, file$a, 64, 6, 1707);
-    			attr_dev(span5, "class", "material-icons-round svelte-1lnywyx");
-    			add_location(span5, file$a, 82, 8, 2200);
-    			add_location(span6, file$a, 84, 8, 2266);
-    			attr_dev(div5, "class", "btn clickable svelte-1lnywyx");
-    			toggle_class(div5, "active", /*$pageState*/ ctx[0] === 'record');
-    			add_location(div5, file$a, 71, 6, 1873);
-    			attr_dev(div6, "class", "header-right svelte-1lnywyx");
-    			add_location(div6, file$a, 34, 4, 1002);
-    			attr_dev(div7, "class", "header-content svelte-1lnywyx");
-    			add_location(div7, file$a, 20, 2, 558);
+    			add_location(span2, file$a, 78, 8, 2223);
+    			add_location(span3, file$a, 80, 8, 2289);
+    			attr_dev(div1, "class", "btn clickable svelte-1lnywyx");
+    			toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'record');
+    			add_location(div1, file$a, 67, 6, 1896);
+    			attr_dev(div2, "class", "header-right svelte-1lnywyx");
+    			add_location(div2, file$a, 34, 4, 1002);
+    			attr_dev(div3, "class", "header-content svelte-1lnywyx");
+    			add_location(div3, file$a, 20, 2, 558);
     			attr_dev(header, "class", "svelte-1lnywyx");
     			add_location(header, file$a, 19, 0, 546);
     		},
@@ -27202,94 +27273,92 @@ var app = (function () {
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, header, anchor);
-    			append_dev(header, div7);
-    			append_dev(div7, div0);
+    			append_dev(header, div3);
+    			append_dev(div3, div0);
     			append_dev(div0, span0);
     			append_dev(div0, t1);
     			append_dev(div0, span1);
     			append_dev(div0, t3);
-    			if_block.m(div0, null);
-    			append_dev(div7, t4);
-    			append_dev(div7, div6);
-    			append_dev(div6, nav);
-    			append_dev(nav, div1);
+    			if_block0.m(div0, null);
+    			append_dev(div3, t4);
+    			append_dev(div3, div2);
+    			if (if_block1) if_block1.m(div2, null);
+    			append_dev(div2, t5);
+    			append_dev(div2, div1);
     			append_dev(div1, span2);
-    			append_dev(nav, t6);
-    			append_dev(nav, div2);
-    			append_dev(div2, span3);
-    			append_dev(nav, t8);
-    			append_dev(nav, div3);
-    			append_dev(div3, span4);
-    			append_dev(div6, t10);
-    			append_dev(div6, div4);
-    			append_dev(div6, t12);
-    			append_dev(div6, div5);
-    			append_dev(div5, span5);
-    			append_dev(div5, t14);
-    			append_dev(div5, span6);
+    			append_dev(div1, t7);
+    			append_dev(div1, span3);
     			current = true;
 
     			if (!mounted) {
-    				dispose = [
-    					listen_dev(span2, "click", /*click_handler*/ ctx[4], false, false, false),
-    					listen_dev(span3, "click", /*click_handler_1*/ ctx[5], false, false, false),
-    					listen_dev(div3, "click", /*click_handler_2*/ ctx[6], false, false, false),
-    					listen_dev(div5, "click", /*click_handler_3*/ ctx[7], false, false, false)
-    				];
-
+    				dispose = listen_dev(div1, "click", /*click_handler_3*/ ctx[7], false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
-    				if_block.p(ctx, dirty);
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
+    				if_block0.p(ctx, dirty);
     			} else {
-    				if_block.d(1);
-    				if_block = current_block_type(ctx);
+    				if_block0.d(1);
+    				if_block0 = current_block_type(ctx);
 
-    				if (if_block) {
-    					if_block.c();
-    					if_block.m(div0, null);
+    				if (if_block0) {
+    					if_block0.c();
+    					if_block0.m(div0, null);
     				}
     			}
 
-    			if (dirty & /*$pageState*/ 1) {
-    				toggle_class(div4, "active", /*$pageState*/ ctx[0] === 'gallery');
+    			if (/*$pageState*/ ctx[0] == 'gallery') {
+    				if (if_block1) {
+    					if_block1.p(ctx, dirty);
+
+    					if (dirty & /*$pageState*/ 1) {
+    						transition_in(if_block1, 1);
+    					}
+    				} else {
+    					if_block1 = create_if_block$4(ctx);
+    					if_block1.c();
+    					transition_in(if_block1, 1);
+    					if_block1.m(div2, t5);
+    				}
+    			} else if (if_block1) {
+    				group_outros();
+
+    				transition_out(if_block1, 1, 1, () => {
+    					if_block1 = null;
+    				});
+
+    				check_outros();
     			}
 
     			if (dirty & /*$pageState*/ 1) {
-    				toggle_class(div5, "active", /*$pageState*/ ctx[0] === 'record');
+    				toggle_class(div1, "active", /*$pageState*/ ctx[0] === 'record');
     			}
     		},
     		i: function intro(local) {
     			if (current) return;
+    			transition_in(if_block1);
 
     			add_render_callback(() => {
-    				if (!div4_transition) div4_transition = create_bidirectional_transition(div4, fade, {}, true);
-    				div4_transition.run(1);
-    			});
-
-    			add_render_callback(() => {
-    				if (!div5_transition) div5_transition = create_bidirectional_transition(div5, slide, { duration: 500 }, true);
-    				div5_transition.run(1);
+    				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, slide, { duration: 500 }, true);
+    				div1_transition.run(1);
     			});
 
     			current = true;
     		},
     		o: function outro(local) {
-    			if (!div4_transition) div4_transition = create_bidirectional_transition(div4, fade, {}, false);
-    			div4_transition.run(0);
-    			if (!div5_transition) div5_transition = create_bidirectional_transition(div5, slide, { duration: 500 }, false);
-    			div5_transition.run(0);
+    			transition_out(if_block1);
+    			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, slide, { duration: 500 }, false);
+    			div1_transition.run(0);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(header);
-    			if_block.d();
-    			if (detaching && div4_transition) div4_transition.end();
-    			if (detaching && div5_transition) div5_transition.end();
+    			if_block0.d();
+    			if (if_block1) if_block1.d();
+    			if (detaching && div1_transition) div1_transition.end();
     			mounted = false;
-    			run_all(dispose);
+    			dispose();
     		}
     	};
 

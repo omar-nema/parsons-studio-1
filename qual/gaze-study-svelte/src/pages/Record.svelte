@@ -277,10 +277,11 @@
   .experiment-container {
     background: var(--bg-contrast);
     width: 100%;
-    margin-top: 80px;
+    margin-top: 60px;
     height: auto;
     box-shadow: var(--box-shadow-light);
     overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
   .container-header,
   .container-footer,
@@ -288,7 +289,7 @@
     padding: 0 30px;
   }
   .container-body {
-    height: calc(100vh - 3 * var(--header-ht) - 80px);
+    height: calc(100vh - 3 * var(--header-ht) - 65px);
     padding: 0 30px;
     font-size: 18px;
     position: relative;
@@ -301,6 +302,7 @@
   }
   .container-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    font-weight: 500;
   }
   .container-footer {
     box-shadow: var(--box-shadow-light-inverse);

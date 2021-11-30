@@ -79,7 +79,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 50px;
   }
   .btn {
     /* background: #ffffff75; */
@@ -97,15 +97,14 @@
 
   .artwork-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     padding-bottom: 150px;
-    overflow: auto;
-    height: calc(100vh - 160px);
   }
   .artwork-holder {
     display: flex;
     flex-direction: column;
+    margin-bottom: 50px;
   }
   .img-holder {
     width: 315px;

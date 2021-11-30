@@ -23574,16 +23574,16 @@ var app = (function () {
         width: 1745,
         height: 1228,
       },
-      rothko: {
-        key: 'rothko',
-        artist: 'Mark Rothko',
-        title: 'Record Number 24',
-        url: './assets/img/rothko.png',
-        sessionData: {},
-        dimWidthToHt: 0.65,
-        width: 1021,
-        height: 1571,
-      },
+      // rothko: {
+      //   key: 'rothko',
+      //   artist: 'Mark Rothko',
+      //   title: 'Record Number 24',
+      //   url: './assets/img/rothko.png',
+      //   sessionData: {},
+      //   dimWidthToHt: 0.65,
+      //   width: 1021,
+      //   height: 1571,
+      // },
       nevelson: {
         key: 'nevelson',
         artist: 'Louise Nevelson',
@@ -23595,6 +23595,40 @@ var app = (function () {
         height: 500,
         origLink:
           'https://www.si.edu/object/untitled-self-portrait:npg_NPG.2002.307',
+      },
+      kahlo: {
+        key: 'kahlo',
+        artist: 'Magda Pach',
+        title: 'Frida Kahlo',
+        url: './assets/img/kahlo.jpg',
+        sessionData: {},
+        dimWidthToHt: 3212 / 4000,
+        width: 3212,
+        height: 4000,
+        origLink: 'https://www.si.edu/object/frida-kahlo:npg_NPG.2015.136',
+      },
+      dewittHardy: {
+        key: 'dewittHardy',
+        artist: 'DeWitt Hardy',
+        title: 'Nude',
+        url: './assets/img/dewittHardy.png',
+        sessionData: {},
+        width: 1194,
+        height: 1697,
+        dimWidthToHt: 1194 / 1697,
+        origLink: 'https://www.si.edu/object/nude:hmsg_86.2482',
+      },
+
+      hockney: {
+        key: 'hockney',
+        artist: 'David Hockney',
+        title: 'Ordinary Picture',
+        url: './assets/img/hockney.png',
+        sessionData: {},
+        width: 1691,
+        height: 1704,
+        dimWidthToHt: 1691 / 1704,
+        origLink: 'https://www.si.edu/object/ordinary-picture:hmsg_66.2472',
       },
     };
 
@@ -29147,7 +29181,7 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			div = element("div");
-    			attr_dev(div, "class", "nav-dot svelte-hbxg54");
+    			attr_dev(div, "class", "nav-dot svelte-1c3jx3e");
     			toggle_class(div, "active", /*sections*/ ctx[0][/*$stateIndex*/ ctx[2]] === /*section*/ ctx[22]);
     			add_location(div, file$2, 199, 8, 5764);
     		},
@@ -29445,7 +29479,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			t = text(t_value);
-    			attr_dev(div, "class", "btn-prev btn disabled svelte-hbxg54");
+    			attr_dev(div, "class", "btn-prev btn disabled svelte-1c3jx3e");
     			toggle_class(div, "accent", /*$calibrationPct*/ ctx[1] && /*$calibrationPct*/ ctx[1] < 70);
     			toggle_class(div, "disabled", /*disableBack*/ ctx[3] == true);
     			add_location(div, file$2, 232, 6, 6848);
@@ -29498,7 +29532,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			div.textContent = "Re-Calibrate";
-    			attr_dev(div, "class", "btn re-cal clickable svelte-hbxg54");
+    			attr_dev(div, "class", "btn re-cal clickable svelte-1c3jx3e");
     			toggle_class(div, "disabled", /*calibrated*/ ctx[6] == false);
     			add_location(div, file$2, 224, 6, 6662);
     		},
@@ -29551,7 +29585,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			if_block.c();
-    			attr_dev(div, "class", "btn-next btn accent clickable svelte-hbxg54");
+    			attr_dev(div, "class", "btn-next btn accent clickable svelte-1c3jx3e");
     			toggle_class(div, "disabled", /*$loadingInd*/ ctx[8] || /*disableNext*/ ctx[4]);
     			toggle_class(div, "glow", /*$loadingInd*/ ctx[8]);
     			add_location(div, file$2, 249, 6, 7347);
@@ -29752,19 +29786,19 @@ var app = (function () {
     			if_block1.c();
     			t7 = space();
     			if (if_block2) if_block2.c();
-    			attr_dev(span, "class", "selection-holder svelte-hbxg54");
+    			attr_dev(span, "class", "selection-holder svelte-1c3jx3e");
     			add_location(span, file$2, 193, 16, 5575);
     			attr_dev(div0, "class", "current-selection");
     			add_location(div0, file$2, 192, 4, 5526);
-    			attr_dev(div1, "class", "nav-ind svelte-hbxg54");
+    			attr_dev(div1, "class", "nav-ind svelte-1c3jx3e");
     			add_location(div1, file$2, 197, 4, 5698);
-    			attr_dev(div2, "class", "container-header svelte-hbxg54");
+    			attr_dev(div2, "class", "container-header svelte-1c3jx3e");
     			add_location(div2, file$2, 191, 2, 5490);
-    			attr_dev(div3, "class", "container-body svelte-hbxg54");
+    			attr_dev(div3, "class", "container-body svelte-1c3jx3e");
     			add_location(div3, file$2, 203, 2, 5877);
-    			attr_dev(div4, "class", "container-footer svelte-hbxg54");
+    			attr_dev(div4, "class", "container-footer svelte-1c3jx3e");
     			add_location(div4, file$2, 222, 2, 6563);
-    			attr_dev(section, "class", "experiment-container svelte-hbxg54");
+    			attr_dev(section, "class", "experiment-container svelte-1c3jx3e");
     			add_location(section, file$2, 190, 0, 5448);
     		},
     		l: function claim(nodes) {
@@ -30284,18 +30318,18 @@ var app = (function () {
     			t3 = text(t3_value);
     			t4 = space();
     			if (!src_url_equal(img.src, img_src_value = /*artwork*/ ctx[5].url)) attr_dev(img, "src", img_src_value);
-    			attr_dev(img, "class", "svelte-1ex6xmi");
+    			attr_dev(img, "class", "svelte-1s76hs4");
     			add_location(img, file$1, 46, 12, 1210);
-    			attr_dev(div0, "class", "img-holder svelte-1ex6xmi");
+    			attr_dev(div0, "class", "img-holder svelte-1s76hs4");
     			add_location(div0, file$1, 45, 10, 1172);
     			add_location(strong, file$1, 49, 15, 1306);
-    			attr_dev(p0, "class", "svelte-1ex6xmi");
+    			attr_dev(p0, "class", "svelte-1s76hs4");
     			add_location(p0, file$1, 49, 12, 1303);
-    			attr_dev(p1, "class", "svelte-1ex6xmi");
+    			attr_dev(p1, "class", "svelte-1s76hs4");
     			add_location(p1, file$1, 50, 12, 1356);
-    			attr_dev(div1, "class", "txt-holder svelte-1ex6xmi");
+    			attr_dev(div1, "class", "txt-holder svelte-1s76hs4");
     			add_location(div1, file$1, 48, 10, 1265);
-    			attr_dev(div2, "class", "artwork-holder clickable svelte-1ex6xmi");
+    			attr_dev(div2, "class", "artwork-holder clickable svelte-1s76hs4");
     			add_location(div2, file$1, 39, 8, 1023);
     		},
     		m: function mount(target, anchor) {
@@ -30386,17 +30420,17 @@ var app = (function () {
     			}
 
     			add_location(h1, file$1, 26, 6, 695);
-    			attr_dev(span, "class", "material-icons-round svelte-1ex6xmi");
+    			attr_dev(span, "class", "material-icons-round svelte-1s76hs4");
     			add_location(span, file$1, 33, 8, 855);
-    			attr_dev(div0, "class", "btn clickable svelte-1ex6xmi");
+    			attr_dev(div0, "class", "btn clickable svelte-1s76hs4");
     			add_location(div0, file$1, 27, 6, 729);
-    			attr_dev(div1, "class", "cont-header svelte-1ex6xmi");
+    			attr_dev(div1, "class", "cont-header svelte-1s76hs4");
     			add_location(div1, file$1, 25, 4, 662);
-    			attr_dev(div2, "class", "artwork-container svelte-1ex6xmi");
+    			attr_dev(div2, "class", "artwork-container svelte-1s76hs4");
     			add_location(div2, file$1, 37, 4, 938);
-    			attr_dev(div3, "class", "container svelte-1ex6xmi");
+    			attr_dev(div3, "class", "container svelte-1s76hs4");
     			add_location(div3, file$1, 24, 2, 633);
-    			attr_dev(div4, "class", "modal svelte-1ex6xmi");
+    			attr_dev(div4, "class", "modal svelte-1s76hs4");
     			add_location(div4, file$1, 23, 0, 569);
     		},
     		l: function claim(nodes) {

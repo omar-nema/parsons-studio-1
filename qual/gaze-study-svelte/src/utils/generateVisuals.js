@@ -1,7 +1,6 @@
 import * as d3 from 'd3';
 
 export async function contourMapBlur(data, containerAll, containerSvg, url) {
-  console.log(data);
   let bbox = d3.select(containerAll).node().getBoundingClientRect();
   let width = bbox.width;
   let height = 0.705 * width;
@@ -39,7 +38,7 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
       maxCoords / 3,
       minCoords,
     ])
-    .range([0, 0.5, 1, 2, 8]);
+    .range([0, 0.5, 0.75, 1, 8]);
 
   let opacityScale = d3
     .scaleLinear()

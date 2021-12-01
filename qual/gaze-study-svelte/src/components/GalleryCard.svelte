@@ -5,10 +5,14 @@
     screenWidth,
     screenHeight,
     cardInView,
+    tooltipText,
   } from '../stores/pageState';
   import { dbGet } from '../utils/firebaseUtils.js';
   import { onMount } from 'svelte';
   import { contourMapBlur } from '../utils/generateVisuals';
+  import Tooltip from './Tooltip.svelte';
+  import { fade } from 'svelte/transition';
+  import { updateTooltip } from '../utils/tooltipUtils';
 
   //CUSTOM WIDTH AND HEIGHT CALC
   export let data;
@@ -131,6 +135,12 @@
   $: clips;
 </script>
 
+{#if $tooltipText}
+  <div transition:fade={{ duration: 200 }}>
+    <Tooltip />
+  </div>
+{/if}
+
 <div class="card-outer" id={data.key} class:active={data.key == $cardInView}>
   <h2 style="display: flex; align-items: center;">
     <div style="font-weight: 400; color: rgb(126 123 123);margin-right: 15px;">
@@ -173,6 +183,15 @@
         </div>
         <div
           class="filter clickable"
+          on:mouseover={(e) => {
+            updateTooltip(e.x, e.y, 'Add your gaze to the collection');
+          }}
+          on:mousemove={(e) => {
+            updateTooltip(e.x, e.y);
+          }}
+          on:mouseleave={(e) => {
+            updateTooltip();
+          }}
           on:click={() => {
             selectedImage.set(data);
             pageState.set('record');
@@ -228,6 +247,19 @@
         <div
           class="filter clickable"
           class:selected={viewMode == 'aggregate'}
+          on:mouseover={(e) => {
+            updateTooltip(
+              e.x,
+              e.y,
+              'View a summary of personX gaze. The image is blurred out in portions where the viewer paid less attention.'
+            );
+          }}
+          on:mousemove={(e) => {
+            updateTooltip(e.x, e.y);
+          }}
+          on:mouseleave={(e) => {
+            updateTooltip();
+          }}
           on:click={() => {
             playStatus = 'pause';
             viewMode = 'aggregate';

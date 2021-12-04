@@ -104,7 +104,8 @@
     --color-accent-sec: #7c7777;
     --box-shadow-med:  0 0 2px 2px rgba(0, 0, 0, 0.1);
     --box-shadow-light:  0 0 1px 1px rgba(0, 0, 0, 0.07); 
-    --box-shadow-light-inverse:  0 -1px 3px 0px rgb(0 0 0 / 10%);        
+    --box-shadow-light-inverse:  0 -1px 3px 0px rgb(0 0 0 / 10%);    
+    --font-size-filter: 14px;    
   }
   :global(body) {
     margin: 0;
@@ -131,6 +132,7 @@
   }
   :global(h2){
     font-weight: 500;
+    /* font-size: 20px; */
   }
   :global(h3) {
     font-weight: 600;
@@ -147,6 +149,18 @@
     padding: 7px 12px;
     border-radius: 5px;
     transition: opacity 0.2s ease-in-out;
+  }
+  :global(.card-outer){
+  
+    max-width: min(75vw, 1100px);
+    width: 100%;
+    background: var(--bg-contrast);
+    padding: 30px 40px;
+    margin: auto;
+    margin-top: 70px;
+    margin-bottom: 70px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
   }
   
   :global(.disabled-part) {

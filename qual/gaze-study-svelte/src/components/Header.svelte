@@ -42,7 +42,7 @@
                 jumpSection(-1);
               }}
             >
-              navigate_before
+              keyboard_arrow_up
             </span>
           </div>
           <div>
@@ -52,7 +52,7 @@
                 jumpSection(1);
               }}
             >
-              navigate_next
+              keyboard_arrow_down
             </span>
           </div>
           <div

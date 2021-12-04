@@ -17,7 +17,7 @@
   //CUSTOM WIDTH AND HEIGHT CALC
   export let data;
   let maxW = Math.min($screenWidth - 500, 1000),
-    maxH = Math.max($screenHeight - 300, 500);
+    maxH = Math.max($screenHeight - 350, 500);
   let width = 'auto',
     ht = 'auto',
     styleSubstring = '';
@@ -152,80 +152,44 @@
     > -->
   </h2>
   <div class="card-filters">
-    <div class="viewer-filter  filter-group">
-      <div class="label">
-        <span class="material-icons-round md-14">people</span>
-        <span>Viewer</span>
-      </div>
+    <div class="visual-filter filter-group">
+      <!-- <div class="label compact">
+        <span>Gaze View</span>
+      </div> -->
       <div class="filter-options">
-        <div class="filter selected">
-          <span
-            class:disabled={currSessionIndex == 0}
-            on:click={() => {
-              currSessionIndex--;
-              currSessionKey = sessionsArray[currSessionIndex];
-            }}
-            class="material-icons-round md-18 nav clickable">chevron_left</span
-          >
-          <span
-            class:disabled={currSessionIndex == sessionsArray.length - 1}
-            on:click={() => {
-              currSessionIndex++;
-              currSessionKey = sessionsArray[currSessionIndex];
-            }}
-            class="material-icons-round md-18 nav clickable">chevron_right</span
-          >
-          <select class="clickable" bind:value={currSessionKey}>
-            {#each sessionsArray as session}
-              <option value={session}>{sessions[session].name}</option>
-            {/each}
-          </select>
-        </div>
         <div
-          class="filter clickable"
-          on:mouseover={(e) => {
-            updateTooltip(e.x, e.y, 'Add your gaze to the collection');
-          }}
-          on:mousemove={(e) => {
-            updateTooltip(e.x, e.y);
-          }}
-          on:mouseleave={(e) => {
-            updateTooltip();
-          }}
+          class="filter time clickable"
+          class:selected={viewMode == 'slice'}
           on:click={() => {
-            selectedImage.set(data);
-            pageState.set('record');
+            if (playStatus == 'pause') {
+              viewMode = 'slice';
+              if (currFrame == sessionData.length - 1) {
+                currFrame = 0;
+              }
+              playStatus = 'play';
+            } else if (viewMode == 'slice' && playStatus !== 'pause') {
+              playStatus = 'pause';
+            }
           }}
         >
-          Add Gaze
-        </div>
-      </div>
-    </div>
-
-    <div class="visual-filter filter-group">
-      <div class="label">
-        <span class="material-icons-round md-14">layers</span>
-        <span>Visual</span>
-      </div>
-      <div class="filter-options">
-        <div class="filter time" class:selected={viewMode == 'slice'}>
           {#if playStatus == 'pause'}
+            <!-- <span class="material-icons-round md-14">style</span> -->
             <span
               on:click={() => {
-                viewMode = 'slice';
-                if (currFrame == sessionData.length - 1) {
-                  currFrame = 0;
-                }
-                playStatus = 'play';
+                // viewMode = 'slice';
+                // if (currFrame == sessionData.length - 1) {
+                //   currFrame = 0;
+                // }
+                // playStatus = 'play';
               }}
-              class="material-icons-round md-14 clickable">play_arrow</span
+              class="play-toggle">Animate</span
             >
           {:else}
             <span
               on:click={() => {
-                playStatus = 'pause';
+                // playStatus = 'pause';
               }}
-              class="material-icons-round md-14 clickable">pause</span
+              class="play-toggle">Pause</span
             >
           {/if}
 
@@ -247,19 +211,6 @@
         <div
           class="filter clickable"
           class:selected={viewMode == 'aggregate'}
-          on:mouseover={(e) => {
-            updateTooltip(
-              e.x,
-              e.y,
-              'View a summary of personX gaze. The image is blurred out in portions where the viewer paid less attention.'
-            );
-          }}
-          on:mousemove={(e) => {
-            updateTooltip(e.x, e.y);
-          }}
-          on:mouseleave={(e) => {
-            updateTooltip();
-          }}
           on:click={() => {
             playStatus = 'pause';
             viewMode = 'aggregate';
@@ -271,7 +222,42 @@
             );
           }}
         >
-          Aggregate
+          <!-- <span class="material-icons-round md-14">image</span> -->
+          <span>Aggregate</span>
+        </div>
+        <div class="filter clickable">
+          <!-- <span class="material-icons-round md-14">compare</span> -->
+          <span>Original</span>
+        </div>
+      </div>
+    </div>
+    <div class="viewer-filter  filter-group">
+      <!-- <div class="label compact">
+        <span class="material-icons-round md-14">people</span>
+        <span>Viewer</span>
+      </div> -->
+      <div class="filter-options">
+        <!-- <div class="label compact">
+          <span class="material-icons-round md-14">add</span>
+  
+        </div> -->
+        <div
+          class="filter clickable add"
+          on:mouseover={(e) => {
+            updateTooltip(e.x, e.y, 'Add your gaze to the collection');
+          }}
+          on:mousemove={(e) => {
+            updateTooltip(e.x, e.y);
+          }}
+          on:mouseleave={(e) => {
+            updateTooltip();
+          }}
+          on:click={() => {
+            selectedImage.set(data);
+            pageState.set('record');
+          }}
+        >
+          <span> Add Gaze</span>
         </div>
       </div>
     </div>
@@ -307,6 +293,48 @@
 
       <!-- <img src={data.url} style={styleSubstring} /> -->
     </div>
+
+    <div class="filter person">
+      <div
+        class="arrow-nav clickable"
+        class:disabled={currSessionIndex == 0}
+        on:click={() => {
+          currSessionIndex--;
+          currSessionKey = sessionsArray[currSessionIndex];
+        }}
+      >
+        <span class="material-icons-round md-18 nav" style="font-size: 26px"
+          >arrow_left</span
+        >
+        <span>Prev</span>
+      </div>
+
+      <select class="clickable" bind:value={currSessionKey}>
+        {#each sessionsArray as session, index}
+          <option value={session}>
+            <span style="font-weight: 600; color: black;"
+              >{sessions[session].name}'s Gaze</span
+            >
+            <span style="font-weight: 400; color: gray"
+              >({index + 1} of {sessionsArray.length})</span
+            >
+          </option>
+        {/each}
+      </select>
+      <div
+        class="clickable arrow-nav"
+        class:disabled={currSessionIndex == sessionsArray.length - 1}
+        on:click={() => {
+          currSessionIndex++;
+          currSessionKey = sessionsArray[currSessionIndex];
+        }}
+      >
+        <span>Next</span>
+        <span class="material-icons-round md-18 nav" style="font-size: 26px"
+          >arrow_right</span
+        >
+      </div>
+    </div>
   </div>
 </div>
 
@@ -329,6 +357,7 @@
     flex-wrap: wrap;
     flex-direction: row;
     margin-bottom: 30px;
+    justify-content: space-between;
   }
 
   p {
@@ -347,23 +376,13 @@
 
   .label .material-icons-round {
     margin-right: 10px;
-    font-size: 14px;
+    color: gray;
   }
   .material-icons-round {
     font-size: 18px;
+    margin-right: 5px;
   }
 
-  .card-outer {
-    max-width: min(75vw, 1100px);
-    width: 100%;
-    background: var(--bg-contrast);
-    padding: 30px 40px;
-    margin: auto;
-    margin-top: 70px;
-    margin-bottom: 70px;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
-  }
   .img-holder {
     max-width: 100%;
     max-height: 100%;
@@ -383,9 +402,9 @@
   }
 
   .filter-group {
-    min-width: 350px;
-    font-size: 14px;
-    padding: 10px 0;
+    /* min-width: 350px; */
+    font-size: var(--font-size-filter);
+    height: 38px;
   }
 
   .filter-group,
@@ -394,8 +413,13 @@
     flex-direction: row;
   }
   .filter-options {
-    border-radius: 5px;
     overflow: hidden;
+    flex-grow: 0.7;
+    border-radius: 5px;
+  }
+  .arrow-nav {
+    display: flex;
+    align-items: center;
   }
 
   select {
@@ -408,6 +432,11 @@
     text-transform: capitalize;
     text-overflow: ellipsis;
     overflow-wrap: break-word;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    font-weight: 500;
   }
   /* select option {
     color: white;
@@ -419,9 +448,23 @@
     height: 100%;
     border: 0.5px dashed transparent;
     transition: all 0.15s linear;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .filter.add {
+    background: var(--bg-gradient);
+  }
+  .filter:last-child {
+    border-right: none;
+  }
+  .filter.person {
+    background: none;
+    width: 100%;
+
+    margin: auto;
+    margin-top: 10px;
   }
   .filter.selected {
-    background: var(--bg-contrast-darkest);
+    background: #2196f329;
     /* border: 0.5px solid #0000004f; */
   }
   .filter,
@@ -429,7 +472,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 15px;
+    padding: 10px 20px;
+  }
+  .label.compact {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .name {
@@ -441,9 +488,12 @@
   .clickable:hover {
     color: var(--color-accent);
   }
+  .play-toggle {
+    width: 50px;
+  }
 
   .disabled {
-    opacity: 0.2;
+    opacity: 0.1;
     pointer-events: none;
   }
   .viewer-filter {
@@ -459,6 +509,10 @@
     display: flex;
     margin-left: 15px;
     align-items: center;
+    width: 50px;
+  }
+  input {
+    width: 100%;
   }
 
   .filter.time span {
@@ -480,7 +534,9 @@
     height: 15px;
     width: 15px;
     cursor: pointer !important;
-    transition: opacity 0.1s linear;
+    transition: all 0.1s linear;
+    /* box-shadow: var(--box-shadow-med); */
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
   input[type='range']::-ms-fill-lower {
     background: blue !important;
@@ -495,13 +551,15 @@
     width: 15px;
     cursor: pointer !important;
     transition: all 0.15s ease-in-out;
+    /* box-shadow: var(--box-shadow-med); */
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
   }
   input[type='range']::-moz-range-thumb:hover {
-    box-shadow: var(--box-shadow-med);
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
   }
 
   input[type='range']::-webkit-slider-thumb:hover {
-    box-shadow: var(--box-shadow-med);
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
   }
   input[type='range']:focus {
     outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
@@ -520,6 +578,7 @@
   .center {
     display: flex;
     justify-content: center;
+    flex-direction: column;
   }
 
   .contour {

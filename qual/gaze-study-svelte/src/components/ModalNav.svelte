@@ -100,6 +100,8 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
     padding-bottom: 150px;
+    height: calc(100vh - 230px);
+    overflow: auto;
   }
   .artwork-holder {
     display: flex;

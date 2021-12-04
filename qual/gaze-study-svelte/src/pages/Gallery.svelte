@@ -51,6 +51,14 @@
 </script>
 
 <div class="card-holder">
+  <div class="card-outer">
+    <h2>The Gaze Gallery</h2>
+    <p>
+      Welcome to the Gallery. Each collection below visualizes how individuals
+      gazed at a particular piece of artwork. Study the existing gazes in this
+      gallery, or add your own.
+    </p>
+  </div>
   {#each worksArray as img}
     <GalleryCard data={img} />
   {/each}
@@ -62,5 +70,15 @@
     flex-direction: column;
     width: 100%;
     padding-top: 30px;
+  }
+  .card-outer {
+    background: linear-gradient(
+      0deg,
+      rgba(240, 240, 240, 0.05) 0%,
+      rgba(0, 212, 255, 0.05) 100%
+    );
+  }
+  h2 {
+    margin-top: 0;
   }
 </style>

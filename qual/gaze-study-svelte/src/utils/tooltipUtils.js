@@ -1,7 +1,7 @@
 import { tooltipText, tooltipX, tooltipY } from '../stores/pageState';
 export function updateTooltip(xInput, yInput, text) {
   if (!text && !xInput && !yInput) {
-    tooltipText.set(null);
+    tooltipText.set('');
   } else {
     tooltipX.set(xInput);
     tooltipY.set(yInput);

@@ -86,6 +86,9 @@
   :global(body.gaze){
     background: linear-gradient( 180deg, rgb(240, 240, 240) 0%, rgba(0, 212, 255, 0.03) 100%);
   }
+  :global(*){
+    box-sizing: border-box;
+  }
   :global(:root) {
     --bg-gradient: linear-gradient( 180deg, rgb(240, 240, 240) 0%, rgba(0,212,255,0.1) 100%);
     --color-accent: #2196f3;
@@ -94,7 +97,7 @@
     --bg-contrast: #fbfbfb;
     --bg-contrast-darker: #f5f5f5;
     --bg-contrast-darkest: #c3cbcc;
-    --content-width-pct: 92%;
+    --content-width-pct: 90%;
     --content-width-max: 1300px;
     --font-size-md: 22px;
     --font-size-lg: 26px;
@@ -152,7 +155,7 @@
   }
   :global(.card-outer){
   
-    max-width: min(75vw, 1100px);
+    max-width: 1100px;
     width: 100%;
     background: var(--bg-contrast);
     padding: 30px 40px;

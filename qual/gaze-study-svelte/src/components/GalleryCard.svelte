@@ -6,6 +6,7 @@
     screenHeight,
     cardInView,
     tooltipText,
+    infoTipIndex,
   } from '../stores/pageState';
   import { dbGet } from '../utils/firebaseUtils.js';
   import { onMount } from 'svelte';
@@ -13,11 +14,13 @@
   import Tooltip from './Tooltip.svelte';
   import { fade } from 'svelte/transition';
   import { updateTooltip } from '../utils/tooltipUtils';
+  import GalleryCardTip from './GalleryCardTip.svelte';
+  import jump from '../utils/jumpSection';
 
   //CUSTOM WIDTH AND HEIGHT CALC
   export let data;
   let maxW = Math.min($screenWidth - 500, 1000),
-    maxH = Math.max($screenHeight - 350, 500);
+    maxH = $screenHeight - 250;
   let width = 'auto',
     ht = 'auto',
     styleSubstring = '';
@@ -69,6 +72,27 @@
         `#${data.key}-contour`,
         data.url
       );
+    }
+  }
+
+  //get positions to put helper text
+  let helperTextPositions = [[], [0, 0], [0, 0]];
+  let imgNav, visFilter, gazeBtn;
+  function updateHelperTextPos(index, clientRect) {
+    let x, y;
+    x = Math.min(clientRect.x, $screenWidth - 450);
+    if (index == 0) {
+      y = clientRect.y - 130;
+    } else {
+      y = clientRect.y + 50;
+    }
+    helperTextPositions[index] = [x, y];
+  }
+  $: {
+    if (imgNav && visFilter && gazeBtn) {
+      updateHelperTextPos(0, imgNav.getBoundingClientRect());
+      updateHelperTextPos(1, visFilter.getBoundingClientRect());
+      updateHelperTextPos(2, gazeBtn.getBoundingClientRect());
     }
   }
 
@@ -133,6 +157,7 @@
     });
   }
   $: clips;
+  $: $infoTipIndex;
 </script>
 
 {#if $tooltipText}
@@ -142,20 +167,40 @@
 {/if}
 
 <div class="card-outer" id={data.key} class:active={data.key == $cardInView}>
-  <h2 style="display: flex; align-items: center;">
-    <div style="font-weight: 400; color: rgb(126 123 123);margin-right: 15px;">
-      Gaze Collection
-    </div>
-    <div>{data.artist}, <i>{data.title}</i></div>
-    <!-- <span style="margin: 0 15px; font-size: 18px;color: rgb(126 123 123)"
-      >-</span
-    > -->
-  </h2>
+  {#if $infoTipIndex >= 0}
+    <GalleryCardTip {helperTextPositions} />
+  {/if}
+  <div class="card-header">
+    <h2 style="display: flex; align-items: center;">
+      <div
+        style="font-weight: 400; color: rgb(126 123 123);margin-right: 15px;"
+      >
+        Gaze Collection
+      </div>
+      <div>{data.artist}, <i>{data.title}</i></div>
+    </h2>
+    {#if $screenWidth > 800}
+      <div
+        class="clickable"
+        on:click={() => {
+          jump(data.key);
+          infoTipIndex.set(0);
+        }}
+      >
+        <span
+          class="material-icons-round md-14"
+          style="font-size: 24px; color: #bfb9b9">info</span
+        >
+      </div>
+    {/if}
+  </div>
+
   <div class="card-filters">
-    <div class="visual-filter filter-group">
-      <!-- <div class="label compact">
-        <span>Gaze View</span>
-      </div> -->
+    <div
+      class="visual-filter filter-group"
+      bind:this={visFilter}
+      class:info-highlight={$infoTipIndex == 1}
+    >
       <div class="filter-options">
         <div
           class="filter time clickable"
@@ -225,41 +270,53 @@
           <!-- <span class="material-icons-round md-14">image</span> -->
           <span>Aggregate</span>
         </div>
-        <div class="filter clickable">
+        <div
+          class="filter clickable"
+          class:selected={viewMode == 'original'}
+          on:click={() => {
+            viewMode = 'original';
+          }}
+        >
           <!-- <span class="material-icons-round md-14">compare</span> -->
           <span>Original</span>
         </div>
       </div>
     </div>
-    <div class="viewer-filter  filter-group">
+    <div
+      class="viewer-filter  filter-group"
+      class:info-highlight={$infoTipIndex == 2}
+    >
       <!-- <div class="label compact">
         <span class="material-icons-round md-14">people</span>
         <span>Viewer</span>
       </div> -->
-      <div class="filter-options">
-        <!-- <div class="label compact">
+      {#if $screenWidth > 950}
+        <div class="filter-options">
+          <!-- <div class="label compact">
           <span class="material-icons-round md-14">add</span>
   
         </div> -->
-        <div
-          class="filter clickable add"
-          on:mouseover={(e) => {
-            updateTooltip(e.x, e.y, 'Add your gaze to the collection');
-          }}
-          on:mousemove={(e) => {
-            updateTooltip(e.x, e.y);
-          }}
-          on:mouseleave={(e) => {
-            updateTooltip();
-          }}
-          on:click={() => {
-            selectedImage.set(data);
-            pageState.set('record');
-          }}
-        >
-          <span> Add Gaze</span>
+          <div
+            bind:this={gazeBtn}
+            class="filter clickable add"
+            on:mouseover={(e) => {
+              updateTooltip(e.x, e.y, 'Add your gaze to the collection');
+            }}
+            on:mousemove={(e) => {
+              updateTooltip(e.x, e.y);
+            }}
+            on:mouseleave={(e) => {
+              updateTooltip();
+            }}
+            on:click={() => {
+              selectedImage.set(data);
+              pageState.set('record');
+            }}
+          >
+            <span> Add Gaze</span>
+          </div>
         </div>
-      </div>
+      {/if}
     </div>
   </div>
   <div class="center">
@@ -272,6 +329,7 @@
         class:agg={viewMode == 'aggregate'}
         src={data.url}
         style={styleSubstring}
+        class="main"
       />
       <svg
         class="contour"
@@ -294,7 +352,7 @@
       <!-- <img src={data.url} style={styleSubstring} /> -->
     </div>
 
-    <div class="filter person">
+    <div class="filter person" class:info-highlight={$infoTipIndex == 0}>
       <div
         class="arrow-nav clickable"
         class:disabled={currSessionIndex == 0}
@@ -309,7 +367,7 @@
         <span>Prev</span>
       </div>
 
-      <select class="clickable" bind:value={currSessionKey}>
+      <select class="clickable" bind:value={currSessionKey} bind:this={imgNav}>
         {#each sessionsArray as session, index}
           <option value={session}>
             <span style="font-weight: 600; color: black;"
@@ -345,6 +403,9 @@
   }
   .card-outer.active {
     opacity: 1;
+  }
+  .card-header {
+    display: flex;
   }
 
   #contour-overlay {
@@ -397,6 +458,9 @@
   img.agg {
     filter: blur(8px);
   }
+  img.main {
+    transition: all 0.3s ease-in-out;
+  }
   img.slice {
     filter: blur(6px);
   }
@@ -405,6 +469,11 @@
     /* min-width: 350px; */
     font-size: var(--font-size-filter);
     height: 38px;
+  }
+  .info-highlight {
+    border: 1px dashed var(--color-accent-faded) !important;
+    box-shadow: var(--box-shadow-med);
+    border-radius: 5px;
   }
 
   .filter-group,
@@ -535,8 +604,7 @@
     width: 15px;
     cursor: pointer !important;
     transition: all 0.1s linear;
-    /* box-shadow: var(--box-shadow-med); */
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: var(--box-shadow-light);
   }
   input[type='range']::-ms-fill-lower {
     background: blue !important;
@@ -551,8 +619,7 @@
     width: 15px;
     cursor: pointer !important;
     transition: all 0.15s ease-in-out;
-    /* box-shadow: var(--box-shadow-med); */
-    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow-light);
   }
   input[type='range']::-moz-range-thumb:hover {
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);

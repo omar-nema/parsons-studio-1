@@ -32,3 +32,6 @@ export let jumpCard = writable(null);
 export let tooltipText = writable(null);
 export let tooltipX = writable(null);
 export let tooltipY = writable(null);
+
+//for the explanatory pop-ups in gallery card
+export let infoTipIndex = writable(-1);

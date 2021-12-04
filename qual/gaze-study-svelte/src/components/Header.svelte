@@ -5,6 +5,7 @@
     pageState,
     modalState,
     cardInView,
+    screenWidth,
   } from '../stores/pageState';
   import { loadedWorksKeys } from '../stores/artworkMetadata';
   import { hideGazerForLater } from '../utils/gazerUtils';
@@ -63,7 +64,11 @@
             <span class="material-icons-round"> view_module </span>
           </div>
         </nav>
-        <div transition:fade class="btn clickable active btn-about">About</div>
+        {#if $screenWidth > 950}
+          <div transition:fade class="btn clickable active btn-about">
+            About
+          </div>
+        {/if}
       {/if}
       <div
         transition:slide={{ duration: 500 }}

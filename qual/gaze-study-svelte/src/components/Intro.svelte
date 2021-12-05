@@ -16,6 +16,7 @@
   let showSvg = false;
   let animateSvg = false;
   let blurSvg = false;
+  let isoSvg = false;
 
   function initScroll() {
     document.querySelector('#modal').addEventListener('scroll', (e) => {
@@ -41,10 +42,17 @@
         showSvg = true;
         animateSvg = true;
         blurSvg = false;
+        isoSvg = false;
       } else if (el.dataset['effect'] == 'blur') {
         animateSvg = false;
         showSvg = true;
         blurSvg = true;
+        isoSvg = false;
+      } else if (el.dataset['effect'] == 'iso') {
+        animateSvg = false;
+        showSvg = true;
+        blurSvg = false;
+        isoSvg = true;
       }
     } else {
       (showSvg = false), (animateSvg = false), (blurSvg = false);
@@ -52,7 +60,6 @@
   }
 
   onMount(() => {
-    // instantiate the scrollama
     initScroll();
   });
 </script>
@@ -78,7 +85,7 @@
   <section class="scroll" data-effect="blur">
     <p>Or do you take it in as a whole?</p>
   </section>
-  <section class="scroll">
+  <section class="scroll" data-effect="iso">
     <p>How would someone else look at the same work?</p>
   </section>
   <section class="scroll">
@@ -113,6 +120,7 @@
       class="svg-holder"
       class:animate={animateSvg}
       class:blur={blurSvg}
+      class:iso={isoSvg}
       transition:fade={{ delay: 500 }}
     >
       <svg
@@ -475,14 +483,12 @@
     border-radius: 20px;
     background: linear-gradient(
         172deg,
-        rgb(194 244 255) 0%,
-        rgb(194 244 255) 20%,
-        rgb(255 255 255) 50%,
-        rgb(194 244 255) 80%,
-        rgb(194 244 255) 100%
+        rgb(69 159 180 / 41%) 0%,
+        rgb(103 227 254 / 63%) 50%,
+        rgb(33 187 221 / 58%) 100%
       )
       fixed;
-    color: var(--color-accent);
+    color: white;
     transition: all 0.15s ease-in-out;
   }
   .btn:hover {
@@ -597,6 +603,13 @@
 
   .svg-holder.blur #bigshape {
     filter: blur(7px);
+  }
+  .svg-holder.iso #bigshape {
+    filter: blur(0px);
+  }
+  .svg-holder.iso #squiggles,
+  .svg-holder.iso #mag {
+    opacity: 0;
   }
 
   #square,

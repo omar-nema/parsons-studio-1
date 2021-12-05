@@ -14,6 +14,7 @@
   import Patterns from './pages/Patterns.svelte';
   import Record from './pages/Record.svelte';
   import ModalNav from './components/ModalNav.svelte'
+  import Intro from './components/Intro.svelte';
 
   function updateScreenSize() {
     screenWidth.set(screenSize().windowW);
@@ -44,6 +45,9 @@
 
 </script>
 
+{#if $modalState == 'intro'}
+<Intro></Intro>
+{/if}
 
 <main>
   <Header />
@@ -89,8 +93,11 @@
   :global(*){
     box-sizing: border-box;
   }
+
   :global(:root) {
     --bg-gradient: linear-gradient( 180deg, rgb(240, 240, 240) 0%, rgba(0,212,255,0.1) 100%);
+    /* --bg-gradient-dark: linear-gradient( 180deg, rgba(63,223,255,0.3) 0%, rgba(63,223,255,0.2) 80%, rgba(240,240,240,1)  100%); */
+    --bg-gradient-dark: linear-gradient( 180deg,rgb(0 212 255 / 15%) 0%, rgb(0 212 255 / 10%) 90%, rgb(240, 240, 240) 100%);
     --color-accent: #2196f3;
     --color-accent-faded: #2196f385;
     --color-gray-faded: #a0a0a0;
@@ -131,7 +138,9 @@
   :global(h1) {
     font-size: 40px;
     font-weight: 400;
-
+  }
+  :global(html){
+    height: 100%;
   }
   :global(h2){
     font-weight: 500;
@@ -200,7 +209,7 @@
 
 :global(::-webkit-scrollbar-thumb) 
   {
-  background: #88888870
+  background: #88888826;
 }
 
 

@@ -218,17 +218,7 @@
           }}
         >
           {#if playStatus == 'pause'}
-            <!-- <span class="material-icons-round md-14">style</span> -->
-            <span
-              on:click={() => {
-                // viewMode = 'slice';
-                // if (currFrame == sessionData.length - 1) {
-                //   currFrame = 0;
-                // }
-                // playStatus = 'play';
-              }}
-              class="play-toggle">Animate</span
-            >
+            <span on:click={() => {}} class="play-toggle">Animate</span>
           {:else}
             <span
               on:click={() => {
@@ -520,7 +510,7 @@
     border-right: 1px solid rgba(0, 0, 0, 0.1);
   }
   .filter.add {
-    background: var(--bg-gradient);
+    background: var(--bg-gradient-dark);
   }
   .filter:last-child {
     border-right: none;
@@ -533,7 +523,7 @@
     margin-top: 10px;
   }
   .filter.selected {
-    background: #2196f329;
+    background: var(--bg-gradient-dark);
     /* border: 0.5px solid #0000004f; */
   }
   .filter,

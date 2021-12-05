@@ -1,7 +1,7 @@
 import { readable, writable } from 'svelte/store';
 
 export let pageState = writable('gallery');
-export let modalState = writable(null);
+export let modalState = writable('intro');
 
 export let selectedImage = writable(null);
 export let calibrationState = writable(null);

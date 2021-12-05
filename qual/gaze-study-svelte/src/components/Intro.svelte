@@ -22,7 +22,7 @@
   >
     Skip Intro
   </div>
-  <section>
+  <section class="introbg">
     <h1>How We Gaze</h1>
   </section>
   <section>
@@ -60,6 +60,22 @@
 </main>
 
 <style>
+  /* @keyframes bg-change {
+    0% {
+      background: lightblue;
+    }
+
+    50% {
+      background: white;
+    }
+    0% {
+      background: lightblue;
+    }
+  }
+  .introbg {
+    animation: bg-change 10s ease-in-out infinite;
+  } */
+
   h1 {
     font-size: 100px;
     font-weight: 500;
@@ -124,6 +140,7 @@
         rgb(194 244 255) 100%
       )
       fixed;
+    color: var(--color-accent);
     transition: all 0.15s ease-in-out;
   }
   .btn:hover {

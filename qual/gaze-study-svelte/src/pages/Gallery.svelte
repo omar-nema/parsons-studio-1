@@ -52,7 +52,7 @@
 
 <div class="card-holder">
   <div class="card-outer">
-    <h2>The Gaze Gallery</h2>
+    <h2>Gaze Gallery</h2>
     <p>
       Welcome to the Gallery. Each collection below visualizes how individuals
       gazed at a particular piece of artwork. Study the existing gazes in this

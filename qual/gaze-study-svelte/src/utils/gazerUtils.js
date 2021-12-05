@@ -77,7 +77,7 @@ async function gazerLoadCheck() {
 }
 
 export function gazerHideCalDot() {
-  //document.querySelector('#webgazerGazeDot').style.opacity = 0;
+  document.querySelector('#webgazerGazeDot').style.opacity = 0;
 }
 
 export function gazerShowCalDot() {

@@ -13,19 +13,33 @@
   let calibrationMode = 'dots';
   gazerTrain();
 
-  let calibrationPoints = [
-    { top: '10%', right: '7%', numClicks: 0 },
-    { top: '50%', right: '7%', numClicks: 0 },
-    { top: '90%', right: '7%', numClicks: 0 },
-    { top: '10%', right: '93%', numClicks: 0 },
-    { top: '50%', right: '93%', numClicks: 0 },
-    { top: '90%', right: '93%', numClicks: 0 },
-    { top: '10%', right: '50%', numClicks: 0 },
-    { top: '50%', right: '50%', numClicks: 0 },
-    { top: '90%', right: '50%', numClicks: 0 },
-  ];
+  let numRows = 4;
+  let ptsPerRow = 4;
 
-  let maxClicks = 4;
+  let calibrationPoints = [];
+
+  for (let i = 0; i < numRows; i++) {
+    let minX = 7,
+      maxX = 93,
+      minY = 5,
+      maxY = 95;
+
+    let yInc = (maxY - minY) / (numRows - 1);
+    let currY = minY + yInc * i;
+
+    let xInc = (maxX - minX) / (ptsPerRow - 1);
+
+    for (let j = 0; j < ptsPerRow; j++) {
+      let currX = minX + xInc * j;
+      calibrationPoints.push({
+        top: `${currY}%`,
+        right: `${currX}%`,
+        numClicks: 0,
+      });
+    }
+  }
+
+  let maxClicks = 3;
   function calibrateClick(e) {
     let numClicks = parseInt(this.getAttribute('numclicks')) + 1;
     this.setAttribute('numclicks', numClicks);

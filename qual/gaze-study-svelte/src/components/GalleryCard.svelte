@@ -80,7 +80,7 @@
   let imgNav, visFilter, gazeBtn;
   function updateHelperTextPos(index, clientRect) {
     let x, y;
-    x = Math.min(clientRect.x, $screenWidth - 450);
+    x = Math.min(clientRect.x - 300, $screenWidth - 600);
     if (index == 0) {
       y = clientRect.y - 130;
     } else {

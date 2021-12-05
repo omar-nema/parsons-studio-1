@@ -16,7 +16,7 @@ export let gazerInitDone = writable(false);
 export let gazerInitVideoDone = writable(false);
 
 export let calibrationPct = writable(null);
-export let calibrationCutoff = readable(10);
+export let calibrationCutoff = readable(70);
 export let stateIndex = writable(0);
 export let loadingInd = writable(true);
 export let sessionID = writable(null);

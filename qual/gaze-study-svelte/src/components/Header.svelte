@@ -65,7 +65,13 @@
           </div>
         </nav>
         {#if $screenWidth > 950}
-          <div transition:fade class="btn clickable active btn-about">
+          <div
+            transition:fade
+            class="btn clickable active btn-about"
+            on:click={() => {
+              $modalState = 'intro';
+            }}
+          >
             About
           </div>
         {/if}

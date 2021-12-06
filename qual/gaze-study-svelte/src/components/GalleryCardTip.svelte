@@ -1,8 +1,9 @@
 <script>
   import { gazerShowCalDot } from '../utils/gazerUtils';
-  import { infoTipIndex } from '../stores/pageState';
-
+  
+  export let infoTipIndex;
   export let helperTextPositions;
+
   let hintTextArray = [
     "We’re currently visualizing a single gaze. Use the controls below to switch between different viewers' gazes.",
     'Filter between different views above. The ‘animate’ option allows you to play black a viewing session, while ‘aggregate’ shows a single static summary. And lastly, ‘original’ shows the original image, sans gaze.',
@@ -13,32 +14,32 @@
 <div
   class="hint-holder"
   style="top: {helperTextPositions[
-    $infoTipIndex
-  ][1]}px; left: {helperTextPositions[$infoTipIndex][0]}px"
+    infoTipIndex
+  ][1]}px; left: {helperTextPositions[infoTipIndex][0]}px"
 >
   <div class="text-upper">
-    <p>{hintTextArray[$infoTipIndex]}</p>
+    <p>{hintTextArray[infoTipIndex]}</p>
   </div>
   <nav>
     <div
       class="clickable"
-      class:disabled={$infoTipIndex == 0}
+      class:disabled={infoTipIndex == 0}
       on:click={() => {
-        $infoTipIndex--;
+        infoTipIndex--;
       }}
     >
       <span class="material-icons-round">navigate_before</span>
       <span>Prev</span>
     </div>
     <div>
-      Tip {$infoTipIndex + 1} of {hintTextArray.length}
+      Tip {infoTipIndex + 1} of {hintTextArray.length}
     </div>
 
-    {#if $infoTipIndex < hintTextArray.length - 1}
+    {#if infoTipIndex < hintTextArray.length - 1}
       <div
         class="clickable"
         on:click={() => {
-          $infoTipIndex++;
+          infoTipIndex++;
         }}
       >
         <span>Next</span>
@@ -48,7 +49,7 @@
       <div
         class="clickable"
         on:click={() => {
-          $infoTipIndex = -1;
+          infoTipIndex = -1;
         }}
       >
         <span>Close</span>
@@ -78,7 +79,7 @@
   nav {
     display: flex;
     justify-content: space-between;
-    background: #000000d6;
+    background: #00000059;
   }
   nav .clickable {
     display: flex;

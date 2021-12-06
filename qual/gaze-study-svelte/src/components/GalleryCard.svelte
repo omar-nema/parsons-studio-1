@@ -6,7 +6,7 @@
     screenHeight,
     cardInView,
     tooltipText,
-    infoTipIndex,
+    // infoTipIndex,
   } from '../stores/pageState';
   import { dbGet } from '../utils/firebaseUtils.js';
   import { onMount } from 'svelte';
@@ -76,24 +76,40 @@
     }
   }
 
-  //get positions to put helper text
+  //helper text insantiation
   let helperTextPositions = [[], [0, 0], [0, 0]];
-  let imgNav, visFilter, gazeBtn;
-  function updateHelperTextPos(index, clientRect) {
+  let imgNav, visFilter, gazeBtn, card;
+  function updateHelperTextPos(index, clientRect, cardRect) {
     let x, y;
-    x = Math.min(clientRect.x - 300, $screenWidth - 600);
+    x = Math.max(
+      Math.min(clientRect.x + clientRect.width / 2 - 300, $screenWidth - 600),
+      $screenWidth * 0.15
+    );
     if (index == 0) {
-      y = clientRect.y - 130;
+      console.log(cardRect);
+      y = clientRect.y - cardRect.y - 150;
     } else {
-      y = clientRect.y + 50;
+      y = clientRect.y - cardRect.y + 50;
     }
     helperTextPositions[index] = [x, y];
   }
   $: {
     if (imgNav && visFilter && gazeBtn) {
-      updateHelperTextPos(0, imgNav.getBoundingClientRect());
-      updateHelperTextPos(1, visFilter.getBoundingClientRect());
-      updateHelperTextPos(2, gazeBtn.getBoundingClientRect());
+      updateHelperTextPos(
+        0,
+        imgNav.getBoundingClientRect(),
+        card.getBoundingClientRect()
+      );
+      updateHelperTextPos(
+        1,
+        visFilter.getBoundingClientRect(),
+        card.getBoundingClientRect()
+      );
+      updateHelperTextPos(
+        2,
+        gazeBtn.getBoundingClientRect(),
+        card.getBoundingClientRect()
+      );
     }
   }
 
@@ -158,7 +174,7 @@
     });
   }
   $: clips;
-  $: $infoTipIndex;
+  let infoTipIndex = -1;
 </script>
 
 {#if $tooltipText}
@@ -167,9 +183,14 @@
   </div>
 {/if}
 
-<div class="card-outer" id={data.key} class:active={data.key == $cardInView}>
-  {#if $infoTipIndex >= 0}
-    <GalleryCardTip {helperTextPositions} />
+<div
+  class="card-outer"
+  id={data.key}
+  class:active={data.key == $cardInView}
+  bind:this={card}
+>
+  {#if infoTipIndex >= 0}
+    <GalleryCardTip {helperTextPositions} bind:infoTipIndex />
   {/if}
   <div class="card-header">
     <h2 style="display: flex; align-items: center;">
@@ -190,7 +211,8 @@
         class="clickable"
         on:click={() => {
           jump(data.key);
-          infoTipIndex.set(0);
+          infoTipIndex = 0;
+          // infoTipIndex.set(0);
         }}
       >
         <span
@@ -205,7 +227,7 @@
     <div
       class="visual-filter filter-group"
       bind:this={visFilter}
-      class:info-highlight={$infoTipIndex == 1}
+      class:info-highlight={infoTipIndex == 1}
     >
       <div class="filter-options">
         <div
@@ -280,7 +302,7 @@
     </div>
     <div
       class="viewer-filter  filter-group"
-      class:info-highlight={$infoTipIndex == 2}
+      class:info-highlight={infoTipIndex == 2}
     >
       <!-- <div class="label compact">
         <span class="material-icons-round md-14">people</span>
@@ -348,7 +370,7 @@
       <!-- <img src={data.url} style={styleSubstring} /> -->
     </div>
 
-    <div class="filter person" class:info-highlight={$infoTipIndex == 0}>
+    <div class="filter person" class:info-highlight={infoTipIndex == 0}>
       <div
         class="arrow-nav clickable"
         class:disabled={currSessionIndex == 0}
@@ -395,6 +417,7 @@
 <style>
   .card-outer {
     opacity: 0.2;
+    position: relative;
     transition: opacity 0.3s ease-in-out;
   }
   .card-outer.active {

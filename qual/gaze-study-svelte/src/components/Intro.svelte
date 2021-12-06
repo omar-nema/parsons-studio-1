@@ -62,6 +62,11 @@
     }
   }
 
+  function exitModal() {
+    localforage.setItem('visited', true);
+    $modalState = null;
+  }
+
   onMount(() => {
     initScroll();
   });
@@ -71,8 +76,7 @@
   <div
     class="btn-close clickable"
     on:click={() => {
-      localforage.setItem('visited', true);
-      $modalState = null;
+      exitModal();
     }}
   >
     Skip Intro
@@ -106,7 +110,7 @@
     <div
       class="btn"
       on:click={() => {
-        $modalState = null;
+        exitModal();
       }}
     >
       <span> Enter Gallery</span>

@@ -54,11 +54,22 @@
   <div class="card-outer">
     <h2>Gaze Gallery</h2>
     <p>
-      Welcome to the Gallery. Each collection below visualizes how individuals
+      Welcome to the Gallery! Each collection below visualizes how individuals
       gazed at a particular piece of artwork. Study the existing gazes in this
       gallery, or add your own.
     </p>
-    <p>All works are sourced from the Smithsonian's Open Collection.</p>
+    <p>
+      All works are sourced from the Smithsonian Insitute's <a
+        href="https://www.si.edu/openaccess"
+        target="_blank"
+        >Open Access Collection
+        <span class="material-icons-round" style="font-size: 12px;">
+          open_in_new
+        </span>
+      </a>
+
+      .
+    </p>
   </div>
   {#each worksArray as img}
     <GalleryCard data={img} />
@@ -66,6 +77,15 @@
 </div>
 
 <style>
+  a {
+    color: black;
+    transition: all 0.15s linear;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 0, 0, 0.1);
+  }
+  a:hover {
+    color: var(--color-accent);
+  }
   .card-holder {
     display: flex;
     flex-direction: column;

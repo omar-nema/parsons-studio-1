@@ -179,7 +179,6 @@
     transition: opacity 0.2s ease-in-out;
   }
   :global(.card-outer){
-  
     max-width: 1100px;
     width: 100%;
     background: var(--bg-contrast);

@@ -81,12 +81,13 @@
   let imgNav, visFilter, gazeBtn, card;
   function updateHelperTextPos(index, clientRect, cardRect) {
     let x, y;
-    x = Math.max(
-      Math.min(clientRect.x + clientRect.width / 2 - 300, $screenWidth - 600),
-      $screenWidth * 0.15
+
+    x = Math.min(
+      clientRect.x + clientRect.width / 4 - cardRect.x,
+      cardRect.width - 450
     );
+
     if (index == 0) {
-      console.log(cardRect);
       y = clientRect.y - cardRect.y - 150;
     } else {
       y = clientRect.y - cardRect.y + 50;

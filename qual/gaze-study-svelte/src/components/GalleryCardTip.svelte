@@ -1,6 +1,6 @@
 <script>
   import { gazerShowCalDot } from '../utils/gazerUtils';
-  
+
   export let infoTipIndex;
   export let helperTextPositions;
 
@@ -68,7 +68,7 @@
     border-radius: 5px;
     z-index: 100;
     transition: all 0.1s ease-in-out;
-    max-width: 400px;
+    width: 400px;
     font-size: 14px;
     overflow: hidden;
   }

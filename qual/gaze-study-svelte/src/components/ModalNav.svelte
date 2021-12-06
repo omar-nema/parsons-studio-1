@@ -19,6 +19,13 @@
     jump(`${artwork.key}`);
     modalState.set(null);
   }
+
+  function getLowResImgPath(imgUrl) {
+    let n = imgUrl.lastIndexOf('/');
+    let pre = imgUrl.substring(0, n);
+    let filepath = imgUrl.substring(n + 1);
+    return pre + '/lowres/' + filepath;
+  }
 </script>
 
 <div class="modal" transition:fadeSlide={{ duration: 150 }}>
@@ -44,7 +51,7 @@
           }}
         >
           <div class="img-holder">
-            <img src={artwork.url} />
+            <img src={getLowResImgPath(artwork.url)} />
           </div>
           <div class="txt-holder">
             <p><strong>{artwork.title}</strong></p>

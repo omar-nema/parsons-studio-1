@@ -1,8 +1,14 @@
-import { tooltipText, tooltipX, tooltipY } from '../stores/pageState';
+import {
+  tooltipText,
+  tooltipX,
+  tooltipY,
+  tooltipShow,
+} from '../stores/pageState';
 export function updateTooltip(xInput, yInput, text) {
   if (!text && !xInput && !yInput) {
-    tooltipText.set('');
+    tooltipShow.set(false);
   } else {
+    tooltipShow.set(true);
     tooltipX.set(xInput);
     tooltipY.set(yInput);
     if (text) {

@@ -7,6 +7,7 @@ import {
   gazerRecordingArt,
   stateIndex,
   sessionID,
+  testMode,
 } from '../stores/pageState';
 import { get } from 'svelte/store';
 import * as localforage from 'localforage';
@@ -112,11 +113,17 @@ export async function gazerArtRecording() {
     gazerArray.push(recordingObj);
     gazerRecordingArt.set(gazerArray);
   });
+  let duration;
+  if (get(testMode) == 1) {
+    duration = 1000;
+  } else {
+    duration = 20000;
+  }
   setTimeout(() => {
     webgazer.clearGazeListener();
     console.log(get(gazerRecordingArt));
     stateIndex.set(get(stateIndex) + 1);
-  }, 20000);
+  }, duration);
 }
 
 export function gazerCalibrationRecording() {

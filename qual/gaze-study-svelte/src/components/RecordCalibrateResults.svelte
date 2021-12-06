@@ -8,6 +8,7 @@
     pageState,
     selectedImage,
     jumpCard,
+    testMode,
   } from '../stores/pageState';
   import {
     dbGet,
@@ -41,17 +42,20 @@
     await dbWrite('sessionData/' + sessionId, sessionData);
     return await dbWrite('sessionData/' + sessionId, sessionData);
   }
-  async function updateUserName() {
+  async function submitSession() {
     nameInputted = true;
-    await dbWrite(
-      'works/' + artworkId + '/sessionData/' + sessionId + '/name',
-      userName
-    );
+
+    if ($testMode == 0) {
+      await dbWrite(
+        'works/' + artworkId + '/sessionData/' + sessionId + '/name',
+        userName
+      );
+    }
+
     //switch pages only after video container is moved to body
     let observer = new MutationObserver((mutationRecords) => {
       if (mutationRecords[0].removedNodes.length > 0) {
-        console.log(selectedImage.key);
-        jumpCard.set(selectedImage.key);
+        jumpCard.set($selectedImage.key);
         pageState.set('gallery');
       }
     });
@@ -68,34 +72,10 @@
   $: {
   }
 
-  storeSessionData();
-  writeSessionToArtwork();
-
-  // async function writeAllData() {
-  //   storeSessionData();
-  //   writeSessionToArtwork();
-
-  //   let vis = generateContour();
-  //   let svgBlob = await new Blob([vis], {
-  //     type: 'image/svg+xml;charset=utf-8',
-  //   });
-  //   await uploadBlob(
-  //     'svgContours/' + artworkId + '/contours/' + sessionId + '.svg',
-  //     svgBlob
-  //   );
-  //   console.log('made it ma');
-  //   loadingInd.set(false);
-  //   console.log($loadingInd);
-  // }
-
-  // writeAllData();
-
-  // async function updateSVGUrl() {
-  //   return await dbWrite(
-  //     'works/' + artworkId + '/sessionData/' + sessionId + '/svgURL',
-  //     svgURL
-  //   );
-  // }
+  if ($testMode == 0) {
+    storeSessionData();
+    writeSessionToArtwork();
+  }
 </script>
 
 <h3>Calibrate: Results</h3>
@@ -110,7 +90,7 @@
     bind:value={userName}
     on:keyup={(e) => {
       if (e.keyCode === 13) {
-        updateUserName();
+        submitSession();
       } else {
         nameInputted = false;
       }
@@ -119,7 +99,7 @@
   <div
     class="btn accent clickable"
     class:disabled-part={nameInputted == true}
-    on:click={updateUserName}
+    on:click={submitSession}
   >
     Save & View
   </div>

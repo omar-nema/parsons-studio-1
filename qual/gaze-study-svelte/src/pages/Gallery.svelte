@@ -8,11 +8,9 @@
     loadedWorksArray,
   } from '../stores/artworkMetadata';
   import { initScroll } from '../utils/scrollListener';
-  import { onMount } from 'svelte';
+  import { onMount, afterUpdate } from 'svelte';
   import { cardInView, jumpCard } from '../stores/pageState';
   import jump from '../utils/jumpSection';
-
-  //load the works in real time
 
   let worksArray = [],
     worksKeys = [];
@@ -28,7 +26,7 @@
     document.querySelector('body').className = '';
     //write any new artwork that is not yet in DB to DB
     //issue is that this could remove sessionData if initial read was unsuccessful
-    //FIX LATERRRRR
+    //function addNewArtwork(){
     // for (let key in $artworkMetadata) {
     //   if (!worksKeys.includes(key)) {
     //     let objToAdd = $artworkMetadata[key];
@@ -36,12 +34,28 @@
     //     dbWrite('works/' + key, objToAdd);
     //   }
     // }
+    // }
   }
 
-  $: {
-    $jumpCard;
-    jump($jumpCard);
-  }
+  //after recording sesh, scroll to the card that was last viewed
+  afterUpdate(() => {
+    if ($jumpCard) {
+      let observer = new MutationObserver((mutationRecords) => {
+        console.log(mutationRecords);
+        if (mutationRecords.length > 10) {
+          window.scrollTo({
+            top: document.querySelector('#' + $jumpCard).getBoundingClientRect()
+              .top,
+          });
+        }
+      });
+      observer.observe(document.querySelector('.card-holder'), {
+        childList: true, // observe direct children
+        subtree: false, // lower descendants too
+        characterDataOldValue: true, // pass old data to callback
+      });
+    }
+  });
 
   async function init() {
     await getAllWorks();
@@ -94,7 +108,7 @@
   }
   .card-outer {
     background: linear-gradient(
-      0deg,
+      10deg,
       rgba(240, 240, 240, 0.05) 0%,
       rgba(0, 212, 255, 0.05) 100%
     );

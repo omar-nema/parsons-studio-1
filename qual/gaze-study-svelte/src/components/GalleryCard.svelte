@@ -6,6 +6,7 @@
     screenHeight,
     cardInView,
     tooltipText,
+    tooltipShow,
     // infoTipIndex,
   } from '../stores/pageState';
   import { dbGet } from '../utils/firebaseUtils.js';
@@ -178,8 +179,8 @@
   let infoTipIndex = -1;
 </script>
 
-{#if $tooltipText}
-  <div transition:fade={{ duration: 200 }}>
+{#if $tooltipShow}
+  <div transition:fade={{ duration: 100 }}>
     <Tooltip />
   </div>
 {/if}
@@ -318,15 +319,6 @@
           <div
             bind:this={gazeBtn}
             class="filter clickable add"
-            on:mouseover={(e) => {
-              updateTooltip(e.x, e.y, 'Add your gaze to the collection');
-            }}
-            on:mousemove={(e) => {
-              updateTooltip(e.x, e.y);
-            }}
-            on:mouseleave={(e) => {
-              updateTooltip();
-            }}
             on:click={() => {
               selectedImage.set(data);
               pageState.set('record');
@@ -342,6 +334,27 @@
     <div
       class="img-holder"
       style="width: {width}; height: {ht}; max-width: {data.width}px; max-height: {data.height}px"
+      on:mouseover={(e) => {
+        let str;
+        let name = sessions[sessionsArray[currSessionIndex]].name;
+
+        if (viewMode == 'aggregate') {
+          str = `Visualization of ${name}'s Gaze. Focused portions of the image represent where ${name} was looking the most, while blurred portions were paid less attention to. `;
+        } else if (viewMode == 'slice' && playStatus == 'pause') {
+          str = `Currently displaying a single slice - a frame representing just 0.05 seconds of viewing. Click on the Animate button on the top left to play back ${name}'s viewing session.`;
+        } else if (viewMode == 'slice' && playStatus == 'play') {
+          str = `Playing back ${name}'s viewing session. The focused section represents what they were looking at a given moment.`;
+        } else if (viewMode == 'original') {
+          str = `Showing ${data.artist}'s ${data.title}, without a gaze representation.`;
+        }
+        updateTooltip(e.x, e.y, str);
+      }}
+      on:mousemove={(e) => {
+        updateTooltip(e.x, e.y);
+      }}
+      on:mouseleave={(e) => {
+        updateTooltip();
+      }}
     >
       <img
         class:slice={viewMode == 'slice'}

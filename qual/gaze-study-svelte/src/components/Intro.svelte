@@ -2,6 +2,9 @@
   import { onMount } from 'svelte';
   import { modalState } from '../stores/pageState';
   import { slide, fade } from 'svelte/transition';
+  //detect if visited
+  import * as localforage from 'localforage';
+
   function fadeSlide(node, options) {
     const slideTrans = slide(node, options);
     return {
@@ -68,6 +71,7 @@
   <div
     class="btn-close clickable"
     on:click={() => {
+      localforage.setItem('visited', true);
       $modalState = null;
     }}
   >
@@ -435,7 +439,7 @@
 
   .scroll {
     opacity: 0.1;
-    transition: all 0.5s ease-in-out;
+    transition: all 1s ease-in-out;
   }
 
   main {
@@ -469,7 +473,7 @@
     position: relative;
   }
   p {
-    font-size: 38px;
+    font-size: 34px;
     font-weight: 400;
   }
   .btn {

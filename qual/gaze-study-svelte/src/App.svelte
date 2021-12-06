@@ -16,6 +16,9 @@
   import ModalNav from './components/ModalNav.svelte'
   import Intro from './components/Intro.svelte';
 
+  //to check if page visited and remove intro modal
+  import * as localforage from 'localforage';
+
   function updateScreenSize() {
     screenWidth.set(screenSize().windowW);
     screenHeight.set(screenSize().windowH);
@@ -33,6 +36,19 @@
   window.onresize = function () {
     updateScreenSize();
   };
+
+  let visited = false;
+  async function checkIfVisited(){
+    visited = await localforage.getItem('visited');
+  }
+  checkIfVisited();
+  $: {
+    if (visited){
+      $modalState = null;
+    }
+  }
+
+
 
   $: {
     if ($modalState){

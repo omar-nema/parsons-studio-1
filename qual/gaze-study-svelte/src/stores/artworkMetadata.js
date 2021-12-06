@@ -127,6 +127,17 @@ let artworkData = {
     origLink:
       'https://www.si.edu/object/lines-points-points-portfolio-location-lines:saam_1990.60.2',
   },
+  albers: {
+    key: 'albers',
+    artist: 'Josef Albers',
+    title: 'Homage to the Square',
+    url: './assets/img/albers.png',
+    sessionData: {},
+    width: 1645,
+    height: 1705,
+    origLink:
+      'https://www.si.edu/object/homage-square-white-line-red:saam_1976.108.7',
+  },
 };
 
 export let artworkMetadata = writable(artworkData);

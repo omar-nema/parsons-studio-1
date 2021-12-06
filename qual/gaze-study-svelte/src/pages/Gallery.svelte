@@ -58,6 +58,7 @@
       gazed at a particular piece of artwork. Study the existing gazes in this
       gallery, or add your own.
     </p>
+    <p>All works are sourced from the Smithsonian's Open Collection.</p>
   </div>
   {#each worksArray as img}
     <GalleryCard data={img} />

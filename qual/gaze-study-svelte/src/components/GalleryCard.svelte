@@ -24,7 +24,9 @@
   let width = 'auto',
     ht = 'auto',
     styleSubstring = '';
-  if (data.dimWidthToHt < 1) {
+
+  let dimWidthToHt = data.width / data.height;
+  if (dimWidthToHt < 1) {
     ht = maxH + 'px';
     styleSubstring = 'height: 100%';
   } else {
@@ -52,7 +54,6 @@
   }
   async function getSessionData(key) {
     sessionData = await dbGet('sessionData/' + key);
-    console.log(data, sessionData);
     createClips();
     //reset the slider
     if (sessionData) {
@@ -177,7 +178,12 @@
       >
         Gaze Collection
       </div>
-      <div>{data.artist}, <i>{data.title}</i></div>
+      <a class="clickable" href={data.origLink} target="_blank">
+        <span>
+          {data.artist}, <i>{data.title}</i>
+        </span>
+        <span class="material-icons-round"> open_in_new </span>
+      </a>
     </h2>
     {#if $screenWidth > 800}
       <div
@@ -410,6 +416,13 @@
     margin-bottom: 30px;
     justify-content: space-between;
   }
+  a {
+    color: black;
+    transition: all 0.15s linear;
+  }
+  a:hover {
+    text-decoration: none;
+  }
 
   p {
     margin-top: 10px;
@@ -446,7 +459,7 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
   img.agg {
-    filter: blur(8px);
+    filter: blur(5px);
   }
   img.main {
     transition: all 0.3s ease-in-out;
@@ -507,7 +520,7 @@
     height: 100%;
     border: 0.5px dashed transparent;
     transition: all 0.15s linear;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 0.5px solid rgba(0, 0, 0, 0.1);
   }
   .filter.add {
     background: var(--bg-gradient-dark);

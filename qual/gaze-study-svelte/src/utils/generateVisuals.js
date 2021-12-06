@@ -38,7 +38,7 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
       maxCoords / 3,
       minCoords,
     ])
-    .range([0, 0.5, 0.75, 1, 8]);
+    .range([0, 0.5, 0.75, 1, 4]);
 
   let opacityScale = d3
     .scaleLinear()

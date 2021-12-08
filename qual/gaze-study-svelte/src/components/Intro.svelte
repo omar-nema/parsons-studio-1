@@ -102,8 +102,7 @@
   <section class="scroll">
     <p>
       Inspired by these questions, How We Gaze is a <strong>meta-gallery</strong
-      > that shows how individuals gaze at pieces of artwork. You can view others’
-      gazes, or add your own.
+      > that shows how individuals gaze at pieces of artwork.
     </p>
   </section>
   <section class="scroll">

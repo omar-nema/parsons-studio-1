@@ -102,7 +102,13 @@
     backdrop-filter: blur(5px);
     z-index: 1;
     background-color: none;
+
+    transition: all 0.15s linear;
   }
+  header:hover {
+    opacity: 1;
+  }
+
   .header-content {
     max-width: var(--content-width-max);
     width: var(--content-width-pct);

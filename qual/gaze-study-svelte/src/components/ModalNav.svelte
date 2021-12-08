@@ -75,9 +75,13 @@
     /* top: var(--header-ht); */
     top: 0;
     left: 0;
-    background: var(--bg-gradient);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgb(194 240 250 / 90%) 100%
+    );
     z-index: 100;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px);
     overflow: auto;
   }
 

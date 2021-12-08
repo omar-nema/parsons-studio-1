@@ -131,18 +131,18 @@
   }
   $: {
     currFrame;
-    if (sessionData) {
+    if (sessionData && currFrame < sessionData.length - 1) {
       moveClips(sessionData[currFrame].xPct, sessionData[currFrame].yPct);
     }
   }
   let clips = [];
   function createClips() {
     clips = [];
-    let numClips = 10;
-    let clipMaxSize = 20;
-    let clipMinR = 10;
+    let numClips = 30;
+    let clipMaxSize = 33;
+    let clipMinR = 17;
     let clipInc = (clipMaxSize - clipMinR) / numClips;
-    let blurMax = 6;
+    let blurMax = 10;
     let blurInc = blurMax / numClips;
     let opacityInc = 1 / numClips;
     for (let i = numClips; i > 0; i--) {
@@ -238,7 +238,11 @@
           on:click={() => {
             if (playStatus == 'pause') {
               viewMode = 'slice';
-              if (currFrame == sessionData.length - 1) {
+              console.log('session length', sessionData.length);
+              if (
+                currFrame == sessionData.length ||
+                currFrame == sessionData.length - 1
+              ) {
                 currFrame = 0;
               }
               playStatus = 'play';
@@ -248,7 +252,7 @@
           }}
         >
           {#if playStatus == 'pause'}
-            <span on:click={() => {}} class="play-toggle">Animate</span>
+            <span class="play-toggle">Animate</span>
           {:else}
             <span
               on:click={() => {
@@ -324,7 +328,7 @@
               pageState.set('record');
             }}
           >
-            <span> Add Gaze</span>
+            <span> Add Your Gaze</span>
           </div>
         </div>
       {/if}
@@ -384,7 +388,11 @@
       <!-- <img src={data.url} style={styleSubstring} /> -->
     </div>
 
-    <div class="filter person" class:info-highlight={infoTipIndex == 0}>
+    <div
+      class="filter person"
+      class:info-highlight={infoTipIndex == 0}
+      class:info-hide={viewMode == 'original'}
+    >
       <div
         class="arrow-nav clickable"
         class:disabled={currSessionIndex == 0}
@@ -495,6 +503,7 @@
     margin: auto;
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
+
   img.agg {
     filter: blur(5px);
   }
@@ -502,7 +511,7 @@
     transition: all 0.3s ease-in-out;
   }
   img.slice {
-    filter: blur(6px);
+    filter: blur(10px);
   }
 
   .filter-group {
@@ -510,10 +519,14 @@
     font-size: var(--font-size-filter);
     height: 38px;
   }
+  .info-hide {
+    opacity: 0;
+  }
   .info-highlight {
     border: 1px dashed var(--color-accent-faded) !important;
     box-shadow: var(--box-shadow-med);
     border-radius: 5px;
+    opacity: 1;
   }
 
   .filter-group,
@@ -679,7 +692,7 @@
     max-width: 100%;
     margin: auto;
     opacity: 1;
-    transition: all 0.07s linear;
+    transition: all 0.11s linear;
   }
 
   .center {

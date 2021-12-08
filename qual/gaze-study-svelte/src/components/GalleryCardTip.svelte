@@ -6,7 +6,7 @@
 
   let hintTextArray = [
     "We’re currently visualizing a single gaze. Use the controls below to switch between different viewers' gazes.",
-    'Filter between different views above. The ‘animate’ option allows you to play black a viewing session, while ‘aggregate’ shows a single static summary. And lastly, ‘original’ shows the original image, sans gaze.',
+    'Filter between different views above. The ‘animate’ option allows you to play back a viewing session, while ‘aggregate’ shows a single static summary. And lastly, ‘original’ shows the original image, sans gaze.',
     'Are you curious to see what your own gaze would look like? Contribute to the gallery and add your own gaze!',
   ];
 </script>

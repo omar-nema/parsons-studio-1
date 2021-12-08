@@ -22,23 +22,34 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
     .x((d) => xPos(d.xPct))
     .y((d) => yPos(d.yPct))
     .size([width, height])
-    .bandwidth(25)
-    .thresholds(20)(data);
+    .bandwidth(70)
+    .thresholds(30)(data);
 
   let minCoords = d3.min(contours, (d) => d.value);
   let maxCoords = d3.max(contours, (d) => d.value);
 
   let blurScale = d3
-    .scaleLinear()
+    .scaleLog()
     .domain([
       maxCoords,
       maxCoords * 0.75,
       ,
       maxCoords / 2,
       maxCoords / 3,
+      maxCoords / 4,
+      maxCoords / 10,
       minCoords,
     ])
-    .range([0, 0.5, 0.75, 1, 4]);
+    .range([0, 0.5, 0.75, 1, 1.5, 2, 10]);
+
+  blurScale = d3
+    .scaleLinear()
+    .domain([maxCoords, maxCoords * 0.75, minCoords])
+    .range([0, 1, 5]);
+
+  //the update isn't happening properly
+
+  // let blurScale = d3.scaleLinear().domain([maxCoords, minCoords]).range([0, 0]);
 
   let opacityScale = d3
     .scaleLinear()

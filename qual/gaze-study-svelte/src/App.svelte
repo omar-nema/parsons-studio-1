@@ -90,13 +90,13 @@
 </svelte:head>
 
 <style>
-  /* @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap'); */
-  /* @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500&display=swap'); */
+    @import url('https://fonts.googleapis.com/icon?family=Material+Icons+Round');
+  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500&display=swap');
+   */
   /* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
    */
-  
-  @import url('https://fonts.googleapis.com/icon?family=Material+Icons+Round');
-  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&display=swap'); */
 
   :global(*) {
     box-sizing: border-box;
@@ -143,6 +143,7 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     transition: background 1s ease-in-out;
+    font-size: var(--font-size-filter);
   }
   :global(.clickable) {
     cursor: pointer;
@@ -160,7 +161,7 @@
   }
   :global(h2){
     font-weight: 500;
-    /* font-size: 20px; */
+    font-size: 18px;
   }
   :global(h3) {
     font-weight: 600;
@@ -179,7 +180,7 @@
     transition: opacity 0.2s ease-in-out;
   }
   :global(.card-outer){
-    max-width: 1100px;
+    max-width: 900px;
     width: 100%;
     background: var(--bg-contrast);
     padding: 30px 40px;
@@ -188,6 +189,7 @@
     margin-bottom: 70px;
     border-radius: 10px;
     box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
+   
   }
   
   :global(.disabled-part) {

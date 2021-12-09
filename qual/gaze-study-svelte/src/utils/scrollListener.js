@@ -1,7 +1,13 @@
-import { cardInView } from '../stores/pageState';
+import { cardInView, scrollThresh } from '../stores/pageState';
 
 export function initScroll() {
   window.addEventListener('scroll', (e) => {
+    if (window.scrollY > 200) {
+      scrollThresh.set(true);
+    } else {
+      scrollThresh.set(false);
+    }
+
     let ctrPt = window.innerHeight / 2;
     let cards = document.querySelectorAll('.card-outer');
     cards.forEach((d) => {

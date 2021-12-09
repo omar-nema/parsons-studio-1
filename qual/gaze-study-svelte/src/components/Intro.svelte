@@ -101,8 +101,9 @@
   </section>
   <section class="scroll">
     <p>
-      Inspired by these questions, How We Gaze is a <strong>meta-gallery</strong
-      > that shows how individuals gaze at pieces of artwork.
+      How We Gaze is a <strong>meta-gallery</strong> that shows how individuals gaze
+      at pieces of artwork. Crowdsourced eye-tracking sessions are used to study
+      and visualize individuals' gazes.
     </p>
   </section>
   <section class="scroll">
@@ -488,15 +489,10 @@
     padding: 50px 0;
     width: 80%;
     border-radius: 20px;
-    background: linear-gradient(
-        172deg,
-        rgb(69 159 180 / 41%) 0%,
-        rgb(103 227 254 / 63%) 50%,
-        rgb(33 187 221 / 58%) 100%
-      )
-      fixed;
-    color: white;
+    background: white;
+    color: var(--color-accent);
     transition: all 0.15s ease-in-out;
+    border: 1px solid #2196f352;
   }
   .btn:hover {
     filter: brightness(0.99);

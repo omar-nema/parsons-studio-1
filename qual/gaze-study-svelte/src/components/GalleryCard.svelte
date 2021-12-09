@@ -20,8 +20,8 @@
 
   //CUSTOM WIDTH AND HEIGHT CALC
   export let data;
-  let maxW = Math.min($screenWidth - 500, 1000),
-    maxH = $screenHeight - 250;
+  let maxW = Math.min($screenWidth - 600, 800),
+    maxH = $screenHeight - 190;
   let width = 'auto',
     ht = 'auto',
     styleSubstring = '';
@@ -138,9 +138,9 @@
   let clips = [];
   function createClips() {
     clips = [];
-    let numClips = 30;
+    let numClips = 40;
     let clipMaxSize = 33;
-    let clipMinR = 17;
+    let clipMinR = 19;
     let clipInc = (clipMaxSize - clipMinR) / numClips;
     let blurMax = 10;
     let blurInc = blurMax / numClips;
@@ -201,11 +201,21 @@
       >
         Gaze Collection
       </div>
-      <a class="clickable" href={data.origLink} target="_blank">
+      <a
+        class="clickable"
+        style="display: flex; align-items: center;"
+        href={data.origLink}
+        target="_blank"
+      >
         <span>
           {data.artist}, <i>{data.title}</i>
         </span>
-        <span class="material-icons-round"> open_in_new </span>
+        <span
+          class="material-icons-round"
+          style="font-size: 12px; margin-left: 6px"
+        >
+          open_in_new
+        </span>
       </a>
     </h2>
     {#if $screenWidth > 800}
@@ -217,9 +227,8 @@
           // infoTipIndex.set(0);
         }}
       >
-        <span
-          class="material-icons-round md-14"
-          style="font-size: 24px; color: #bfb9b9">info</span
+        <span class="material-icons-round md-14" style="color: #bfb9b9"
+          >info</span
         >
       </div>
     {/if}
@@ -339,25 +348,24 @@
       class="img-holder"
       style="width: {width}; height: {ht}; max-width: {data.width}px; max-height: {data.height}px"
       on:mouseover={(e) => {
-        let str;
-        let name = sessions[sessionsArray[currSessionIndex]].name;
-
-        if (viewMode == 'aggregate') {
-          str = `Visualization of ${name}'s Gaze. Focused portions of the image represent where ${name} was looking the most, while blurred portions were paid less attention to. `;
-        } else if (viewMode == 'slice' && playStatus == 'pause') {
-          str = `Currently displaying a single slice - a frame representing just 0.05 seconds of viewing. Click on the Animate button on the top left to play back ${name}'s viewing session.`;
-        } else if (viewMode == 'slice' && playStatus == 'play') {
-          str = `Playing back ${name}'s viewing session. The focused section represents what they were looking at a given moment.`;
-        } else if (viewMode == 'original') {
-          str = `Showing ${data.artist}'s ${data.title}, without a gaze representation.`;
-        }
-        updateTooltip(e.x, e.y, str);
+        // let str;
+        // let name = sessions[sessionsArray[currSessionIndex]].name;
+        // if (viewMode == 'aggregate') {
+        //   str = `Visualization of ${name}'s Gaze. Focused portions of the image represent where ${name} was looking the most, while blurred portions were paid less attention to. `;
+        // } else if (viewMode == 'slice' && playStatus == 'pause') {
+        //   str = `Currently displaying a single slice - a frame representing just 0.05 seconds of viewing. Click on the Animate button on the top left to play back ${name}'s viewing session.`;
+        // } else if (viewMode == 'slice' && playStatus == 'play') {
+        //   str = `Playing back ${name}'s viewing session. The focused section represents what they were looking at a given moment.`;
+        // } else if (viewMode == 'original') {
+        //   str = `Showing ${data.artist}'s ${data.title}, without a gaze representation.`;
+        // }
+        // updateTooltip(e.x, e.y, str);
       }}
       on:mousemove={(e) => {
-        updateTooltip(e.x, e.y);
+        // updateTooltip(e.x, e.y);
       }}
       on:mouseleave={(e) => {
-        updateTooltip();
+        // updateTooltip();
       }}
     >
       <img
@@ -458,7 +466,7 @@
     font-weight: 500;
     flex-wrap: wrap;
     flex-direction: row;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     justify-content: space-between;
   }
   a {
@@ -517,7 +525,7 @@
   .filter-group {
     /* min-width: 350px; */
     font-size: var(--font-size-filter);
-    height: 38px;
+    height: 34px;
   }
   .info-hide {
     opacity: 0;
@@ -558,7 +566,7 @@
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
-    font-weight: 500;
+    font-weight: 600;
   }
   /* select option {
     color: white;
@@ -581,9 +589,8 @@
   .filter.person {
     background: none;
     width: 100%;
-
     margin: auto;
-    margin-top: 10px;
+    padding: 5px 20px;
   }
   .filter.selected {
     background: var(--bg-gradient-dark);
@@ -692,7 +699,7 @@
     max-width: 100%;
     margin: auto;
     opacity: 1;
-    transition: all 0.11s linear;
+    transition: all 0.1s ease-in-out;
   }
 
   .center {

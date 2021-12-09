@@ -45,7 +45,9 @@ export async function contourMapBlur(data, containerAll, containerSvg, url) {
   blurScale = d3
     .scaleLinear()
     .domain([maxCoords, maxCoords * 0.75, minCoords])
-    .range([0, 1, 5]);
+    .range([0, 0.25, 5]);
+
+  // blurScale = d3.scaleLinear().domain([maxCoords, minCoords]).range([0, 5]);
 
   //the update isn't happening properly
 

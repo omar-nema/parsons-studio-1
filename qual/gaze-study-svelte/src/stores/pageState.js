@@ -31,6 +31,7 @@ export let screenHeight = writable(null);
 //for scrolling and naviating between cards
 export let cardInView = writable(null);
 export let jumpCard = writable(null);
+export let scrollThresh = writable(false);
 
 export let tooltipText = writable(null);
 export let tooltipX = writable(null);
